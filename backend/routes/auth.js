@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 var bcrypt = require("bcryptjs");
 const jwt =require('jsonwebtoken');
 
-const requiredLogin = require("../middleware/requireLogin");
+// const requiredLogin = require("../middleware/requireLogin");
 
 //using and accessing important keys in env file
 require("dotenv").config();
@@ -97,11 +97,6 @@ router.post(
     }
   }
 );
-
-//Route-3 Checking whether the token given ius right or wrong
-router.get('/protected',requiredLogin,(req,res)=>{
-  res.send("hello user")
-})
 
 
 module.exports = router;

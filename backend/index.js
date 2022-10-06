@@ -9,9 +9,7 @@ const port = 5000;//defining the port of localhost for backend
 app.use(express.json())//express. json() is a method inbuilt in express to recognize the incoming Request Object as a JSON Object.
 
 app.use(require('./routes/auth'))
-// const cors =require('cors');
-// app.use(cors())
-
+app.use(require('./routes/post'))
 
 // app.use("/api/auth", require("./routes/auth"));
 app.get("/", (req, res) => {//request and response on the home page
