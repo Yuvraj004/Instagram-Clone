@@ -1,7 +1,10 @@
-#external packages
+# External packages Used
 - mongoose
 - express
 - nodemon
+- jsonwebtoken
+- express-validattor
+- bcryptjs
 
 # Getting Started with Create React App
 
