@@ -12,7 +12,7 @@ const User = require("../models/User");
 
 
 module.exports =async (req,res,next)=>{
-    const {auth} =await req.body
+    const {auth} =await req.headers.authorization
     //auth === Bearer ewedfanwoir
     if(!auth){res.status(401).json({error:"You must be auth logged in"})}
     

@@ -1,16 +1,17 @@
-import { Router } from "express";
-import mongoose from "mongoose";
-import Post from "../models/post";
-const router = Router();
+const express =require('express');
+const mongoose =require('mongoose');
+const router = express.Router();
+const requireLogin =require('../middleware/requireLogin')
+const Post = require('../models/post')
 
 
-router.post('/createpost',(req,res)=>{
+router.post('/createpost',requireLogin,(req,res)=>{
     const {title,body} = req.body;
     if(!title || !body){
         return res.status(402).json({error:"Plz add all the fields"})
     }
     const post = new Post({
-        title,body,postedBy:req.user 
+        title,body,postedBy:"undefined"
     })
 
     post.save().then(result=>{
@@ -23,4 +24,4 @@ router.post('/createpost',(req,res)=>{
 })
 
 
-export default router
+module.exports = router

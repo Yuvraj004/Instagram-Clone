@@ -1,9 +1,8 @@
-import pkg from 'mongoose';
-const { Schema, model } = pkg;
+const mongoose =require('mongoose');
 //connection between user and post  models
-const {ObjectId} = Schema.Types 
+const {ObjectId} = mongoose.Schema.Types 
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true
@@ -21,8 +20,8 @@ const userSchema = new Schema({
         ref:"User"
     }
 })
-const Post = model('User',userSchema);
+const Post = mongoose.model('Post',userSchema);
 // //createindexes to uniquely identify each email,repetitve email will not saved separately
 // User.createIndexes();
 //exporting the model
-export default Post
+module.exports = Post
