@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+const mongoose = require('mongoose');
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
 
     name:{
         type:String,
@@ -9,7 +9,8 @@ const userSchema = new Schema({
 
     email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     password:{
         type:String,
@@ -18,8 +19,8 @@ const userSchema = new Schema({
 })
 
 //creating a model for auth of user
-const User = model('user',userSchema,'user');
-//createindexes to uniquely identify each email,repetitve email will not saved separately
-User.createIndexes();
+const User = mongoose.model('User',userSchema);
+// //createindexes to uniquely identify each email,repetitve email will not saved separately
+// User.createIndexes();
 //exporting the model
-export default User
+module.exports= User
