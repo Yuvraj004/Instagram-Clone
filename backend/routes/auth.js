@@ -3,6 +3,14 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
 var bcrypt = require("bcryptjs");
+const jwt =require('jsonwebtoken');
+
+const requiredLogin = require("../middleware/requireLogin");
+
+//using and accessing important keys in env file
+require("dotenv").config();
+const JWT=process.env.JWT_KEY;
+
 
 //importing Router function in express
 const User = require("../models/User");
@@ -47,20 +55,22 @@ router.post("/signup", async (req, res) => {
     });
 });
 
+
+
 //Route-2 login the user using POST "/api/auth/login" . Authentication required
 router.post(
   "/login",
-  //   [
-  //     body("email", "Enter a valid Email").isEmail(), //custom msg can also be done
-  //     body("password", "Password cannot be blank").exists(),
-  //   ],
+    [
+      body("email", "Enter a valid Email").isEmail(), //custom msg can also be done
+      body("password", "Password cannot be blank").exists(),
+    ],
   async (req, res) => {
     let success = false;
     //if there are errors,returning bad request and the errors
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
     const { name, email, password } = req.body;
     try {
@@ -76,12 +86,22 @@ router.post(
           .status(400)
           .json({ success, error: "Please use correct credentials" });
       }
-      return res.status(200).json({message:"Correct credentials"})
+      //creating a token for a particular user
+      const token=jwt.sign({_id:user._id},JWT)
+      //return that token
+      return res.json({token})
+      // return res.status(200).json({message:"Correct credentials"})
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error Occured");
     }
   }
 );
+
+//Route-3 Checking whether the token given ius right or wrong
+router.get('/protected',requiredLogin,(req,res)=>{
+  res.send("hello user")
+})
+
 
 module.exports = router;
