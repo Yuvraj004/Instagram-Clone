@@ -1,10 +1,24 @@
-import React from 'react'
-
+import React from 'react';
+import Navbar from './Components/Navbar';
+import {BrowserRouter,Route, Routes} from 'react-router-dom' 
+import Home from './Components/screens/Home';
+import Login from './Components/screens/Login';
+import Profile from './Components/screens/Profile';
+import Signup from './Components/screens/Signup';
+import './App.css';
 function App() {
   return (
-    <>
-        <h1>hello</h1>
-        <div>App</div>
+    <>  
+        
+        <BrowserRouter>
+            <Navbar/>
+            <Routes>
+                <Route path='/' element={<Home/>}></Route>
+                <Route path='/login' element={<Login/>}></Route>
+                <Route path='/profile' element={<Profile/>}></Route>
+                <Route path='/signup' element={<Signup/>}></Route>
+            </Routes>
+        </BrowserRouter>
     </>
   )
 }
