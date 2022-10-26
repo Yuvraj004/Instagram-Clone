@@ -13,28 +13,16 @@ const Login = () => {
       },
       body: JSON.stringify({ email, password })
     })
-    // .then(res=>{res.status()})
-    // .then((data)=>{
-    //   console.log(data)
-    //   if(data){
-    //     M.toast({html:data.token,classes:"#43a047 green darken-3"});
-    //     navigate("/profile");
-    //   }
-    //   else{
-    //     M.toast({html:"bad",classes:"#c62828 red darken-1"})
-    //     navigate("/login")
-    //   }
-    // }).catch(err=>{
-    //   console.log(err)
-    // })
     const json =await response.json();
-        console.log(json);
         if(json.success){
-          M.toast({html:json,classes:"#43a047 green darken-3"});
+          M.toast({html:"GOTCHA",classes:"#43a047 green darken-3"});
             //save the token and redirect
             // props.showAlert("You are logged in","success");
             // localStorage.setItem('token',json.authtoken);
           navigate("/profile");
+        }
+        else{
+          M.toast({html:"Retry Please",classes:"#c62828 red darken-3"});
         }
   }
 
