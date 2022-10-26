@@ -5,6 +5,8 @@ import Home from './Components/screens/Home';
 import Login from './Components/screens/Login';
 import Profile from './Components/screens/Profile';
 import Signup from './Components/screens/Signup';
+import CreatePost from './Components/screens/CreatePost';
+
 import './App.css';
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
                 <Route path='/login' element={<Login/>}></Route>
                 <Route path='/profile' element={<Profile/>}></Route>
                 <Route path='/signup' element={<Signup/>}></Route>
+                <Route path='/create' element={<CreatePost/>}></Route>
             </Routes>
         </BrowserRouter>
     </>
