@@ -8,26 +8,24 @@ const Signup = () => {
   const [email, setEmail] = useState("")
   let navigate = useNavigate();
   const PostData = async () => {
-    const respons = await fetch("http://localhost:5000/api/auth/signup", {
+    await fetch("http://localhost:5000/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ name:name, email:email, password:password })
+    }).then(res=>res.json())
+    .then(data=>{
+      if(data.error){
+        M.toast({html:data.error,classes:"#c62828 red darken-3"})
+      }
+      else{
+        M.toast({html:data.message,classes:"#43a047 green darken-1"})
+        navigate("/login");
+      }
+    }).catch(err=>{
+      console.log(err)
     })
-    const json = await respons.json();
-    console.log(json);
-    if (json.success) {
-      //save the token and redirect
-      // props.showAlert("You are logged in","success");
-      // localStorage.setItem('token',json.authtoken);
-      M.toast({ html: 'Success!', classes: 'rounded' });
-      navigate("/profile");
-    }
-    else {
-      // props.showAlert("Invalid credentials","danger");
-      M.toast({ html: 'Invalid credentials!', classes: 'rounded' });
-    }
   }
 
   return (

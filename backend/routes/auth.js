@@ -3,14 +3,13 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
 var bcrypt = require("bcryptjs");
-const jwt =require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 // const requiredLogin = require("../middleware/requireLogin");
 
 //using and accessing important keys in env file
 require("dotenv").config();
-const JWT=process.env.JWT_KEY;
-
+const JWT = ""+process.env.JWT_KEY;
 
 //importing Router function in express
 const User = require("../models/User");
@@ -55,15 +54,13 @@ router.post("/signup", async (req, res) => {
     });
 });
 
-
-
 //Route-2 login the user using POST "/api/auth/login" . Authentication required
 router.post(
   "/login",
-    [
-      body("email", "Enter a valid Email").isEmail(), //custom msg can also be done
-      body("password", "Password cannot be blank").exists(),
-    ],
+  [
+    body("email", "Enter a valid Email").isEmail(), //custom msg can also be done
+    body("password", "Password cannot be blank").exists(),
+  ],
   async (req, res) => {
     let success = false;
     //if there are errors,returning bad request and the errors
@@ -72,31 +69,31 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
     try {
-      let user = await User.findOne({ email: email });
+      let user = await User.findOne({ email: req.body.email });
       if (!user) {
         return res
           .status(400)
           .json({ error: "Please use correct credentials" });
       }
-      const passCompare = bcrypt.compareSync(password, user.password);
+      const passCompare = await bcrypt.compare(req.body.password, user.password);
       if (!passCompare) {
         return res
           .status(400)
           .json({ success, error: "Please use correct credentials" });
       }
       //creating a token for a particular user
-      const token=jwt.sign({_id:user._id},JWT)
+      const token = jwt.sign({ _id: user._id }, JWT);
+      const { _id, name, email } = user;
       //return that token
-      return res.json({token})
-      // return res.status(200).json({message:"Correct credentials"})
+      success=true
+      return res.json({success,token, user: { _id, name, email } })
+      // return res.status(200).json({ message: "Correct credentials" });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error Occured");
     }
   }
 );
-
 
 module.exports = router;
