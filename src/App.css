@@ -42,3 +42,13 @@ a{
 .item{
     width: 30%;
 }
+
+/*End of Profile page*/
+
+/* Home page*/
+
+.home-card{
+    max-width:500px;
+    height:max-content;
+    margin:26px auto;
+}
