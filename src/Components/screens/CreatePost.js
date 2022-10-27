@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import M from 'materialize-css'
 //Dialog box to create a new post
@@ -46,8 +46,6 @@ import M from 'materialize-css'
         })
         let json = await response.json();
         if(json){
-            setUrl(json.url);
-            console.log(`Bearer ${localStorage.getItem('token')}`);
             M.toast({html:"Success",classes:"#43a047 green darken-1"})
             navigate("/");
         }

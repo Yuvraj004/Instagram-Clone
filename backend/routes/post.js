@@ -8,12 +8,11 @@ const Post = require('../models/post')
 //Route- 1 to create a post ,path: post:api/post/createpost
 router.post('/createpost',requireLogin,(req,res)=>{
     const {title,body,pic} = req.body;
-    console.log(req.body);
     if(!title || !body || !pic){
         return res.status(402).json({error:"Plz add all the fields"})
     }
     const post = new Post({
-        title,body,pic,postedBy:"undefined"
+        title,body,photo:pic,postedBy:req.user
     })
 
     post.save().then(result=>{

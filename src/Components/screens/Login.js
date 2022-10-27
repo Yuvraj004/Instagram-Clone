@@ -19,7 +19,7 @@ const Login = () => {
             //save the token and redirect
             // props.showAlert("You are logged in","success");
           localStorage.setItem('token',json.token);
-          localStorage.setItem('user',JSON.stringify(json.user));
+          // localStorage.setItem('user',JSON.stringify(json.user));
           navigate("/profile");
         }
         else{
