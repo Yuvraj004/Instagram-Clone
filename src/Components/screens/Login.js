@@ -18,7 +18,8 @@ const Login = () => {
           M.toast({html:"GOTCHA",classes:"#43a047 green darken-3"});
             //save the token and redirect
             // props.showAlert("You are logged in","success");
-            // localStorage.setItem('token',json.authtoken);
+          localStorage.setItem('token',json.token);
+          localStorage.setItem('user',JSON.stringify(json.user));
           navigate("/profile");
         }
         else{

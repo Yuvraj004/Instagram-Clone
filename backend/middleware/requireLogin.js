@@ -12,13 +12,12 @@ const User = require("../models/User");
 
 
 module.exports =async (req,res,next)=>{
-    const {auth} =await req.headers.authorization
+    const auth =await req.headers.authorization
     //auth === Bearer ewedfanwoir
     if(!auth){res.status(401).json({error:"You must be auth logged in"})}
-    
     //destructuring the token
-    const token =auth.replace("Bearer ",'');
-
+    const token =auth.replace("Bearer ","");
+    console.log(token);
     //verifying the token
     jwt.verify(token,KEY,(err,payload)=>{
         if(err){

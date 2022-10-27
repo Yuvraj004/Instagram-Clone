@@ -9,11 +9,11 @@ const userSchema = new mongoose.Schema({
     },
     body:{
         type:String,
-        requied:true
+        required:true
     },
     photo:{
         type:String,
-        default:"no photo"
+        required:true
     },
     postedBy:{
         type: ObjectId,
