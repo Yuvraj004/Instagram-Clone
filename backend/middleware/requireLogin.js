@@ -1,22 +1,23 @@
 const jwt = require("jsonwebtoken");
 //taking out the jwt key
-require("dotenv").config({path:'backend/.env'});
-const JWT_KEY = ""+process.env.JWT_KEY;
+require("dotenv").config({ path: "backend/.env" });
+const JWT_KEY = "" + process.env.JWT_KEY;
 //accessing the user model
-const mongoose = require("mongoose")
 const User = require("../models/User");
 
-
 module.exports = async (req, res, next) => {
-    const auth = await req.headers.authorization
+    const auth = await req.headers.authorization;
     //auth === Bearer ewedfanwoir
-    if (!auth) { res.status(401).json({ error: "You must be auth logged in" }) }
+    if (!auth) {
+        return res.status(401).json({ error: "You must be auth logged in" });
+    }
     //destructuring the token
-    const token = auth.replace('Bearer ', '')
+    const token = (auth.replace("Bearer ", "")).toString();
     //verifying the token
     jwt.verify(token, JWT_KEY, (err,payload) => {
+
         if (err) {
-            return res.status(401).json({ error: "Yahin pr problem" });
+            return res.status(401).json({ error: err });
         }
         //finding the userdata using the id from above
         const { _id } = payload;
@@ -24,5 +25,5 @@ module.exports = async (req, res, next) => {
             req.user = userdata;
             next();
         });
-    })
+    });
 }

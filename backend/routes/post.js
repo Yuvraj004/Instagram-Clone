@@ -1,5 +1,4 @@
 const express =require('express');
-const mongoose =require('mongoose');
 const router = express.Router();
 const requireLogin =require('../middleware/requireLogin')
 const Post = require('../models/post')

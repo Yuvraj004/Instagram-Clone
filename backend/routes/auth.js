@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// const requiredLogin = require("../middleware/requireLogin");
+const requiredLogin = require("../middleware/requireLogin");
 
 //using and accessing important keys in env file
 require("dotenv").config();
@@ -13,6 +13,7 @@ const JWT = ""+process.env.JWT_KEY;
 
 //importing Router function in express
 const User = require("../models/User");
+const requireLogin = require("../middleware/requireLogin");
 router.get("/", (req, res) => {
   res.send("hello");
 });
@@ -95,5 +96,10 @@ router.post(
     }
   }
 );
+
+//Route-3 protected api for testing problem with requirelogin
+router.get('/protected',requiredLogin,(req,res)=>{
+  res.send("Hello user")
+})
 
 module.exports = router;
