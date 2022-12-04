@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import {  UserContext } from '../../App';
 import M from 'materialize-css'
 const Login = () => {
+  const {state,dispatch}=useContext(UserContext);
   let navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -19,8 +21,10 @@ const Login = () => {
             //save the token and redirect
             // props.showAlert("You are logged in","success");
           localStorage.setItem('token',json.token);
-          // localStorage.setItem('user',JSON.stringify(json.user));
+          localStorage.setItem('user',JSON.stringify(json.user));
+          dispatch(({type:"USER",payload:json.user}))
           navigate("/profile");
+          
         }
         else{
           M.toast({html:"Retry Please",classes:"#c62828 red darken-3"});
