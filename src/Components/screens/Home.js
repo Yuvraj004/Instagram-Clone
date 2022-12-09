@@ -1,56 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-const Home=()=> {
+const Home = () => {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    fetch('/allpost', {
+      headers: {
+        'authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then(res => {console.log(res.json())})
+      .then(result => {
+        console.log(typeof(result))
+        setData(result.posts)
+      })
+  }, [])
   return (
     <div className='home'>
-      <div className='card home-card'>
-        <h2>Ramesh</h2>
-        <div className="card-image">
-          <img src='https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8d2FsbHBhcGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60' alt='...'/>
-        </div>
-        <div className="card-content">
-          <i className="material-icons" style={{color:"red"}}>favorite</i>
-          <h6>Title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="Add a text"/>
-        </div>
-      </div>
-      <div className='card home-card'>
-        <h2>Ramesh</h2>
-        <div className="card-image">
-          <img src='https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8d2FsbHBhcGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60' alt='...'/>
-        </div>
-        <div className="card-content">
-          <i className="material-icons" style={{color:"red"}}>favorite</i>
-          <h6>Title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="Add a text"/>
-        </div>
-      </div>
-      <div className='card home-card'>
-        <h2>Ramesh</h2>
-        <div className="card-image">
-          <img src='https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8d2FsbHBhcGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60' alt='...'/>
-        </div>
-        <div className="card-content">
-          <i className="material-icons" style={{color:"red"}}>favorite</i>
-          <h6>Title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="Add a text"/>
-        </div>
-      </div>
-      <div className='card home-card'>
-        <h2>Ramesh</h2>
-        <div className="card-image">
-          <img src='https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8d2FsbHBhcGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60' alt='...'/>
-        </div>
-        <div className="card-content">
-          <i className="material-icons" style={{color:"red"}}>favorite</i>
-          <h6>Title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="Add a text"/>
-        </div>
-      </div>
+      {
+        data.map(item => {
+          return (
+            <div className='card home-card'>
+              <h2>{item.postedBy.name }</h2>
+              <div className="card-image">
+                <img src={item.photo} alt='...' />
+              </div>
+              <div className="card-content">
+                <i className="material-icons" style={{ color: "red" }}>favorite</i>
+                <h6>{item.title}</h6>
+                <p>{item.body}</p>
+                <input type="text" placeholder="Add a text" />
+              </div>
+            </div>
+          )
+        })
+      }
+
 
     </div>
   )

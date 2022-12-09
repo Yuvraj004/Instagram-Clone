@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {  UserContext } from '../../App';
 import M from 'materialize-css'
 const Login = () => {
-  const {state,dispatch}=useContext(UserContext);
+  const {dispatch}=useContext(UserContext);
   let navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")

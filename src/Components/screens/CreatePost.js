@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import M from 'materialize-css'
 //Dialog box to create a new post
@@ -10,28 +10,31 @@ const CreatePost = () => {
     let navigate = useNavigate();
 
 
-    // useEffect(() => {
-    //     if(localStorage.getItem('token')){
-    //       postDetails();
-    //     }
-    //     else{
-    //       navigate("/login")
-    //     }
-    //     //eslint-disable-next-line
-    //   }, []);
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            postDetails();
+        }
+        else {
+            navigate("/login")
+        }
+        //eslint-disable-next-line
+    }, []);
 
     const postDetails = async () => {
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "ig-clone")
         data.append("cloud_name", "ycloud")
-        const dataResponse =await fetch("http://api.cloudinary.com/v1_1/ycloud/image/upload",{method:"post",
-        body:data}).catch(err=>{console.log(err)})
-        const jsonData=await dataResponse.json();
-        if(jsonData){
+        const dataResponse = fetch("http://api.cloudinary.com/v1_1/ycloud/image/upload", {
+            method: "post",
+            body: data
+        }).catch(err => { console.log(err) })
+        const jsonData = await dataResponse;
+        if (jsonData) {
+            console.log(dataResponse.url)
             setUrl(jsonData.url)
         }
-        else{
+        else {
             console.log(jsonData.error)
         }
         let response = await fetch("http://localhost:5000/api/post/createpost", {
@@ -41,7 +44,7 @@ const CreatePost = () => {
                 'authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify({
-                title, body, pic: url
+                title, body, pic:url
             })
         })
         let json = await response.json();
@@ -58,7 +61,7 @@ const CreatePost = () => {
 
     return (
         <div className='card input-filed' style={{ margin: "10px auto", maxWidth: "500px", padding: "20px", textAlign: "center" }}>
-            <input type="text" placeholder='title' value={title} onChange={(e) =>  setTitle(e.target.value) } />
+            <input type="text" placeholder='title' value={title} onChange={(e) => setTitle(e.target.value)} />
             <input type="text" placeholder='body' value={body} onChange={(e) => { setBody(e.target.value) }} />
             <div className='file-field input-field'>
                 <div className="btn">
