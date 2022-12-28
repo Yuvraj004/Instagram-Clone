@@ -25,7 +25,9 @@ router.post('/createpost',requireLogin,(req,res)=>{
         return res.status(402).json({error:"Plz add all the fields"})
     }
     const post = new Post({
-        title,body,photo:pic,postedBy:req.user
+        title,
+        body,
+        photo:pic,postedBy:req.user
     })
 
     post.save().then(result=>{

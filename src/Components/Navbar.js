@@ -6,20 +6,20 @@ const Navbar=()=> {
   const renderList=()=>{
     if(state){
       return [
-        <li><Link key={0} to='/profile'>Profile</Link></li>,
-        <li><Link key={1} to='/create'>Create Post</Link></li>
+        <li key={0}><Link  to='/profile'>Profile</Link></li>,
+        <li key={1}><Link  to='/create'>Create Post</Link></li>
       ]
     }else{
       return [
-        <li><Link key={3} to='/login'>Login</Link></li>,
-        <li><Link key={4} to='/signup'>Signup</Link></li>
+        <li key={3}><Link  to='/login'>Login</Link></li>,
+        <li key={4}><Link  to='/signup'>Signup</Link></li>
       ]
     }
   }
   return (
     <nav>
         <div className='nav-wrapper white' >
-            <Link key={2} to={state?'/':'/login'} className='brand-logo'>Instagram</Link>
+            <Link to={state?'/':'/login'} className='brand-logo'>Instagram</Link>
             <ul id="nav-mobile" className='right'>
                 {renderList()}
 

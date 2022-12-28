@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
     postedBy:{
         type: ObjectId,
         ref:"User"
-    }
+    },
+
 })
 const Post = mongoose.model('Post',userSchema);
 // //createindexes to uniquely identify each email,repetitve email will not saved separately
