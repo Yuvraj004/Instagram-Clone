@@ -5,14 +5,16 @@ const Post = require('../models/Post')
 
 //Route-0 to get all posts of a person
 router.get('/allpost',requireLogin,(req,res)=>{
-    Post.find().populate("postedBy","_id name")
-    .then(posts=>{
-        res.json({posts})
-        console.log(posts)
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+    console.log(res.json());
+    // Post.find().populate("postedBy","_id name")
+    // .then(posts=>{
+    //     res.json({posts})
+    //     console.log(posts)
+    // })
+    // .catch(err=>{
+    //     console.log(err)
+    // })
+    return "routesok";
 })
 
 

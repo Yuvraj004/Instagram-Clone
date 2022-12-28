@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
+
+// Require the cloudinary library
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({ 
+  cloud_name: 'ycloud', 
+  api_key: '614353156711494', 
+  api_secret: '0695vvsfBs2PEWw77rCa2_TknTs' ,
+  secure: true
+});
+
 //Dialog box to create a new post
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -23,10 +34,11 @@ const CreatePost = () => {
     data.append("file", image);
     data.append("upload_preset", "ig-clone");
     data.append("cloud_name", "ycloud");
-    fetch("https://api.cloudinary.com/v1_1/ycloud/auto/upload", {
-      method: "post",
-      body: data,
-    })
+    cloudinary.v2.uploader.upload(data)
+    // await fetch("https://api.cloudinary.com/v1_1/ycloud/unsigned/upload", {
+    //   method: "post",
+    //   body: data,
+    // })
       .then((res) => res.json())
       .then((data) => {
         setUrl(data.url);

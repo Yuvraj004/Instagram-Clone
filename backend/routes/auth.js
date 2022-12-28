@@ -13,7 +13,6 @@ const JWT = ""+process.env.JWT_KEY;
 
 //importing Router function in express
 const User = require("../models/User");
-const requireLogin = require("../middleware/requireLogin");
 router.get("/", (req, res) => {
   res.send("hello");
 });

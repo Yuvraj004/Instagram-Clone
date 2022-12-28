@@ -1,13 +1,21 @@
 import React, { useState, useEffect,useCallback } from 'react'
-
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [data, setData] = useState([])
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
+  let navigate = useNavigate();
   useEffect(() => {
-    async function getAllPosts() {
-      await fetch('http://localhost:5000/api/post/allpost', {
+    if (localStorage.getItem("token")) {
+      getAllPosts();
+    } else {
+      navigate("/login");
+    }
+  }, [logResult]);
+
+  const getAllPosts = async ()=>{
+    await fetch('http://localhost:5000/routes/post/allpost', {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -15,9 +23,8 @@ const Home = () => {
         .then(result => {
           setData(result.posts)
         })
-    }
-    getAllPosts();
-  }, [logResult])
+  }
+
 
   return (
     <div className='home'>
