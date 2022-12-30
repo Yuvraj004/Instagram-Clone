@@ -18,7 +18,7 @@ const Routing =()=>{
     
     if(user){
       dispatch({type:"USER",payload:user})
-      history('/');
+      // history('/');
     }
     else{
       history('/signup');

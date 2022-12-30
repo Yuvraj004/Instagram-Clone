@@ -56,7 +56,7 @@ router.get('/viewpost',requireLogin,(req,res)=>{
 //Route-3 To find a post sgned by user
 router.get('/mypost',requireLogin,(req,res)=>{
     Post.find({postedBy:req.user._id})
-    .populate("PostedBy","_id name")
+    .populate("postedBy","_id name")
     .then(mypost=>{
         res.json({mypost})
     })

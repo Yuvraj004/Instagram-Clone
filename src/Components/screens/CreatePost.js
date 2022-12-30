@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
 
 // Require the cloudinary library
-// var cloudinary = require('cloudinary').v2;
-
+// const cloudinary = require('cloudinary').v2;
 // cloudinary.config({ 
 //   cloud_name: 'ycloud', 
 //   api_key: '614353156711494', 
 //   api_secret: '0695vvsfBs2PEWw77rCa2_TknTs' ,
-//   secure: true
 // });
+// cloudinary.v2.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
+//   { public_id: "olympic_flag" }, 
+//   function(error, result) {console.log(result); });
 // // Log the configuration
 // console.log(cloudinary.config());
 // const uploadImage = async (imagePath) => {
@@ -96,29 +97,19 @@ const CreatePost = () => {
     data.append("upload_preset", "ig-clone");//ig-clone
     data.append("cloud_name", "ycloud");//ycloud
     // await cloudinary.v2.uploader.upload(data)
-    await fetch("https://api.cloudinary.com/v1_1/ycloud/auto/upload", {
+    fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
       method: "post",
       body: data,
-      request:'no-cors'
     })
       .then((res) => res.json())
       .then((data) => {
         setUrl(data.url);
-        console.log(data);
+        console.log(data.url);
       })
       .catch((err) => {
         console.log(err);
       });
-      // try {
-      //   // Upload the image
-      //   const result = await cloudinary.v2.uploader.upload(data);
-      //   console.log(result);
-      //   setUrl(result.url);
-      //   return result.public_id;
-      // } catch (error) {
-      //   console.error(error);
-      // }
-    let response = await fetch("http://localhost:5000/routes/post/createpost", {
+    await fetch("http://localhost:5000/routes/post/createpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -130,17 +121,17 @@ const CreatePost = () => {
         pic: url,
       }),
     });
-    let json = await response.json();
-    if (json) {
-      M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-      navigate("/");
-    } else {
-      console.log(json.error);
-      M.toast({
-        html: "Something Went Wrong AF",
-        classes: "#c62828 red darken-1",
-      });
-    }
+    // let json =  response.json();
+    // if (json) {
+    //   M.toast({ html: "Success", classes: "#43a047 green darken-1" });
+    //   navigate("/");
+    // } else {
+    //   console.log(json.error);
+    //   M.toast({
+    //     html: "Something Went Wrong AF",
+    //     classes: "#c62828 red darken-1",
+    //   });
+    // }
   };
 
   return (

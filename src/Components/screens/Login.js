@@ -37,7 +37,7 @@ const Login = () => {
         <div className="card auth-card">
           <h2>Instagram</h2>
           <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="text" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => CheckData()}>Login
           </button>
           <h5>
