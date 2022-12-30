@@ -14,15 +14,21 @@ const Home = () => {
     }
   }, [logResult]);
 
-  const getAllPosts = async ()=>{
+  var getAllPosts = async ()=>{
     await fetch('http://localhost:5000/routes/post/allpost', {
         headers: {
-          'authorization': `Bearer ${localStorage.getItem('token')}`
+          "Content-Type": "application/json",
+          'authorization': `Bearer ${localStorage.getItem('token')}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials" : true ,
+          // "Cross-Origin Read Blocking":"*"
+          'Access-Control-Allow-Headers':'application/json',
         }
       }).then(res => res.json())
         .then(result => {
           setData(result.posts)
         })
+        .catch(err=>console.log(err))
   }
 
 
