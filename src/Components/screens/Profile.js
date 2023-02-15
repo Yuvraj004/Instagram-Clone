@@ -3,7 +3,7 @@ import React,{useEffect,useCallback,useState,useContext} from "react";
 import {UserContext} from "../../App";
 const Profile = () => {
   const [mypics,setPics]=useState([]);
-  const {state,dispatch}=useContext(UserContext);
+  const {state}=useContext(UserContext);
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
@@ -14,7 +14,7 @@ const Profile = () => {
       }
     }).then(res=>res.json())
     .then(result=>setPics(result.mypost))
-    // .catch(err=>console.log(err))
+    .catch(err=>console.log(err))
   }, [logResult])
   
   return (
@@ -37,12 +37,16 @@ const Profile = () => {
       <div className="gallery">
         {mypics.map(item=>{
           return(
-          <img
-            key={item._id}
-            className="item"
-            src= {item.photo}
-            alt={item.title}
-          />)
+          <div key={item._id} style={{"textAlign":"center"}}>
+            <p>{item.title}</p>
+            <img
+              key={item._id}
+              className="item"
+              src= {item.photo}
+              alt={item.title}
+            />
+            <p>{item.body}</p>
+          </div>)
           
         })}
       </div>

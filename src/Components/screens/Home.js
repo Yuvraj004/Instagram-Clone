@@ -21,7 +21,6 @@ const Home = () => {
           'authorization': `Bearer ${localStorage.getItem('token')}`,
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials" : true ,
-          // "Cross-Origin Read Blocking":"*"
           'Access-Control-Allow-Headers':'application/json',
         }
       }).then(res => res.json())
@@ -31,14 +30,21 @@ const Home = () => {
         .catch(err=>console.log(err))
   }
 
-
+  var i=0;
   return (
     <div className='home'>
       {
         data.map(item => {
+          i++;
+          console.log(item.postedBy);
+          let data2 = item.postedBy;
           return (
             <div className='card home-card'  key={item._id}>
-              <h2>{item.postedBy}</h2>
+              ;
+              <h2 key={item._id}>{data2.map((item2,name) => {
+                return ({name})
+              })
+              }</h2>
               <div className="card-image">
                 <img src={item.photo} alt='...' />
               </div>

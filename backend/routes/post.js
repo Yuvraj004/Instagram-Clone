@@ -1,10 +1,10 @@
 const express =require('express');
 const router = express.Router();
-const requireLogin =require('../middleware/requireLogin')
+const requiredLogin =require('../middleware/requireLogin')
 const Post = require('../models/Post')
 
 //Route-0 to get all posts of a person
-router.get('/allpost',requireLogin,(req,res)=>{
+router.get('/allpost',requiredLogin,(req,res)=>{
     // console.log(res.json());
     Post.find().populate("postedBy","_id name")
     .then(posts=>{
@@ -17,8 +17,8 @@ router.get('/allpost',requireLogin,(req,res)=>{
 })
 
 
-//Route- 1 to create a post ,path: post:api/post/createpost
-router.post('/createpost',requireLogin,(req,res)=>{
+//Route- 1 to create a post ,path: post:routes/post/createpost
+router.post('/createpost',requiredLogin,(req,res)=>{
     const {title,body,pic} = req.body;
     console.log(req.body);
     if(!title || !body || !pic){
@@ -42,7 +42,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 
 
 //Route- 2 to view all the posts ,path: post:api/post/viewpost
-router.get('/viewpost',requireLogin,(req,res)=>{
+router.get('/viewpost',requiredLogin,(req,res)=>{
     Post.find()
     .populate("postedBy","_id name")
     .then(posts=>{
@@ -54,7 +54,7 @@ router.get('/viewpost',requireLogin,(req,res)=>{
 })
 
 //Route-3 To find a post sgned by user
-router.get('/mypost',requireLogin,(req,res)=>{
+router.get('/mypost',requiredLogin,(req,res)=>{
     Post.find({postedBy:req.user._id})
     .populate("postedBy","_id name")
     .then(mypost=>{

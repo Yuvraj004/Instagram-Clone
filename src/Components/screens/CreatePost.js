@@ -97,7 +97,7 @@ const CreatePost = () => {
     data.append("upload_preset", "ig-clone");//ig-clone
     data.append("cloud_name", "ycloud");//ycloud
     // await cloudinary.v2.uploader.upload(data)
-    fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
+    await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
       method: "post",
       body: data,
     })
@@ -109,11 +109,11 @@ const CreatePost = () => {
       .catch((err) => {
         console.log(err);
       });
-    await fetch("http://localhost:5000/routes/post/createpost", {
+    let response =await fetch("http://localhost:5000/routes/post/createpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${localStorage.getItem("token")}`,
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({
         title,
@@ -121,17 +121,17 @@ const CreatePost = () => {
         pic: url,
       }),
     });
-    // let json =  response.json();
-    // if (json) {
-    //   M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-    //   navigate("/");
-    // } else {
-    //   console.log(json.error);
-    //   M.toast({
-    //     html: "Something Went Wrong AF",
-    //     classes: "#c62828 red darken-1",
-    //   });
-    // }
+    let json = await response.json();
+    if (json) {
+      M.toast({ html: "Success", classes: "#43a047 green darken-1" });
+      navigate("/");
+    } else {
+      console.log(json.error);
+      M.toast({
+        html: "Something Went Wrong AF",
+        classes: "#c62828 red darken-1",
+      });
+    }
   };
 
   return (
