@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [data, setData] = useState([])
-  const [data2,setData2]= useState({})
+  const [data2, setData2] = useState({})
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
@@ -30,31 +30,32 @@ const Home = () => {
       })
       .catch(err => console.log(err))
   }
+  var i = 0, num = 60;
+  const hex = num.toString(16);
   useEffect(() => {
-    if(!data.postedBy){
-      console.log("no data")
-      setData2({"_id":data._id,"name":"Anonymous"})
-    }
-    else{
-      console.log("data p")
-      setData2(data.postedBy)
-    }
+    data.map((item) => {
+      var obje = { "_id": item._id, "name": "ANONYMOUS" };
+      setData2(item.postedBy?item.postedBy:obje);
+    })
   }, [])
-  var i = 0;
+
+
+
   return (
     <div className='home'>
       {
-        data.map(item => {
+
+        data.map((item) => {
           i++;
           return (
-          <div className="card home-card" key={item._id}>;
+            <div className="card home-card" key={hex + i + num}>
               {/* {data2.map((item2,name) => {
                 return (<h2 key={item._id}>{name }</h2>)
                 })} */}
-              {Object.keys(item.postedBy).map((item2) => {
-                return (<h2 key={i}>{item.postedBy[item2].name}</h2>)
-              })}
-
+              {<h2 key={i}>{data2.name}</h2>}
+              {/* {Object.keys(data2).map((item2) => {
+                <h2 key={i}>{data2[item2].name}</h2>
+              })} */}
               <div className="card-image">
                 <img src={item.photo} alt='...' />
               </div>

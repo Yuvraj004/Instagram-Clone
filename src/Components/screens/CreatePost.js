@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
 
 // Require the cloudinary library
-// const cloudinary = require('cloudinary').v2;
+// const cloudinary = require('cloudinary');
 // cloudinary.config({ 
 //   cloud_name: 'ycloud', 
 //   api_key: '614353156711494', 
@@ -12,7 +12,8 @@ import M from "materialize-css";
 // cloudinary.v2.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
 //   { public_id: "olympic_flag" }, 
 //   function(error, result) {console.log(result); });
-// // Log the configuration
+// Log the configuration
+
 // console.log(cloudinary.config());
 // const uploadImage = async (imagePath) => {
 //   // Use the uploaded file's name as the asset's public ID and 
@@ -27,40 +28,11 @@ import M from "materialize-css";
 // };
 
 
-// Gets details of an uploaded image
-// const getAssetInfo = async (publicId) => {
-  
-//   // Return colors in the response
-//   const options = {
-//     colors: true,
-//   };
-  
-//   try {
-//       // Get details about the asset
-//       const result = await cloudinary.api.resource(publicId, options);
-//       console.log(result);
-//       return result.colors;
-//       } catch (error) {
-//       console.error(error);
-//   }
-// };
+// const createImageTag = (publicId) => {
 
-
-// const createImageTag = (publicId, ...colors) => {
-      
-//   // Set the effect color and background color
-//   const [effectColor, backgroundColor] = colors;
-  
 //   // Create an image tag with transformations applied to the src URL
-//   let imageTag = cloudinary.image(publicId, {
-//     transformation: [
-//       { gravity: 'faces', crop: 'thumb' },
-//       { radius: 'max' },
-//       { effect: 'outline:10', color: effectColor },
-//       { background: backgroundColor },
-//     ],
-//   });
-  
+//   let imageTag = cloudinary.image(publicId);
+
 //   return imageTag;
 // };
 
@@ -69,51 +41,45 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
+  var [url, setUrl] = useState("");
   let navigate = useNavigate();
 
-  useEffect( () => {
-    if (localStorage.getItem("token")) {
-      // const publicId = await uploadImage("./image.jpg");
-      
-      // // Get the colors in the image
-      // const colors = await getAssetInfo(publicId);
-      
-      // // Create an image tag, using two of the colors in a transformation
-      // const imageTag = await createImageTag(publicId, colors[0][0], colors[1][0]);
-      
-      // // Log the image tag to the console
-      // console.log(imageTag);
-      postDetails();
-    } else {
-      navigate("/login");
-    }
-    //eslint-disable-next-line
-  }, []);
+
+  // const publicId = await uploadImage(image);
+  // Create an image tag, using two of the colors in a transformation
+  // const imageTag = await createImageTag(publicId);
+  // // Log the image tag to the console
+  // console.log(imageTag);
+  // };
+  // await cloudinary.v2.uploader.upload(data)
 
   const postDetails = async () => {
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "ig-clone");//ig-clone
     data.append("cloud_name", "ycloud");//ycloud
-    // await cloudinary.v2.uploader.upload(data)
+
+    //uploading image to cloudinary
     await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
       method: "post",
       body: data,
     })
       .then((res) => res.json())
       .then((data) => {
-        setUrl(data.url);
-        console.log(data.url);
+        const newurl = data.url;
+        url = newurl;
+        console.log(url);
       })
       .catch((err) => {
         console.log(err);
       });
-    let response =await fetch("http://localhost:5000/routes/post/createpost", {
+    
+    //uploading data to database
+    let response = await fetch("http://localhost:5000/routes/post/createpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        'authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
         title,

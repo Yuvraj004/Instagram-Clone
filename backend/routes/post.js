@@ -20,7 +20,7 @@ router.get('/allpost',requiredLogin,(req,res)=>{
 //Route- 1 to create a post ,path: post:routes/post/createpost
 router.post('/createpost',requiredLogin,(req,res)=>{
     const {title,body,pic} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     if(!title || !body || !pic){
 
         return res.status(402).json({error:"Plz add all the fields"})
