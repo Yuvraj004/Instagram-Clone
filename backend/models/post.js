@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    postedBy:[{
+    postedBy:{
         type: ObjectId,
         ref: "User"
-    }]
+    }
 
 })
 const Post = mongoose.model('Post',userSchema);

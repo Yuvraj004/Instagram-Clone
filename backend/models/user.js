@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 })
 
 //creating a model for auth of user
-const User = mongoose.model('User',userSchema);
+const User = mongoose.model("User",userSchema);
 // //createindexes to uniquely identify each email,repetitve email will not saved separately
 // User.createIndexes();
 //exporting the model
