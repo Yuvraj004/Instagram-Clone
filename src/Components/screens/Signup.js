@@ -39,7 +39,7 @@ const Signup = () => {
           <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
           <h5>
-            <Link to="signin" >Already have an account </Link>
+            <Link to="/login" >Already have an account </Link>
           </h5>
         </div>
       </div>

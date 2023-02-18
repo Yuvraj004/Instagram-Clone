@@ -21,14 +21,17 @@ a{
 
 /* Profile page*/
 .profile{
-    max-width:550px;margin:0px auto
+    /* /* max-width:550px; */
+    margin:20px  ;
 }
 
 .p-section{
     display: flex;
     justify-content: space-around;
     margin: 18px 0px;
-    border-bottom: 1px solid grey
+    border-bottom: 1px solid grey;
+    width:100%;
+
 }
 .dp{
     width: 160px; height: 160px; border-radius: 80px ;
