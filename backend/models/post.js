@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         ref: "User",
     }],
     comments:[{
-        type:String,
+        text:{type:String},//js was considering the type string as the type of comment therefore we used the above structure instead of(type:String) only
         postedBy:{type:ObjectId,ref:"User"}
     }],
     postedBy: {

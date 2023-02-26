@@ -5,7 +5,9 @@ const Home = () => {
   const [data, setData] = useState([])
   // const [data2, setData2] = useState({})
   const { state, dispatch } = useContext(UserContext)
+  //eslint-disable-next-line
   var [color, setColor] = useState("black");
+
 
   const logResult = useCallback(() => {
     return 2 + 2;
@@ -20,6 +22,7 @@ const Home = () => {
   }, [logResult]);
 
   var getAllPosts = async () => {
+
     await fetch('http://localhost:5000/routes/post/allpost', {
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +34,7 @@ const Home = () => {
     }).then(res => res.json())
       .then(result => {
         setData(result.posts)
-        console.log(result);
+        // console.log(result);
 
       })
       .catch(err => console.log(err))
@@ -84,49 +87,49 @@ const Home = () => {
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch('http://localhost:5000/routes/post/comment', {
-      method: "put",
+    await fetch(`http://localhost:5000/routes/post/comment`, {
+      method: "post",
       headers: {
         "Content-Type": "application/json",
         "authorization": `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
-        postId: postId,
-        text: text
+        text:text,
+        postId:postId
       })
-    }).then(res => { res.json() })
+    }).then(res =>  res.json() )
       .then(result => {
         console.log(result);
         const newData = data.map(item => {
           if (item._id === result._id) { return result }
-          else {
-            return item
-          }
+          else { return item }
         })
         setData(newData);
-      }).catch(err => { console.log(err) })
+      })
+      .catch(err => { console.log(err) })
+
   }
+
 
   return (
     <div className='home'>
       {
         data.map((item) => {
-          { (item.likes.includes(state._id)) ? color = "red" : color = "black" }
+           (item.likes.includes(state._id)) ? color = "red" : color = "black" 
           i++;
           return (
             <div className="card home-card" key={hex + i + num}>
 
               {/* {data2.map((item2,name) => {
                   return (<h2 key={item._id}>{name }</h2>)
-                  })}
-                {<h2 key={i}>{data2.name}</h2>}
-                {Object.keys(item.postedBy).map((item2) => {
+                  })} */}
+              {/* {<h2 key={i}>{data2.name}</h2>} */}
+              {/* {Object.keys(item.postedBy).map((item2) => {
                   // <h2 key={i}>{item.postedBy[item2].name}</h2>;
                   na=item.postedBy[item2].name;
                   console.log(na)
                 })}
                 <h2 key={i}>{na}</h2> */}
-
               <div className="card-image">
                 <img src={item.photo} alt='...' />
               </div>
@@ -141,8 +144,10 @@ const Home = () => {
                 <p>{item.body}</p>
                 {
                   item.comments ? (item.comments.map(record => {
+                    // console.log(record.text);
+                    i++;
                     return (
-                      <h6 key={record.postedBy._id}><span style={{ fontWeight: "500" }}>{record.postedBy.name}&nbsp;</span>{record.text}</h6>
+                      <h6 key={item._id+record.postedBy._id+i}><span style={{ fontWeight: "500" }}>{record.postedBy.name}&nbsp;</span>{record.text}</h6>
                     )
                   })) : "No comments"
                 }

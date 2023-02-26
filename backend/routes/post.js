@@ -1,12 +1,12 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const requiredLogin = require('../middleware/requireLogin')
 const Post = require('../models/Post')
-
 //Route-0 to get all posts of a person
 router.get('/allpost', requiredLogin, (req, res) => {
     // console.log(res.json());
-    Post.find().populate("postedBy", "_id name")
+    Post.find().populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
         .then(posts => {
             res.json({ posts })
             // console.log(posts)
@@ -123,25 +123,35 @@ router.put('/unlike', requiredLogin, (req, res) => {
 })
 
 //Route-6 updating comments
-router.put('/comment', requiredLogin, (req, res) => {
+router.post('/comment',requiredLogin, async (req, res) => {
+    const id = req.body.postId;
+    const obj_postId = mongoose.Types.ObjectId(id)
     const comment = {
         text: req.body.text,
-        postedBy: req.user
+        postedBy: req.user._id
     }
-    Post.findByIdAndUpdate(req.body.postId, {
-        $push: { comments: comment }
-    }, {
-        new: true
-    }).populate("comments.postedBy", "_id name")
-        .exec((err, result) => {
-            if (err) {
-                return res.status(422).json({ error: err })
-            }
-            else {
-                try { res.json(result) }
-                catch { (err) => { console.log(err) } }
-            }
-        })
+    try {
+      // Check if the post exists
+    //   console.log(obj_postId);
+      const post = await Post.findById(obj_postId);
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+  
+      // Create a new comment
+    //   await comment.save();
+  
+      // Add the comment to the post's comments array
+      post.comments.push(comment);
+      await post.save();
+  
+      // Return the newly created comment object
+      return res.status(201).json(comment);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
 
-})
 module.exports = router
