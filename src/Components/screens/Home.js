@@ -94,14 +94,16 @@ const Home = () => {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
-        text:text,
-        postId:postId
+        text: text,
+        postId: postId
       })
-    }).then(res =>  res.json() )
+    }).then(res => res.json())
       .then(result => {
-        console.log(result);
+        // console.log(result._id);
         const newData = data.map(item => {
-          if (item._id === result._id) { return result }
+          if (item._id === result._id) {
+            return result
+          }
           else { return item }
         })
         setData(newData);
@@ -110,26 +112,31 @@ const Home = () => {
 
   }
 
+  const deletePost = (postId) => {
+    fetch(`http://localhost:5000/routes/post/deletepost/${postId}`, {
+      method: "delete",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then(res => res.json())
+      .then(result => {
+        const newData=data.filter(item=>{
 
+          return item._id!==result._id
+        })
+        setData(newData)
+      })
+  }
   return (
     <div className='home'>
       {
         data.map((item) => {
-           (item.likes.includes(state._id)) ? color = "red" : color = "black" 
+          (item.likes.includes(state._id)) ? color = "red" : color = "black"
           i++;
           return (
             <div className="card home-card" key={hex + i + num}>
-
-              {/* {data2.map((item2,name) => {
-                  return (<h2 key={item._id}>{name }</h2>)
-                  })} */}
-              {/* {<h2 key={i}>{data2.name}</h2>} */}
-              {/* {Object.keys(item.postedBy).map((item2) => {
-                  // <h2 key={i}>{item.postedBy[item2].name}</h2>;
-                  na=item.postedBy[item2].name;
-                  console.log(na)
-                })}
-                <h2 key={i}>{na}</h2> */}
+              <h5>{item.postedBy.name}{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right" }}
+              onClick={()=>deletePost(item._id)}>delete</i>}</h5>
               <div className="card-image">
                 <img src={item.photo} alt='...' />
               </div>
@@ -144,15 +151,14 @@ const Home = () => {
                 <p>{item.body}</p>
                 {
                   item.comments ? (item.comments.map(record => {
-                    // console.log(record.text);
                     i++;
                     return (
-                      <h6 key={item._id+record.postedBy._id+i}><span style={{ fontWeight: "500" }}>{record.postedBy.name}&nbsp;</span>{record.text}</h6>
+                      <h6 key={item._id + record.postedBy._id + i}><span style={{ fontWeight: "500" }}>{record.postedBy.name}&nbsp;</span>{record.text}</h6>
                     )
                   })) : "No comments"
                 }
                 <form onSubmit={(e) => { e.preventDefault(); makeComment(e.target[0].value, item._id) }}>
-                  <input type="text" placeholder="Add a comment" />
+                  <input type="text" placeholder="Add a comment" required />
                 </form>
 
               </div>

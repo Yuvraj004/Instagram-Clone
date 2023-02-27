@@ -143,15 +143,33 @@ router.post('/comment',requiredLogin, async (req, res) => {
   
       // Add the comment to the post's comments array
       post.comments.push(comment);
+      post.populate("comments postedBy", "_id name");
       await post.save();
   
       // Return the newly created comment object
-      return res.status(201).json(comment);
+      return res.status(201).json(post);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Server error' });
     }
   });
   
-
+//Route-7 deleting a post
+router.delete('/deletepost/:postId',requiredLogin,(req,res)=>{
+    Post.findOne({_id:req.params.postId})
+    .populate("postedBy","_id")
+    .exec((err,post)=>{
+        if(err|| !post){
+            return res.status(422).json({error:err})
+        }
+        if(post.postedBy._id.toString() === req.user._id.toString()){
+            post.remove()
+            .then(result=>{
+                res.json(result)
+            }).catch(err=>{
+                console.log(err)
+            })
+        }
+    })
+})
 module.exports = router
