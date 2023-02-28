@@ -1,57 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap");
 
-a{
-    color:black !important;
+a {
+  color: black !important;
 }
 
-.brand-logo,h2{
-    font-family: 'Grand Hotel',cursive;
+.brand-logo,
+h2 {
+  font-family: "Grand Hotel", cursive;
 }
 
-.mycard{
-    margin-top: 30px;
+.mycard {
+  margin-top: 30px;
 }
-.auth-card{
-    margin: auto;
-    
-    padding: 20px;
-    text-align: center;
-    max-width:400px;
+.auth-card {
+  margin: auto;
+
+  padding: 20px;
+  text-align: center;
+  max-width: 400px;
+}
+
+.button {
+  color: #fff;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #7a7676;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.button:active {
+  transform: translateY(2px);
+  background-color: #222;
 }
 
 /* Profile page*/
-.profile{
-    /* /* max-width:550px; */
-    margin:20px  ;
+.profile {
+  /* /* max-width:550px; */
+  margin: 20px;
 }
 
-.p-section{
-    display: flex;
-    justify-content: space-around;
-    margin: 18px 0px;
-    border-bottom: 1px solid grey;
-    width:100%;
+.p-section {
+  display: flex;
+  justify-content: space-around;
+  margin: 18px 0px;
+  border-bottom: 1px solid grey;
+  width: 100%;
+}
+.dp {
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
 
-}
-.dp{
-    width: 160px; height: 160px; border-radius: 80px ;
-}
-.gallery{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.item{
-    width: 30%;
+.item {
+  width: 30%;
 }
 
 /*End of Profile page*/
 
 /* Home page*/
 
-.home-card{
-    max-width:500px;
-    height:max-content;
-    margin:26px auto;
+.home-card {
+  max-width: 500px;
+  height: max-content;
+  margin: 26px auto;
 }
+/*End of Home page*/

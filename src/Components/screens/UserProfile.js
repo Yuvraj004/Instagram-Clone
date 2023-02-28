@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useCallback, useState,  } from "react";
-// import { UserContext } from "../../App";
+import React, { useEffect, useCallback, useState,useContext } from "react";
+import { UserContext } from "../../App";
 import { useParams } from 'react-router-dom'
 const Profile = () => {
   const [userProfile, setProfile] = useState(null);
-  // const { state } = useContext(UserContext);
+  const { state,dispatch } = useContext(UserContext);
   const { userid } = useParams()
   const logResult = useCallback(() => {
     return 2 + 2;
@@ -24,6 +24,23 @@ const Profile = () => {
       .catch(err => console.log(err))
   }, [logResult])
 
+  const followUser = () => {
+    fetch('http://localhost:5000/routes/userpr/follow', {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        followId: userid
+      })
+    }).then(res => { res.json() })
+      .then(result => {
+        console.log(result)
+        dispatch({type:"UPDATE",payload:{following:result.user.following,followers:result.user.following}})
+      })
+  }
+
   return (
     <>
       <div className="profile" >
@@ -39,8 +56,10 @@ const Profile = () => {
             <h4>{!userProfile ? "Loading.." : userProfile.user.email}</h4>
             <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
               <h5>{!userProfile ? "Loading.." : userProfile.posts.length} posts</h5>
-              <h5>1 followers</h5>
-              <h5>40 following</h5>
+              <h5>{!userProfile ? "Loading.." : userProfile.user.followers.length} followers</h5>
+              <h5>{!userProfile ? "Loading.." : userProfile.user.following.length} following</h5>
+              <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
+              </button>
             </div>
           </div>
         </div>
