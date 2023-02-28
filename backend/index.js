@@ -15,6 +15,7 @@ app.use(express.json())//express. json() is a method inbuilt in express to recog
 // app.use("/api/auth", require("./routes/auth"));
 app.use("/api/auth",require('./routes/auth'));
 app.use("/routes/post",require('./routes/post'));
+app.use("/routes/userpr",require('./routes/userpr'));
 
 
 // app.get("/", (req, res) => {//request and response on the home page

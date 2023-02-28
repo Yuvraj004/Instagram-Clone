@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../App';
+import {Link} from 'react-router-dom';
 const Home = () => {
   const [data, setData] = useState([])
   // const [data2, setData2] = useState({})
-  const { state, dispatch } = useContext(UserContext)
   //eslint-disable-next-line
+  const { state } = useContext(UserContext)
+
   var [color, setColor] = useState("black");
 
 
@@ -33,8 +35,9 @@ const Home = () => {
       }
     }).then(res => res.json())
       .then(result => {
+        console.log(result);
         setData(result.posts)
-        // console.log(result);
+        
 
       })
       .catch(err => console.log(err))
@@ -120,6 +123,7 @@ const Home = () => {
       }
     }).then(res => res.json())
       .then(result => {
+        // console.log(result)
         const newData=data.filter(item=>{
 
           return item._id!==result._id
@@ -135,7 +139,7 @@ const Home = () => {
           i++;
           return (
             <div className="card home-card" key={hex + i + num}>
-              <h5>{item.postedBy.name}{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right" }}
+              <h5><Link to={item.postedBy._id !== state._id?"/userprofile/"+item.postedBy._id:"/profile"}><b>{item.postedBy.name}</b></Link>{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right" }}
               onClick={()=>deletePost(item._id)}>delete</i>}</h5>
               <div className="card-image">
                 <img src={item.photo} alt='...' />
