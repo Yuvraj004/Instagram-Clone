@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import M from 'materialize-css'
@@ -33,18 +33,18 @@ const Login = () => {
 
   return (
     <>
-      <div className='mycard'>
-        <div className="card auth-card">
-          <h2>Instagram</h2>
-          <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
+      <div className='container'>
+        <div className="login-box">
+          <h2 className='loginh2'>Instagram</h2>
+          <input className='logininput' type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className='logininput' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
             if (e.key === "Enter") {
               CheckData()
             }}} />
-          <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => CheckData()}>Login
+          <button className=" buttonlog" type="submit" name="action" onClick={() => CheckData()}>Login
           </button>
           <h5>
-            <Link to="signup">Don't have an account </Link>
+            <Link to="signup" className="buttonlog">Don't have an account </Link>
           </h5>
         </div>
       </div>

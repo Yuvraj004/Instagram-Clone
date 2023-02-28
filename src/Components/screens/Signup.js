@@ -30,19 +30,19 @@ const Signup = () => {
 
   return (
     <>
-      <div className='mycard'>
-        <div className="card auth-card">
-          <h2>Instagram</h2>
-          <input type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
+      <div className='container'>
+        <div className="signup-box">
+          <h2 className='loginh2'>Instagram</h2>
+          <input  className='logininput' type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
+          <input className='logininput' type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className='logininput' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
             if (e.key === "Enter") {
               PostData()
             }}}/>
-          <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => PostData()}>Signup
+          <button className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
           <h5>
-            <Link to="/login" >Already have an account </Link>
+            <Link to="/login" className="buttonlog" >Already have an account </Link>
           </h5>
         </div>
       </div>

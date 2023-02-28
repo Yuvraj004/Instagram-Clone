@@ -14,16 +14,16 @@ const Navbar = () => {
       ]
     } else {
       return [
-        <li key={3}><Link to='/login' className='button'>Login</Link></li>,
-        <li key={4}><Link to='/signup' className='button'>Signup</Link></li>
+        <li key={3}><Link  to='/login' className='button' >Login</Link></li>,
+        <li key={4}><Link to='/signup' className='button' style={{marginLeft:"10px"}}>Signup</Link></li>
       ]
     }
   }
   return (
-    <nav style={{marginTop:"10px","height":"95px"}}>
-      <div className='nav-wrapper white' >
+    <nav className='navboxx' style={{marginTop:"10px","height":"95px"}}>
+      <div  >
         <Link to={state ? '/' : '/login'} className='brand-logo' style={{marginLeft:"30px",marginTop:"15px",fontSize:"50px"}}>Instagram</Link>
-        <ul id="nav-mobile" className='right' style={{ "marginRight": "10px" ,marginTop:"10px"}}>
+        <ul id="nav-mobile" className='right' style={{ "marginRight": "10px" ,marginTop:"10px",color:"white",display:"flex",justifyContent:"space-between"}}>
           {renderList()}
         </ul>
       </div>
