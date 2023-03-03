@@ -1,5 +1,5 @@
-require('/backend/models/Post')
-require('./models/User')
+require('./models/post')
+require('./models/user')
 const express = require('express');//importing express
 //importing connecttoMonog function from db.js
 const connectToMongo =require('./dbconnect');
