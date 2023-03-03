@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "backend/.env" });
 const JWT_KEY = "" + process.env.JWT_KEY;
 //accessing the user model
-const User = require("../models/User");
+const User = require("../models/user");
 
 module.exports = async (req, res, next) => {
     const auth = await req.headers.authorization;

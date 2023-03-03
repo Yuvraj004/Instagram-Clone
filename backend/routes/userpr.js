@@ -2,8 +2,8 @@ const express = require('express');
 // const mongoose = require('mongoose');
 const router = express.Router();
 const requiredLogin = require('../middleware/requireLogin')
-const Post = require('../models/Post')
-const User = require('../models/User')
+const Post = require('../models/post')
+const User = require('../models/user')
 
 //Route-1 to view the profile of other user
 router.get('/userprofile/:id',requiredLogin,(req,res)=>{

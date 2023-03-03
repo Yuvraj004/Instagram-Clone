@@ -12,7 +12,7 @@ require("dotenv").config();
 const JWT = ""+process.env.JWT_KEY;
 
 //importing Router function in express
-const User = require("../models/User");
+const User = require("../models/user");
 router.get("/",requiredLogin ,(req, res) => {
   res.send("hello");
 });
