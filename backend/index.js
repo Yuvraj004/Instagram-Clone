@@ -1,4 +1,4 @@
-require('./models/Post')
+require('/backend/models/Post')
 require('./models/User')
 const express = require('express');//importing express
 //importing connecttoMonog function from db.js
@@ -30,12 +30,3 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
   });
-// // Require the cloudinary library
-// const cloudinary = require('cloudinary').v2;
-
-// cloudinary.config({ 
-//   cloud_name: 'ycloud', 
-//   api_key: '614353156711494', 
-//   api_secret: '0695vvsfBs2PEWw77rCa2_TknTs' ,
-//   secure: true
-// });
