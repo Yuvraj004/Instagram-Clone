@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 //taking out the jwt key
-require("dotenv").config({ path: "backend/.env" });
+require("dotenv").config({ path: "../.env" });
 const JWT_KEY = "" + process.env.JWT_KEY;
 //accessing the user model
 const User = require("../models/user");

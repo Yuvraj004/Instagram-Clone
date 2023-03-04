@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useCallback, useState,useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from 'react-router-dom'

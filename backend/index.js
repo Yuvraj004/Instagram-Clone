@@ -5,7 +5,8 @@ const express = require('express');//importing express
 const connectToMongo =require('./dbconnect');
 connectToMongo();
 
-const app = express();const port = 5000;//defining the port of localhost for backend
+const app = express();
+const port = 5000;//defining the port of localhost for backend
 const cors = require('cors');
 app.use(cors({
   'origin': '*',
