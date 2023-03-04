@@ -6,7 +6,6 @@ const JWT_KEY = "" + process.env.JWT_KEY;
 const User = require("../models/user");
 module.exports = async (req, res, next) => {
     const auth = await req.headers.authorization;
-    console.log(auth);
     //auth === Bearer ewedfanwoir
     if (!auth) {
         return res.status(401).json({ error: "You must be auth logged in" });
