@@ -57,7 +57,7 @@ const Profile = () => {
               <h5>{!userProfile ? "Loading.." : userProfile.posts.length} posts</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.followers.length} followers</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.following.length} following</h5>
-              <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
+              <button className="btn waves-effect waves-light" type="submit" name="action"  onClick={() => followUser()}>Follow
               </button>
             </div>
           </div>

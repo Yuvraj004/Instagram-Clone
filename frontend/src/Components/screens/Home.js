@@ -139,7 +139,7 @@ const Home = () => {
           i++;
           return (
             <div className="card home-card" key={hex + i + num}>
-              <h5><Link to={item.postedBy._id !== state._id?"/userprofile/"+item.postedBy._id:"/profile"}><b>{item.postedBy.name}</b></Link>{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right" }}
+              <h5><Link to={item.postedBy._id !== state._id?"/userprofile/"+item.postedBy._id:"/profile"}><b>{item.postedBy.name}</b></Link>{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right",cursor:"pointer" }}
               onClick={()=>deletePost(item._id)}>delete</i>}</h5>
               <div className="card-image">
                 <img src={item.photo} alt='...' />

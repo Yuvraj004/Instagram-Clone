@@ -2,14 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import M from 'materialize-css';
-require("dotenv").config({ path: "./.env" });
 const Login = () => {
   const { dispatch } = useContext(UserContext);
   let navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const CheckData = async () => {
-    let response = await fetch(`${process.env.PORT}/api/auth/login`, {
+    let response = await fetch('http://localhost:5000/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
