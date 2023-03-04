@@ -4,12 +4,13 @@ const express = require('express');//importing express
 //importing connecttoMonog function from db.js
 const connectToMongo =require('./dbconnect');
 connectToMongo();
+require("dotenv").config({ path: "./.env" });
 
 const app = express();
-const port = 5000;//defining the port of localhost for backend
+const port = process.env.PORT || 5000;//defining the port of localhost for backend
 const cors = require('cors');
 app.use(cors({
-  'origin': '*',
+  origin: ['*',"https://www-ussinstaclone-com.onrender.com"],
 }));
 app.use(express.json())//express. json() is a method inbuilt in express to recognize the incoming Request Object as a JSON Object.
 
