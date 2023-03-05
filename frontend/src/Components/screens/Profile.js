@@ -17,7 +17,7 @@ const Profile = () => {
   }, [logResult])
   
   return (
-    <div className="profile" >
+    <div className="profile" style={{color:"white"}} >
       <div className="p-section" style={{"width":"100%"}}>
         <div>
           <img className="dp"
