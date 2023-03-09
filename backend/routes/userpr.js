@@ -29,7 +29,8 @@ router.put('/follow', requiredLogin, (req, res) => {
         $push: { followers: req.user._id }
     }, {
         new: true
-    }, ((err) => {
+    }, 
+    ((err, re) => {
         if (err) {
             return res.status(422).json({ error: err });
         }
@@ -44,7 +45,8 @@ router.put('/follow', requiredLogin, (req, res) => {
             .catch(err => {
                 return res.status(422).json({ error: err });
             });
-    }))
+    })
+    )
 })
 
 // Route-3 To unfollow some other user
@@ -53,7 +55,7 @@ router.put('/unfollow', (req, res) => {
         $pull: { followers: req.user._id }
     }, {
         new: true
-    }, ((err, result) => {
+    }, ((err) => {
         if (err) {
             return res.status(422).json({ error: err })
         }

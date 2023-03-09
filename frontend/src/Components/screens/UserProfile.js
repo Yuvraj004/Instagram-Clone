@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback, useState,useContext } from "react";
+import React, { useEffect, useCallback, useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from 'react-router-dom'
 const Profile = () => {
   const [userProfile, setProfile] = useState(null);
-  const { state,dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const { userid } = useParams()
   const logResult = useCallback(() => {
     return 2 + 2;
@@ -23,22 +23,63 @@ const Profile = () => {
       .catch(err => console.log(err))
   }, [logResult])
 
-  const followUser = () => {
+  const followUser =  () => {
     fetch('http://localhost:5000/routes/userpr/follow', {
-      method: "put",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "authorization": `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
-        followId: userid
+        followId: userid,
       })
-    }).then(res => { res.json() })
-      .then(result => {
-        console.log(result)
-        // dispatch({type:"USER",payload:{following:result.user.following,followers:result.user.following}})
+    })
+    .then(res =>  res.json())
+    .then((data) => {
+      // console.log(data);
+      // setProfile(result);
+      dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
+      localStorage.setItem("user", JSON.stringify(data))
+
+      setProfile((prevState) => {
+        return {
+          ...prevState,
+          user:{
+            ...prevState.user,
+            followers:[...prevState.user.followers,data.__id]
+          }
+        }
       })
+    })
   }
+  // const unfollowUser = async () => {
+  //   await fetch('http://localhost:5000/routes/userpr/unfollow', {
+  //     method: "put",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "authorization": `Bearer ${localStorage.getItem('token')}`
+  //     },
+  //     body: JSON.stringify({
+  //       followId: userid
+  //     })
+  //   }).then(res => { res.json() })
+  //     .then((data, err) => {
+  //       console.log(data);
+  //       // setProfile(result);
+  //       dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
+  //       localStorage.setItem("user", JSON.stringify(data))
+
+  //       setProfile((prevState) => {
+  //         return {
+  //           ...prevState,
+  //           user:{
+  //             ...prevState.user,
+  //             followers:[...prevState.user.followers,data.__id]
+  //           }
+  //         }
+  //       })
+  //     })
+  // }
 
   return (
     <>
@@ -49,7 +90,7 @@ const Profile = () => {
               src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
             />
           </div>
-          <div style={{color:"white"}}>
+          <div style={{ color: "white" }}>
             {!userProfile ? "Loading..!" : ""}
             <h4>{!userProfile ? "Loading.." : userProfile.user.name}</h4>
             <h4 >{!userProfile ? "Loading.." : userProfile.user.email}</h4>
@@ -57,7 +98,7 @@ const Profile = () => {
               <h5>{!userProfile ? "Loading.." : userProfile.posts.length} posts</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.followers.length} followers</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.following.length} following</h5>
-              <button className="btn waves-effect waves-light" type="submit" name="action"  onClick={() => followUser()}>Follow
+              <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
               </button>
             </div>
           </div>
