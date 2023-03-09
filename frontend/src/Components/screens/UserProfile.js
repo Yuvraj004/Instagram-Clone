@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 const Profile = () => {
   const [userProfile, setProfile] = useState(null);
   const { state, dispatch } = useContext(UserContext);
+  const [showfollow, setShowFollow] = useState(true)
   const { userid } = useParams()
   const logResult = useCallback(() => {
     return 2 + 2;
@@ -23,7 +24,7 @@ const Profile = () => {
       .catch(err => console.log(err))
   }, [logResult])
 
-  const followUser =  () => {
+  const followUser = () => {
     fetch('http://localhost:5000/routes/userpr/follow', {
       method: "PUT",
       headers: {
@@ -34,52 +35,55 @@ const Profile = () => {
         followId: userid,
       })
     })
-    .then(res =>  res.json())
-    .then((data) => {
-      // console.log(data);
-      // setProfile(result);
-      dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
-      localStorage.setItem("user", JSON.stringify(data))
+      .then(res => res.json())
+      .then((data) => {
+        // console.log(data);
+        // setProfile(result);
+        dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
+        localStorage.setItem("user", JSON.stringify(data))
 
-      setProfile((prevState) => {
-        return {
-          ...prevState,
-          user:{
-            ...prevState.user,
-            followers:[...prevState.user.followers,data.__id]
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: [...prevState.user.followers, data._id]
+            }
           }
-        }
+        })
+        setShowFollow(false);
+      })
+  }
+  const unfollowUser = () => {
+    fetch('http://localhost:5000/routes/userpr/unfollow', {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        unfollowId: userid
       })
     })
-  }
-  // const unfollowUser = async () => {
-  //   await fetch('http://localhost:5000/routes/userpr/unfollow', {
-  //     method: "put",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "authorization": `Bearer ${localStorage.getItem('token')}`
-  //     },
-  //     body: JSON.stringify({
-  //       followId: userid
-  //     })
-  //   }).then(res => { res.json() })
-  //     .then((data, err) => {
-  //       console.log(data);
-  //       // setProfile(result);
-  //       dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
-  //       localStorage.setItem("user", JSON.stringify(data))
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data);
+        dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
+        localStorage.setItem("user", JSON.stringify(data))
 
-  //       setProfile((prevState) => {
-  //         return {
-  //           ...prevState,
-  //           user:{
-  //             ...prevState.user,
-  //             followers:[...prevState.user.followers,data.__id]
-  //           }
-  //         }
-  //       })
-  //     })
-  // }
+        setProfile((prevState) => {
+          const newFollower = prevState.user.followers.filter(item => item !== data._id)
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: newFollower
+            }
+          }
+        })
+        setShowFollow(true);
+      })
+  }
 
   return (
     <>
@@ -98,8 +102,9 @@ const Profile = () => {
               <h5>{!userProfile ? "Loading.." : userProfile.posts.length} posts</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.followers.length} followers</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.following.length} following</h5>
-              <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
-              </button>
+              {showfollow ? <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
+              </button> : <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => unfollowUser()}>Unfollow
+              </button>}
             </div>
           </div>
         </div>

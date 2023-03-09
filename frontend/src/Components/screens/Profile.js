@@ -12,7 +12,7 @@ const Profile = () => {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
     }).then(res => res.json())
-      .then(result => { console.log(result); setPics(result.mypost) })
+      .then(result => { setPics(result.mypost) })
       .catch(err => console.log(err))
   }, [logResult])
 
@@ -24,34 +24,34 @@ const Profile = () => {
             src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
           />
         </div>
-      
-      {mypics.map(item => {
-        return (
-          <div>
-            <h4>{state ? state.name : "loading"}</h4>
-            <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
-              <h5>40 posts</h5>
-              <h5>40 followers</h5>
-              <h5>{!item.following ? "{Loading..}" :item.following.length} following</h5>
-            </div>
-            <div className="gallery" style={{ "display": "flex" }}>
+        <div>
+          <h4>{state ? state.name : "loading"}</h4>
+          <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
+            <h5>{mypics.length} posts</h5>
+            <h5>{state ? state.followers.length : "0"} followers</h5>
+            <h5>{state ? state.following.length : "0"} following</h5>
+          </div>
+        </div>
+      </div>
+      <div className="gallery" style={{ "display": "flex" }}>
+        {mypics.map(item => {
+          return (
+            <>
               <h2>Your Posts</h2>
               <div style={{ "display": "grid", "columnCount": 2, "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
                 <div key={item._id} style={{ "display": "flex" }}>
                   {/* <p>{item.title}</p> */}
                   <img
-                    key={item._id} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title}
-                  />
+                    key={item._id} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title} />
                   {/* <p>{item.body}</p> */}
                 </div>
               </div>
-            </div>
-          </div>
+            </>
           )
-      })}
+        })}
       </div>
     </div>
-      );
+  );
 };
 
-      export default Profile;
+export default Profile;

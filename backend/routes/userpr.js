@@ -29,44 +29,48 @@ router.put('/follow', requiredLogin, (req, res) => {
         $push: { followers: req.user._id }
     }, {
         new: true
-    }, 
-    ((err, re) => {
-        if (err) {
-            return res.status(422).json({ error: err });
-        }
-        User.findByIdAndUpdate(req.user._id, {
-            $push: { following: req.body.followId }
-        }, { new: true })
-            .select("-password")
-            .then(result => {
-                res.json(result);
-                // console.log(result);
-            })
-            .catch(err => {
+    },
+        ((err, re) => {
+            if (err) {
                 return res.status(422).json({ error: err });
-            });
-    })
+            }
+            User.findByIdAndUpdate(req.user._id, {
+                $push: { following: req.body.followId }
+            }, { new: true })
+                .select("-password")
+                .then(result => {
+                    res.json(result);
+                    // console.log(result);
+                })
+                .catch(err => {
+                    return res.status(422).json({ error: err });
+                });
+        })
     )
 })
 
 // Route-3 To unfollow some other user
-router.put('/unfollow', (req, res) => {
+router.put('/unfollow', requiredLogin, (req, res) => {
     User.findByIdAndUpdate(req.body.unfollowId, {
         $pull: { followers: req.user._id }
     }, {
         new: true
-    }, ((err) => {
-        if (err) {
-            return res.status(422).json({ error: err })
-        }
-        User.findByIdAndUpdate(req.user._id, {
-            $pull: { following: req.body.followId }
-        }, { new: true }).then(result => {
-            res.json(result)
-        }).catch(err => {
-            return res.status(422).json({ error: err })
-        })
-    }))
+    },
+        ((err) => {
+            if (err) {
+                return res.status(422).json({ error: err })
+            }
+            User.findByIdAndUpdate(req.user._id, {
+                $pull: { following: req.body.unfollowId }
+            }, { new: true })
+                .select("-password")
+                .then(result => {
+                    res.json(result)
+                })
+                .catch(err => {
+                    return res.status(422).json({ error: err })
+                })
+        }))
 })
 
 
