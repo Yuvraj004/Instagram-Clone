@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom'
 const Profile = () => {
   const [userProfile, setProfile] = useState(null);
   const { state, dispatch } = useContext(UserContext);
-  const [showfollow, setShowFollow] = useState(true)
   const { userid } = useParams()
+  const [showfollow, setShowFollow] = useState(state? !state.following.includes(userid):true)
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
@@ -103,7 +103,7 @@ const Profile = () => {
               <h5>{!userProfile ? "Loading.." : userProfile.user.followers.length} followers</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.following.length} following</h5>
               {showfollow ? <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
-              </button> : <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => unfollowUser()}>Unfollow
+              </button> : <button className="btn waves-effect waves-light" type="submit" style={{backgroundColor:"grey"}} name="action" onClick={() => unfollowUser()}>following
               </button>}
             </div>
           </div>
