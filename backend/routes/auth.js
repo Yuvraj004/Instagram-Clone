@@ -84,10 +84,10 @@ router.post(
       }
       //creating a token for a particular user
       const token = jwt.sign({ _id: user._id }, JWT);
-      const { _id, name, email } = user;
+      const { _id, name, email,followers,following } = user;
       //return that token
       success=true
-      return res.json({success,token, user: { _id, name, email } })
+      return res.json({success,token, user: { _id, name, email,followers,following } })
       // return res.status(200).json({ message: "Correct credentials" });
     } catch (error) {
       console.error(error.message);

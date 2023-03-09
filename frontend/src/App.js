@@ -7,6 +7,7 @@ import Profile from './Components/screens/Profile';
 import Signup from './Components/screens/Signup';
 import CreatePost from './Components/screens/CreatePost';
 import UserProfile from './Components/screens/UserProfile';
+import FollowedUser from './Components/screens/FollowedUser';
 import './App.css';
 import {reducer,initialState} from './reducers/userReducer';
 export const UserContext=createContext()
@@ -33,6 +34,7 @@ const Routing =()=>{
       <Route path='/signup' element={<Signup  />}></Route>
       <Route path='/create' element={<CreatePost />}></Route>
       <Route path='/userprofile/:userid' element={<UserProfile />}></Route>
+      <Route path='/followeduser' element={<FollowedUser />}></Route>
     </Routes>
   )
 }

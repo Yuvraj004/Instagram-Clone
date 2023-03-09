@@ -175,20 +175,18 @@ router.delete('/deletepost/:postId',requiredLogin,(req,res)=>{
     })
 })
 
-router.get('/userprofile/:id',requiredLogin,(req,res)=>{
-    User.findOne({_id:req.params.id})
-    .select("-password")//so that we do not send the password to server side
-    .then(user=>{
-        Post.find({postedBy:req.params.id})
-        .populate("postedBy","_id name")
-        .exec((err,posts)=>{
-            if(err){
-                return res.status(422).json({error:err})
-            }
-            res.json({user,posts})
+//Route-8 accessing other user's profile from followers
+router.get('/followerpost', requiredLogin, (req, res) => {
+    // console.log(res.json());
+    Post.find({postedBy:{$in:req.user.following}})
+    .populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
+        .then(posts => {
+            res.json({ posts })
+            // console.log(posts)
         })
-    }).catch(err=>{
-        return res.status(404).json({error:"User not found"})
-    })
+        .catch(err => {
+            console.log(err)
+        })
 })
+
 module.exports = router
