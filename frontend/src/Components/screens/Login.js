@@ -34,7 +34,7 @@ const Login = () => {
   return (
     <>
       <div className='container'>
-        <div className="login-box">
+        <div className="login-box shadow">
           <h2 className='loginh2'>Instagram</h2>
           <input className='logininput' type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input className='logininput' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
