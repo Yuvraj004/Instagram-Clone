@@ -2,40 +2,6 @@ import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
 
-// Require the cloudinary library
-// const cloudinary = require('cloudinary');
-// cloudinary.config({ 
-//   cloud_name: 'ycloud', 
-//   api_key: '614353156711494', 
-//   api_secret: '0695vvsfBs2PEWw77rCa2_TknTs' ,
-// });
-// cloudinary.v2.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-//   { public_id: "olympic_flag" }, 
-//   function(error, result) {console.log(result); });
-// Log the configuration
-
-// console.log(cloudinary.config());
-// const uploadImage = async (imagePath) => {
-//   // Use the uploaded file's name as the asset's public ID and 
-//   try {
-//     // Upload the image
-//     const result = await cloudinary.v2.uploader.upload(imagePath);
-//     console.log(result);
-//     return result.public_id;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-
-// const createImageTag = (publicId) => {
-
-//   // Create an image tag with transformations applied to the src URL
-//   let imageTag = cloudinary.image(publicId);
-
-//   return imageTag;
-// };
-
 //Dialog box to create a new post
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -43,15 +9,6 @@ const CreatePost = () => {
   const [image, setImage] = useState("");
   var [url, setUrl] = useState("");
   let navigate = useNavigate();
-
-
-  // const publicId = await uploadImage(image);
-  // Create an image tag, using two of the colors in a transformation
-  // const imageTag = await createImageTag(publicId);
-  // // Log the image tag to the console
-  // console.log(imageTag);
-  // };
-  // await cloudinary.v2.uploader.upload(data)
 
   const postDetails = async () => {
     const data = new FormData();

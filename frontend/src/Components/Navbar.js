@@ -10,7 +10,7 @@ const Navbar = () => {
         <li key={0}><Link className="btn waves-effect waves-light" to='/profile'>Profile</Link></li>,
         <li key={1}><Link className="btn waves-effect waves-light" to='/create'>Create Post</Link></li>,
         <li key={1}><Link className="btn waves-effect waves-light" to='/followeduser'>Posts of people i follow</Link></li>,
-        <li key={2}><button className="btn waves-effect waves-light" onClick={() => { localStorage.clear(); dispatch({ type: 'CLEAR' }); navigate("/login") }}>Logout
+        <li key={2}><button className="btn waves-effect waves-light" onClick={() => { dispatch({ type: "CLEAR" });localStorage.clear(); navigate("/login") }}>Logout
         </button></li>
       ]
     } else {

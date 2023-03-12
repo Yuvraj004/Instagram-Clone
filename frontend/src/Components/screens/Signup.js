@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css'
 
@@ -7,8 +7,12 @@ const Signup = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [image, setImage] = useState("")
-  const [url, setUrl] = useState("")
-
+  const [url, setUrl] = useState(undefined)
+  useEffect(() => {
+    if (url) {
+      uploadFields();
+    }
+  }, [url])
   const uploadPfp = async () => {
     const data = new FormData();
     data.append("file", image);
@@ -22,38 +26,19 @@ const Signup = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const newurl = data.url;
-        url = newurl;
-        console.log(url);
+        let newurl = data.url;
+        setUrl(newurl);
+        url =newurl;
+        M.toast({ html: "Success", classes: "#43a047 green darken-1" });
+        // navigate("/");
       })
       .catch((err) => {
+        M.toast({
+          html: "Something Went Wrong AF",
+          classes: "#c62828 red darken-1",
+        });
         console.log(err);
       });
-
-    //uploading data to database
-    let response = await fetch("http://localhost:5000/routes/post/createpost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({
-        title,
-        body,
-        pic: url,
-      }),
-    });
-    let json = await response.json();
-    if (json) {
-      M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-      navigate("/");
-    } else {
-      console.log(json.error);
-      M.toast({
-        html: "Something Went Wrong AF",
-        classes: "#c62828 red darken-1",
-      });
-    }
   };
   const uploadFields = async () => {
     await fetch("http://localhost:5000/api/auth/signup", {
@@ -61,7 +46,7 @@ const Signup = () => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ name: name, email: email, password: password })
+      body: JSON.stringify({ name: name, email: email, password: password, pic: url })
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
@@ -108,7 +93,7 @@ const Signup = () => {
               />
             </div>
             <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" />
+              <input className="file-path validate" type="text" style={{ "color": "white" }} />
             </div>
           </div>
           <button className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup

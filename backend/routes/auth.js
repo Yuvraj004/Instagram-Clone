@@ -19,7 +19,7 @@ router.get("/",requiredLogin ,(req, res) => {
 
 //ROUTE-1 create a User using : POST "/api/auth/signup". Doesn't require auth
 router.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password,pic } = req.body;
   // if(!email || !pass){
   //     res.status(201).json({error:"Please add all fields"})
   // }
@@ -38,6 +38,7 @@ router.post("/signup", async (req, res) => {
             name,
             email,
             password: hp,
+            pic
           });
           user
             .save()
@@ -84,10 +85,10 @@ router.post(
       }
       //creating a token for a particular user
       const token = jwt.sign({ _id: user._id }, JWT);
-      const { _id, name, email,followers,following } = user;
+      const { _id, name, email,followers,following,pic } = user;
       //return that token
       success=true
-      return res.json({success,token, user: { _id, name, email,followers,following } })
+      return res.json({success,token, user: { _id, name, email,followers,following,pic } })
       // return res.status(200).json({ message: "Correct credentials" });
     } catch (error) {
       console.error(error.message);

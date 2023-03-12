@@ -6,6 +6,7 @@ export const reducer = (state,action)=>{
         return action.payload
     }
     if(action.type==="CLEAR"){
+        state=null;
         return null
     }
     if(action.type==="UPDATE"){
