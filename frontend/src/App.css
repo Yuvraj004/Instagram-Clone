@@ -33,24 +33,25 @@ h2 {
 }
 
 .button {
-  color: #876262;
+  color: #ffffff;
   display: inline-block;
   padding: 10px 20px;
-  background-color: #a789ee;
+  background-color: #764ade;
   border-radius: 30px;
   border: none;
   font-size: 16px;
   cursor: pointer;
+  margin-bottom: 1.625rem;
   transition: background-color 0.3s ease-in-out;
 }
 
 .button:hover {
-  background-color: #2326d5;
+  background-color: #4b2a67;
 }
 
 .button:active {
   transform: translateY(2px);
-  background-color: #050551;
+  background-color: #4b2a67;
 }
 
 /* Profile page*/
@@ -65,6 +66,18 @@ h2 {
   margin: 18px 0px;
   border-bottom: 1px solid grey;
   width: 100%;
+  align-items:self-start;
+}
+.box2{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/* update pic button */
+.probtn {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
 }
 .dp {
   width: 160px;
@@ -382,11 +395,7 @@ h2 {
   width: 60%;
   box-shadow: solid 0 0 40px #3e3e3e;
   /* background: #15202B; */
-  border-radius:30% 70% 52% 48% / 65% 29% 71% 35% ;
-  border-left:5px solid rgba(255,0,0,0.7);
-  border-top:7px solid yellow;
-  border-right:7px solid green;
-  border-bottom:7px solid blue;
+  transition: 5s;
 }
 .shadow::before,
 .shadow::after {
@@ -398,6 +407,7 @@ h2 {
   width: calc(100% + 4px);
   height: calc(100% + 4px);
   z-index: -1;
+
   animation: animate 5s linear infinite;
 }
 

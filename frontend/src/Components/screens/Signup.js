@@ -96,7 +96,7 @@ const Signup = () => {
               <input className="file-path validate" type="text" style={{ "color": "white" }} />
             </div>
           </div>
-          <button className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
+          <button style={{marginBottom:"1.625rem"}} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
           <h5>
             <Link to="/login" className="buttonlog" >Already have an account </Link>
