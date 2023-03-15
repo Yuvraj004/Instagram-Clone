@@ -25,7 +25,7 @@ const Home = () => {
 
   var getAllPosts = async () => {
 
-    await fetch('http://localhost:5000/routes/post/allpost', {
+    await fetch('http://localhost:5000/allpost', {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -46,7 +46,7 @@ const Home = () => {
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch('http://localhost:5000/routes/post/like', {
+    await fetch('http://localhost:5000/like', {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Home = () => {
       }).catch(err => { console.log(err) })
   }
   const unlikePost = async (id) => {
-    await fetch('http://localhost:5000/routes/post/unlike', {
+    await fetch('http://localhost:5000/unlike', {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const Home = () => {
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`http://localhost:5000/routes/post/comment`, {
+    await fetch(`http://localhost:5000/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ const Home = () => {
   }
 
   const deletePost = (postId) => {
-    fetch(`http://localhost:5000/routes/post/deletepost/${postId}`, {
+    fetch(`http://localhost:5000/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`

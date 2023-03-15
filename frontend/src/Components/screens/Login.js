@@ -8,7 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const CheckData = async () => {
-    let response = await fetch('http://localhost:5000/api/auth/login', {
+    let response = await fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -4,12 +4,12 @@ const Profile = () => {
   const [mypics, setPics] = useState([]);
   const { state,dispatch } = useContext(UserContext);
   const [image, setImage] = useState("")
-  const [url, setUrl] = useState(undefined)
+  // const [url, setUrl] = useState(undefined)
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch('http://localhost:5000/routes/post/mypost', {
+    fetch('http://localhost:5000/mypost', {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -31,13 +31,25 @@ const Profile = () => {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
-            let newurl = data.url;
-            setUrl(newurl);
-            M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-            localStorage.setItem("user",JSON.stringify({...state,pic:data.url}))
-            dispatch({type:"UPDATEPIC",payload:data.url})
-            // navigate("/");
+            
+            fetch('http://localhost:5000/updatepic',{
+              method:"PUT",
+              headers:{
+                "Content-Type":"application/json",
+                "Authorization":`Bearer ${localStorage.getItem('token')}`
+              },
+              body:JSON.stringify({
+                pic:data.url
+              })
+            }).then(res=>res.json())
+            .then(result=>{
+              // console.log(result)
+              M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
+              localStorage.setItem("user",JSON.stringify({...state,pic:result.pic}))
+              dispatch({type:"UPDATEPIC",payload:result.pic})
+              // window.location.reload();
+
+            })
         })
         .catch((err) => {
             M.toast({
@@ -80,11 +92,11 @@ const Profile = () => {
         </div>
       </div>
       <div className="gallery" style={{ "display": "flex" }}>
-        {mypics.map(item => {
+        {(mypics.length==0)?"NO POSTS YET ":mypics.map(item => {
           return (
             <>
               <h2>Your Posts</h2>
-              <div style={{ "display": "grid", "columnCount": 2, "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
+              <div style={{ "display": "grid", "columnCount": 3,"rowCount":"3", "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
                 <div key={item._id} style={{ "display": "flex" }}>
                   {/* <p>{item.title}</p> */}
                   <img

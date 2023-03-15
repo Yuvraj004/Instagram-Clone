@@ -2,6 +2,7 @@
   "name": "ig",
   "version": "0.1.0",
   "private": true,
+  "proxy":"http://localhost:5000",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -27,6 +28,7 @@
     "react-scripts": "^5.0.1",
     "react-usestateref": "^1.0.8",
     "url": "^0.11.0"
+    
   },
   "scripts": {
     "start": "react-scripts start",

@@ -32,7 +32,7 @@ const CreatePost = () => {
       });
     
     //uploading data to database
-    let response = await fetch("http://localhost:5000/routes/post/createpost", {
+    let response = await fetch("http://localhost:5000/createpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
 var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -20,9 +20,9 @@ router.get("/",requiredLogin ,(req, res) => {
 //ROUTE-1 create a User using : POST "/api/auth/signup". Doesn't require auth
 router.post("/signup", async (req, res) => {
   const { name, email, password,pic } = req.body;
-  // if(!email || !pass){
-  //     res.status(201).json({error:"Please add all fields"})
-  // }
+  if(!email || !password){
+      res.status(201).json({error:"Please add all fields"})
+  }
   // console.log(res.body.name);
   await User.findOne({ email: email })
     .then((savedUser) => {
@@ -44,6 +44,7 @@ router.post("/signup", async (req, res) => {
             .save()
             .then((user) => {
               res.json({ message: "User Saved Succesfully" });
+              // alert("User succesfully Saved");
             })
             .catch((err) => {
               console.error("Not saved Error", err.message);
@@ -67,18 +68,21 @@ router.post(
     //if there are errors,returning bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      // console.log("Error in validation")
       return res.status(400).json({ errors: errors.array() });
     }
 
     try {
       let user = await User.findOne({ email: req.body.email });
       if (!user) {
+        // console.log("Error in userfinding")
         return res
           .status(400)
           .json({ error: "Please use correct credentials" });
       }
       const passCompare = await bcrypt.compare(req.body.password, user.password);
       if (!passCompare) {
+        // console.log("Error in passcomparision")
         return res
           .status(400)
           .json({ success, error: "Please use correct credentials" });
