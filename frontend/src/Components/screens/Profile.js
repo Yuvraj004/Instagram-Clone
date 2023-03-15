@@ -9,7 +9,7 @@ const Profile = () => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch('http://localhost:5000/mypost', {
+    fetch('/mypost', {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -32,7 +32,7 @@ const Profile = () => {
         .then((res) => res.json())
         .then((data) => {
             
-            fetch('http://localhost:5000/updatepic',{
+            fetch('/updatepic',{
               method:"PUT",
               headers:{
                 "Content-Type":"application/json",

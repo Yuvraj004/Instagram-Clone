@@ -41,7 +41,7 @@ const Signup = () => {
       });
   };
   const uploadFields = async () => {
-    await fetch("http://localhost:5000/signup", {
+    await fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

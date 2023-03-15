@@ -10,7 +10,7 @@ const Profile = () => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch(`http://localhost:5000/userprofile/${userid}`, {
+    fetch(`/userprofile/${userid}`, {
       method: "get",
       headers: {
         "content-type": "application/json",
@@ -25,7 +25,7 @@ const Profile = () => {
   }, [logResult])
 
   const followUser = () => {
-    fetch('http://localhost:5000/follow', {
+    fetch('/follow', {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const Profile = () => {
       })
   }
   const unfollowUser = () => {
-    fetch('http://localhost:5000/unfollow', {
+    fetch('/unfollow', {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

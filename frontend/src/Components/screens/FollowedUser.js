@@ -25,7 +25,7 @@ const FollowedUser = () => {
 
   var getAllPosts = async () => {
 
-    await fetch('http://localhost:5000/followerpost', {
+    await fetch('/followerpost', {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -46,7 +46,7 @@ const FollowedUser = () => {
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch('http://localhost:5000/like', {
+    await fetch('/like', {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const FollowedUser = () => {
       }).catch(err => { console.log(err) })
   }
   const unlikePost = async (id) => {
-    await fetch('http://localhost:5000/unlike', {
+    await fetch('/unlike', {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const FollowedUser = () => {
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`http://localhost:5000/comment`, {
+    await fetch(`/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ const FollowedUser = () => {
   }
 
   const deletePost = (postId) => {
-    fetch(`http://localhost:5000/deletepost/${postId}`, {
+    fetch(`/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
