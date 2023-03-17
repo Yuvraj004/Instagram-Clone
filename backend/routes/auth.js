@@ -9,19 +9,28 @@ const requiredLogin = require("../middleware/requireLogin");
 
 //using and accessing important keys in env file
 require("dotenv").config();
-const JWT = ""+process.env.JWT_KEY;
+const JWT = "" + process.env.JWT_KEY;
+// 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
+
+//using nodemailer to reset password for an user
+// const nodemailer = require("nodemailer");
+// const sendgridTransport = require("nodemailer-sendgrid-transport");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey("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");
+
+
 
 //importing Router function in express
 const User = require("../models/user");
-router.get("/",requiredLogin ,(req, res) => {
+router.get("/", requiredLogin, (req, res) => {
   res.send("hello");
 });
 
 //ROUTE-1 create a User using : POST "/api/auth/signup". Doesn't require auth
 router.post("/signup", async (req, res) => {
-  const { name, email, password,pic } = req.body;
-  if(!email || !password){
-      res.status(201).json({error:"Please add all fields"})
+  const { name, email, password, pic } = req.body;
+  if (!email || !password) {
+    res.status(201).json({ error: "Please add all fields" })
   }
   // console.log(res.body.name);
   await User.findOne({ email: email })
@@ -43,6 +52,17 @@ router.post("/signup", async (req, res) => {
           user
             .save()
             .then((user) => {
+              sgMail.send({
+                to: user.email,
+                from: "theosworth@tutanota.com",
+                subject: "signup success",
+                html: "<h1>Welcome to Instagram</h1>"
+              }, function (err, info) {
+                if (err) { console.log(err.message); }
+                else {
+                  console.log("Email Sent Success");
+                }
+              })
               res.json({ message: "User Saved Succesfully" });
               // alert("User succesfully Saved");
             })
@@ -89,10 +109,10 @@ router.post(
       }
       //creating a token for a particular user
       const token = jwt.sign({ _id: user._id }, JWT);
-      const { _id, name, email,followers,following,pic } = user;
+      const { _id, name, email, followers, following, pic } = user;
       //return that token
-      success=true
-      return res.json({success,token, user: { _id, name, email,followers,following,pic } })
+      success = true
+      return res.json({ success, token, user: { _id, name, email, followers, following, pic } })
       // return res.status(200).json({ message: "Correct credentials" });
     } catch (error) {
       console.error(error.message);
@@ -102,8 +122,44 @@ router.post(
 );
 
 //Route-3 protected api for testing problem with requirelogin
-router.get('/protected',requiredLogin,(req,res)=>{
+router.get('/protected', requiredLogin, (req, res) => {
   res.send("Hello user")
 })
+
+//we need a token  to veriffy user therefore we use crypto module inbuilt in node js
+const crypto = require('crypto')
+//Route-4 Reset Password
+router.post('/reset-password', (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) { console.log(err) }
+    else {
+      const token = buffer.toString("hex")
+      User.findOne({ email: req.body.email })
+        .then(user => {
+          if (!user) {
+            return res.status(422).json({ error: "User does nonto exists" })
+          }
+          user.resetToken = token
+          user.expireToken = Date.now() + 300000
+          user.save().then(ress => {
+            sgMail.send({
+              to: user.email,
+              from: "theosworth@tutanota.com",
+              subject: "Password RESET",
+              html: `<p>You requested for password  reset</p>
+                <h5>Click on this to reset password</h5>
+                <button><a href="http://localhost:3000/reset/${token}">RESET PASSWORD</button>`
+            }, function (err, info) {
+              if (err) { console.log(err.message); }
+              else {
+                res.json({ message: "Check your Email" })
+              }
+            })
+          })
+        })
+    }
+  })
+})
+
 
 module.exports = router;

@@ -1,3 +1,5 @@
+//main purpose of the middleware is to modify the req and res objects, and then compile and execute any code that is required. It also helps to terminate the request-response session and call for the next middleware in the stack.
+
 const jwt = require("jsonwebtoken");
 //taking out the jwt key
 require("dotenv").config({ path: "../.env" });

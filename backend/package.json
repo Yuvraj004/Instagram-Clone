@@ -4,11 +4,12 @@
   "description": "insta clone backend",
   "main": "index.js",
   "scripts": {
-    "start":"node ./backend/index.js"
+    "start": "node ./backend/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "axios": "^1.3.3",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.32.0",
@@ -18,8 +19,13 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
+    "mailparser": "^3.6.4",
     "mongoose": "^6.10.0",
-    "path": "^0.12.7"
+    "nodemailer": "^6.9.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "path": "^0.12.7",
+    "sendgrid": "^5.2.3",
+    "transport": "^0.0.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
