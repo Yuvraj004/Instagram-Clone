@@ -10,14 +10,12 @@ const requiredLogin = require("../middleware/requireLogin");
 //using and accessing important keys in env file
 require("dotenv").config();
 const JWT = "" + process.env.JWT_KEY;
-// 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
 
 //using nodemailer to reset password for an user
 // const nodemailer = require("nodemailer");
 // const sendgridTransport = require("nodemailer-sendgrid-transport");
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("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");
-
+sgMail.setApiKey(""+process.env.SendGridApi);
 
 
 //importing Router function in express
@@ -49,8 +47,7 @@ router.post("/signup", async (req, res) => {
             password: hp,
             pic
           });
-          user
-            .save()
+          user.save()
             .then((user) => {
               sgMail.send({
                 to: user.email,
@@ -128,31 +125,38 @@ router.get('/protected', requiredLogin, (req, res) => {
 
 //we need a token  to veriffy user therefore we use crypto module inbuilt in node js
 const crypto = require('crypto')
+
+
 //Route-4 Reset Password
 router.post('/reset-password', (req, res) => {
+  // console.log(req.body.email);
   crypto.randomBytes(32, (err, buffer) => {
     if (err) { console.log(err) }
     else {
-      const token = buffer.toString("hex")
+      const token = buffer.toString("hex");
+      // console.log(token);
       User.findOne({ email: req.body.email })
         .then(user => {
           if (!user) {
-            return res.status(422).json({ error: "User does nonto exists" })
+            return res.status(422).json({ error: "User does not exists" })
           }
           user.resetToken = token
           user.expireToken = Date.now() + 300000
-          user.save().then(ress => {
+          user.save()
+          .then(ress => {
+            // console.log(ress.email)
             sgMail.send({
-              to: user.email,
+              to: ress.email,
               from: "theosworth@tutanota.com",
               subject: "Password RESET",
-              html: `<p>You requested for password  reset</p>
-                <h5>Click on this to reset password</h5>
-                <button><a href="http://localhost:3000/reset/${token}">RESET PASSWORD</button>`
+              html: `<p>You requested for password reset</p>
+                <h5>Click on this <a href="http://localhost:3000/reset/${token}>LINK</a>to reset password</h5>
+                `
             }, function (err, info) {
-              if (err) { console.log(err.message); }
+              if (err) { console.log(err); }
               else {
                 res.json({ message: "Check your Email" })
+                console.log(info)
               }
             })
           })

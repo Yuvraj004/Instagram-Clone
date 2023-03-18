@@ -10,6 +10,7 @@ import UserProfile from './Components/screens/UserProfile';
 import FollowedUser from './Components/screens/FollowedUser';
 import './App.css';
 import {reducer,initialState} from './reducers/userReducer';
+import Reset from './Components/screens/Reset';
 export const UserContext=createContext()
 
 const Routing =()=>{
@@ -20,10 +21,11 @@ const Routing =()=>{
     
     if(user){
       dispatch({type:"USER",payload:user})
-      // history('/');
+      history('/');
     }
     else{
-      history('/signup');
+      // if(!history.location.pathname.startsWith('/reset'))
+        // history('/signup');
     }
   }, []);
   return(
@@ -35,6 +37,7 @@ const Routing =()=>{
       <Route path='/create' element={<CreatePost />}></Route>
       <Route path='/userprofile/:userid' element={<UserProfile />}></Route>
       <Route path='/followeduser' element={<FollowedUser />}></Route>
+      <Route path='/reset' element={<Reset/>}></Route>
     </Routes>
   )
 }
