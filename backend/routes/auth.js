@@ -51,7 +51,7 @@ router.post("/signup", async (req, res) => {
             .then((user) => {
               sgMail.send({
                 to: user.email,
-                from: "theosworth@tutanota.com",
+                from: "cateye@gmail.com",
                 subject: "signup success",
                 html: "<h1>Welcome to Instagram</h1>"
               }, function (err, info) {
