@@ -12,13 +12,31 @@ const Navbar = () => {
     M.Modal.init(SearchModal.current)
   }, [10])
 
+
+  const fetchUsers = async (query) => {
+    setsearch(query);
+    await fetch("/search-users", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: query
+      })
+    })
+      .then(res => res.json())
+      .then((result) => {
+        // console.log(result.user)
+        setuserDetails(result.user)
+      })
+  }
   const renderList = () => {
     if (state) {
       return [
         <li key={4}>
           <span >
-            <button data-target="modal1" type="submit" class="searchbar__button modal-trigger">
-              <i class="material-icons">search</i></button>
+            <button data-target="modal1" type="submit" className="searchbar__button modal-trigger">
+              <i className="material-icons">search</i></button>
           </span>
         </li>,
         <li key={0}><Link className="btn waves-effect waves-light" to='/profile'>Profile</Link></li>,
@@ -34,24 +52,7 @@ const Navbar = () => {
       ]
     }
   }
-  const fetchUsers = async(query) => {
-    setsearch(query);
-    await fetch("/search-users", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: search
-      })
-    })
-      .then(res => { res.json() })
-      .then(function (result) {
-        console.log(result)
-        // setuserDetails(results.user)
-      })
-    
-  }
+
   return (
     <nav className='navboxx'>
       <div className='navdiv' style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
@@ -63,40 +64,22 @@ const Navbar = () => {
       {/*  Modal Structure  */}
       <div id="modal1" className="modal" ref={SearchModal}>
         <div className="modal-content">
-          <input className='logininput' type="text" placeholder="Search Users" value={search} onChange={(e) => fetchUsers(e.target.value)} />
-          <ul class="collection" style={{ color: "black", display: "flex", flexDirection: "column" }}>
-            <li class="collection-item avatar">
-              <img src="images/yuna.jpg" alt=".../" class="circle" />
-              <span class="title">Title</span>
-              <p>First Line <br />
-                Second Li
-              </p>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-            <li class="collection-item avatar">
-              <i class="material-icons circle">folder</i>
-              <span class="title">Title</span>
-              <p>First Line <br />
-                Second Line
-              </p>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-            <li class="collection-item avatar">
-              <i class="material-icons circle green">insert_chart</i>
-              <span class="title">Title</span>
-              <p>First Line <br />
-                Second Line
-              </p>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-            <li class="collection-item avatar">
-              <i class="material-icons circle red">play_arrow</i>
-              <span class="title">Title</span>
-              <p>First Line <br />
-                Second Line
-              </p>
-              <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
+          <input className='logininput' type="text" style={{ caretColor: "red" }} placeholder="Search Users" value={search} onChange={(e) => fetchUsers(e.target.value)} />
+          <ul className="collection" style={{ color: "black", display: "flex", flexDirection: "column" }}>
+            {!userDetails ? "No Users with this email" : userDetails.map(user => {
+              return [
+                <li className="collection-item avatar">
+                  <img src={user.pic} alt=".../" className="circle" />
+                  <span className="title">{user.name}</span>
+                  <Link key={user._id} to={user._id !== state._id ? "/userprofile/" + user._id : "/profile"} onClick={() => {
+                    M.Modal.getInstance(SearchModal.current).close();
+                    setsearch('');
+                  }} className="secondary-content">
+                    <i className="material-icons">grade</i>
+                  </Link>
+                </li>
+              ]
+            })}
           </ul>
         </div>
         <div className="modal-footer">
