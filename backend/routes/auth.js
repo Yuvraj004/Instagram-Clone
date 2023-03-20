@@ -166,4 +166,26 @@ router.post('/reset-password', (req, res) => {
 })
 
 
+//Route-5 New Password
+router.post('/new-password',(req,res)=>{
+  const newPass=req.body.password
+  const sentToken =req.body.token
+  User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
+  .then(user=>{
+    if(!user){
+      return rerss.status(422).json(({error:"Trry again session Expired"}))
+    }
+    bcrypt.hash(newPass,10).then(hashed=>{
+      user.password=hashed
+      user.resetToken=undefined
+      user.expireToken=undefined
+      user.save().then(savedUser=>{
+        res.json({message:"Password Updated Success"})
+      })
+    }).catch(err=>{
+      console.log(err)
+    })
+  })
+})
+
 module.exports = router;

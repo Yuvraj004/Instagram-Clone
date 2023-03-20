@@ -8,7 +8,7 @@ const User = require('../models/user')
 //Route-0 to get all posts of a person
 router.get('/allpost', requiredLogin, (req, res) => {
     // console.log(res.json());
-    Post.find().populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
+    Post.find().populate("postedBy", "_id name").populate("comments.postedBy", "_id name").sort('-createdAt')
         .then(posts => {
             res.json({ posts })
             // console.log(posts)
@@ -59,6 +59,7 @@ router.get('/viewpost', requiredLogin, (req, res) => {
 router.get('/mypost', requiredLogin, (req, res) => {
     Post.find({ postedBy: req.user._id })
         .populate("postedBy", "_id name")
+        .sort('-createdAt')
         .then(mypost => {
             res.json({ mypost })
         })
@@ -125,7 +126,7 @@ router.put('/unlike', requiredLogin, (req, res) => {
 })
 
 //Route-6 updating comments
-router.post('/comment',requiredLogin, async (req, res) => {
+router.post('/comment', requiredLogin, async (req, res) => {
     const id = req.body.postId;
     const obj_postId = mongoose.Types.ObjectId(id)
     const comment = {
@@ -133,53 +134,54 @@ router.post('/comment',requiredLogin, async (req, res) => {
         postedBy: req.user._id
     }
     try {
-      // Check if the post exists
-    //   console.log(obj_postId);
-      const post = await Post.findById(obj_postId);
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' });
-      }
-  
-      // Create a new comment
-    //   await comment.save();
-  
-      // Add the comment to the post's comments array
-      post.comments.push(comment);
-      post.populate("comments postedBy", "_id name");
-      await post.save();
-  
-      // Return the newly created comment object
-      return res.status(201).json(post);
+        // Check if the post exists
+        //   console.log(obj_postId);
+        const post = await Post.findById(obj_postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Create a new comment
+        //   await comment.save();
+
+        // Add the comment to the post's comments array
+        post.comments.push(comment);
+        post.populate("comments postedBy", "_id name");
+        await post.save();
+
+        // Return the newly created comment object
+        return res.status(201).json(post);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Server error' });
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
     }
-  });
-  
+});
+
 //Route-7 deleting a post
-router.delete('/deletepost/:postId',requiredLogin,(req,res)=>{
-    Post.findOne({_id:req.params.postId})
-    .populate("postedBy","_id")
-    .exec((err,post)=>{
-        if(err|| !post){
-            return res.status(422).json({error:err})
-        }
-        if(post.postedBy._id.toString() === req.user._id.toString()){
-            post.remove()
-            .then(result=>{
-                res.json(result)
-            }).catch(err=>{
-                console.log(err)
-            })
-        }
-    })
+router.delete('/deletepost/:postId', requiredLogin, (req, res) => {
+    Post.findOne({ _id: req.params.postId })
+        .populate("postedBy", "_id")
+        .exec((err, post) => {
+            if (err || !post) {
+                return res.status(422).json({ error: err })
+            }
+            if (post.postedBy._id.toString() === req.user._id.toString()) {
+                post.remove()
+                    .then(result => {
+                        res.json(result)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+            }
+        })
 })
 
 //Route-8 accessing other user's profile from followers
 router.get('/followerpost', requiredLogin, (req, res) => {
     // console.log(res.json());
-    Post.find({postedBy:{$in:req.user.following}})
-    .populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
+    Post.find({ postedBy: { $in: req.user.following } })
+        .populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
+        .sort('-createdAt')
         .then(posts => {
             res.json({ posts })
             // console.log(posts)

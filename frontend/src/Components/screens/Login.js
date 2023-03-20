@@ -16,7 +16,7 @@ const Login = () => {
       body: JSON.stringify({ email, password })
     })
     const json = await response.json();
-    if (json.success) {
+    if (json) {
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
       // props.showAlert("You are logged in","success");
@@ -43,9 +43,13 @@ const Login = () => {
             }}} />
           <button className=" buttonlog" type="submit" name="action" onClick={() => CheckData()}>Login
           </button>
-          <h5>
-            <Link to="signup" className="buttonlog">Don't have an account </Link>
+          
+          <h5 style={{marginTop:"0.625rem"}}>
+            <Link to="/signup" className=" buttonlog" >Don't have an account </Link>
           </h5>
+          <h6 style={{margin:"1.625rem"}}>
+            <Link to="/reset" className=" buttonlog">Forgot Password </Link>
+          </h6>
         </div>
       </div>
     </>

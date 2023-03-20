@@ -98,9 +98,12 @@ const Signup = () => {
           </div>
           <button style={{marginBottom:"1.625rem"}} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
-          <h5>
-            <Link to="/login" className="buttonlog" >Already have an account </Link>
+          <h5 >
+            <Link to="/login"className="buttonlog" >Already have an account </Link>
           </h5>
+          <h6 style={{margin:"1.625rem"}} >
+            <Link to="/reset" className="buttonlog" >Forgot Password </Link>
+          </h6>
         </div>
       </div>
     </>

@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     
 
-})
+},{timestamps:true})
 const Post = mongoose.model('Post', userSchema);
 // //createindexes to uniquely identify each email,repetitve email will not saved separately
 // User.createIndexes();
