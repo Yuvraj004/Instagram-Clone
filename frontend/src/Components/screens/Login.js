@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const CheckData = async () => {
     console.log("login reached")
-    await fetch('/login', {
+    await fetch('https://ussinstaclonebackend.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
