@@ -21,7 +21,7 @@ const Login = () => {
       console.log("worked")
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
-      windows.alert("You are logged in");
+      // windows.alert("You are logged in");
       localStorage.setItem('token', jsond.token);
       localStorage.setItem('user', JSON.stringify(jsond.user));
       dispatch(({ type: "USER", payload: jsond.user }))
