@@ -31,10 +31,10 @@ const Routing =()=>{
   return(
     <Routes>
       <Route path='/' element={<Home />}></Route>
-      <Route path='/login' element={<Login />}></Route>
-      <Route exact path='/profile' element={<Profile />}></Route>
-      <Route path='/signup' element={<Signup  />}></Route>
-      <Route path='/create' element={<CreatePost />}></Route>
+      <Route path='/Login' element={<Login />}></Route>
+      <Route exact path='/Profile' element={<Profile />}></Route>
+      <Route path='/Signup' element={<Signup  />}></Route>
+      <Route path='/Create' element={<CreatePost />}></Route>
       <Route path='/userprofile/:userid' element={<UserProfile />}></Route>
       <Route path='/followeduser' element={<FollowedUser />}></Route>
       <Route exact path='/reset' element={<Reset/>}></Route>
