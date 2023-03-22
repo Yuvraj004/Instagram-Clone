@@ -20,7 +20,7 @@ const Routing =()=>{
   useEffect(() => {
     const userwparse=localStorage.getItem("user");
     if(userwparse){
-      const user =JSON.parse(userwparse);
+      const user =userwparse===undefined?{}:JSON.parse(userwparse);
       dispatch({type:"USER",payload:user})
       history('/');
     }
@@ -31,8 +31,8 @@ const Routing =()=>{
   return(
     <Routes>
       <Route path='/' element={<Home />}></Route>
-      <Route path='/Login' element={<Login />}></Route>
-      <Route exact path='/Profile' element={<Profile />}></Route>
+      <Route path='/signin' element={<Login />}></Route>
+      <Route exact path='/profilep' element={<Profile />}></Route>
       <Route path='/Signup' element={<Signup  />}></Route>
       <Route path='/Create' element={<CreatePost />}></Route>
       <Route path='/userprofile/:userid' element={<UserProfile />}></Route>

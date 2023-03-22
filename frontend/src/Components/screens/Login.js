@@ -8,27 +8,27 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const CheckData = async () => {
-    let response = await fetch('/login', {
+    await fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password })
     })
-    const json = await response.json();
-    if (json) {
+    .then(res=>res.json())
+    .then(jsond => {
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
-      // props.showAlert("You are logged in","success");
-      localStorage.setItem('token', json.token);
-      localStorage.setItem('user', JSON.stringify(json.user));
-      dispatch(({ type: "USER", payload: json.user }))
+      windows.alert("You are logged in");
+      localStorage.setItem('token', jsond.token);
+      localStorage.setItem('user', JSON.stringify(jsond.user));
+      dispatch(({ type: "USER", payload: jsond.user }))
       navigate("/profile");
 
-    }
-    else {
+    })
+    .catch(err=>{
       M.toast({ html: "Retry Please", classes: "#c62828 red darken-3" });
-    }
+    })
   }
 
   return (

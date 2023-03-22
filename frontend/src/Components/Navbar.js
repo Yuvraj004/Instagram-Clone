@@ -39,15 +39,15 @@ const Navbar = () => {
               <i className="material-icons">search</i></button>
           </span>
         </li>,
-        <li key={0}><Link className="btn waves-effect waves-light" to='/profile'>Profile</Link></li>,
-        <li key={1}><Link className="btn waves-effect waves-light" to='/create'>Create Post</Link></li>,
+        <li key={0}><Link className="btn waves-effect waves-light" to='/profilep'>Profile</Link></li>,
+        <li key={1}><Link className="btn waves-effect waves-light" to='/Create'>Create Post</Link></li>,
         <li key={2}><Link className="btn waves-effect waves-light" to='/followeduser'>Posts of people i follow</Link></li>,
         <li key={3}><button className="btn waves-effect waves-light" onClick={() => { dispatch({ type: "CLEAR" }); localStorage.clear(); navigate("/login") }}>Logout
         </button></li>
       ]
     } else {
       return [
-        <li key={30}><Link to='/login' className='button' >Login</Link></li>,
+        <li key={30}><Link to='/signin' className='button' >Login</Link></li>,
         <li key={40}><Link to='/signup' className='button' style={{ marginLeft: "10px" }}>Signup</Link></li>
       ]
     }
@@ -56,7 +56,7 @@ const Navbar = () => {
   return (
     <nav className='navboxx'>
       <div className='navdiv' style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-        <Link to={state ? '/' : '/login'} className='logo' >Instagram</Link>&nbsp;
+        <Link to={state ? '/' : '/signin'} className='logo' >Instagram</Link>&nbsp;
         <ul id="nav-mobile" className='right' style={{ "marginRight": "3rem", color: "white", display: "flex", justifyContent: "space-between" }} >
           {renderList()}
         </ul>
@@ -71,7 +71,7 @@ const Navbar = () => {
                 <li className="collection-item avatar">
                   <img src={user.pic} alt=".../" className="circle" />
                   <span className="title">{user.name}</span>
-                  <Link key={user._id} to={user._id !== state._id ? "/userprofile/" + user._id : "/profile"} onClick={() => {
+                  <Link key={user._id} to={user._id !== state._id ? "/userprofile/" + user._id : "/profilep"} onClick={() => {
                     M.Modal.getInstance(SearchModal.current).close();
                     setsearch('');
                   }} className="secondary-content">
