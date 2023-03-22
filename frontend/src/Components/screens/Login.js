@@ -8,6 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const CheckData = async () => {
+    console.log("login reached")
     await fetch('/login', {
       method: 'POST',
       headers: {
@@ -17,6 +18,7 @@ const Login = () => {
     })
     .then(res=>res.json())
     .then(jsond => {
+      console.log("worked")
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
       windows.alert("You are logged in");
@@ -27,6 +29,7 @@ const Login = () => {
 
     })
     .catch(err=>{
+      console.error(err)
       M.toast({ html: "Retry Please", classes: "#c62828 red darken-3" });
     })
   }
