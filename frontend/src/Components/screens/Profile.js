@@ -1,15 +1,16 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
 import { UserContext } from "../../App";
+require("dotenv").config({ path: "./.env" });
 const Profile = () => {
   const [mypics, setPics] = useState([]);
   const { state,dispatch } = useContext(UserContext);
-  const [image, setImage] = useState("")
-  // const [url, setUrl] = useState(undefined)
+  // const [image, setImage] = useState("")
+  const [url, setUrl] = useState(undefined)
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch('/mypost', {
+    fetch(`${process.env.BACKEND_URI}/mypost`, {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -17,52 +18,7 @@ const Profile = () => {
       .then(result => { setPics(result.mypost) })
       .catch(err => console.log(err))
   }, [logResult])
-  useEffect(()=>{
-    if(image){
-      const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "ig-clone");//ig-clone
-    data.append("cloud_name", "ycloud");//ycloud
 
-    //uploading image to cloudinary
-    fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
-        method: "post",
-        body: data,
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            
-            fetch('/updatepic',{
-              method:"PUT",
-              headers:{
-                "Content-Type":"application/json",
-                "Authorization":`Bearer ${localStorage.getItem('token')}`
-              },
-              body:JSON.stringify({
-                pic:data.url
-              })
-            }).then(res=>res.json())
-            .then(result=>{
-              // console.log(result)
-              M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
-              localStorage.setItem("user",JSON.stringify({...state,pic:result.pic}))
-              dispatch({type:"UPDATEPIC",payload:result.pic})
-              // window.location.reload();
-
-            })
-        })
-        .catch((err) => {
-            M.toast({
-                html: "Something Went Wrong AF",
-                classes: "#c62828 red darken-1",
-            });
-            console.log(err);
-        });
-    }
-  },[image])
-  const updatePhoto = async (file) => {
-    setImage(file);
-  }
   return (
     <div className="profile" style={{ color: "white" }} >
       <div className="p-section" style={{ "width": "100%" }}>
@@ -70,14 +26,9 @@ const Profile = () => {
           <img className="dp"
             src={state ? state.pic : "loading...!"}
           />
-          <input
-              type="file"
-              onChange={(e) => {
-                updatePhoto(e.target.files[0]);
-              }}
-            />
+          
           <div className="button probtn">
-            <span>Update Profile Photo</span>
+            <span><a href="/updatepfp">Update Profile Photo</a></span>
           </div>
           
         </div>

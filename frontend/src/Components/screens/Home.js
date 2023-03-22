@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../App';
 import {Link} from 'react-router-dom';
+require("dotenv").config({ path: "./.env" });
+
 const Home = () => {
   const [data, setData] = useState([])
-  // const [data2, setData2] = useState({})
-  //eslint-disable-next-line
   const { state } = useContext(UserContext)
-
   var [color, setColor] = useState("black");
 
 
@@ -19,25 +18,21 @@ const Home = () => {
     if (localStorage.getItem("token")) {
       getAllPosts();
     } else {
-      navigate("/login");
+      navigate("/signin");
     }
   }, [logResult]);
 
   var getAllPosts = async () => {
 
-    await fetch('/allpost', {
+    await fetch(`${process.env.BACKEND_URI}/allpost`, {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true,
-        'Access-Control-Allow-Headers': 'application/json',
       }
     }).then(res => res.json())
       .then(result => {
         // console.log(result);
         setData(result.posts)
-        
 
       })
       .catch(err => console.log(err))
@@ -46,7 +41,7 @@ const Home = () => {
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch('/like', {
+    await fetch(`${process.env.BACKEND_URI}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +61,7 @@ const Home = () => {
       }).catch(err => { console.log(err) })
   }
   const unlikePost = async (id) => {
-    await fetch('/unlike', {
+    await fetch(`${process.env.BACKEND_URI}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +85,7 @@ const Home = () => {
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`/comment`, {
+    await fetch(`${process.env.BACKEND_URI}/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +111,7 @@ const Home = () => {
   }
 
   const deletePost = (postId) => {
-    fetch(`/deletepost/${postId}`, {
+    fetch(`${process.env.BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`

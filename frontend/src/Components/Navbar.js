@@ -2,6 +2,7 @@ import React, { useContext, useRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import M from 'materialize-css';
+require("dotenv").config({ path: "./.env" });
 const Navbar = () => {
   const SearchModal = useRef(null);
   const [search, setsearch] = useState('');
@@ -15,7 +16,7 @@ const Navbar = () => {
 
   const fetchUsers = async (query) => {
     setsearch(query);
-    await fetch("/search-users", {
+    await fetch(`${process.env.BACKEND_URI}/search-users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

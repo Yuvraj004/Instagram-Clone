@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../App';
 import {Link} from 'react-router-dom';
+require("dotenv").config({ path: "./.env" });
+
 const FollowedUser = () => {
   const [data, setData] = useState([])
   // const [data2, setData2] = useState({})
@@ -19,13 +21,13 @@ const FollowedUser = () => {
     if (localStorage.getItem("token")) {
       getAllPosts();
     } else {
-      navigate("/login");
+      navigate("/signin");
     }
   }, [logResult]);
 
   var getAllPosts = async () => {
 
-    await fetch('/followerpost', {
+    await fetch(`${process.env.BACKEND_URI}/followerpost`, {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -46,7 +48,7 @@ const FollowedUser = () => {
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch('/like', {
+    await fetch(`${process.env.BACKEND_URI}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +68,7 @@ const FollowedUser = () => {
       }).catch(err => { console.log(err) })
   }
   const unlikePost = async (id) => {
-    await fetch('/unlike', {
+    await fetch(`${process.env.BACKEND_URI}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +92,7 @@ const FollowedUser = () => {
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`/comment`, {
+    await fetch(`${process.env.BACKEND_URI}/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +118,7 @@ const FollowedUser = () => {
   }
 
   const deletePost = (postId) => {
-    fetch(`/deletepost/${postId}`, {
+    fetch(`${process.env.BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`

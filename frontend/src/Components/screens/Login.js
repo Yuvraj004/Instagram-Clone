@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import M from 'materialize-css';
+require("dotenv").config({ path: "./.env" });
 const Login = () => {
   const { dispatch } = useContext(UserContext);
   let navigate = useNavigate();
@@ -9,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const CheckData = async () => {
     console.log("login reached")
-    await fetch('https://ussinstaclonebackend.onrender.com/login', {
+    await fetch(`${process.env.BACKEND_URI}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -21,7 +22,7 @@ const Login = () => {
       console.log("worked")
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
-      // windows.alert("You are logged in");
+      window.alert("You are logged in");
       localStorage.setItem('token', jsond.token);
       localStorage.setItem('user', JSON.stringify(jsond.user));
       dispatch(({ type: "USER", payload: jsond.user }))
@@ -39,7 +40,7 @@ const Login = () => {
       <div className='container'>
         <div className="login-box shadow">
           <h2 className='loginh2'>Instagram</h2>
-          <input className='logininput' type="text" placeholder="email" value={email} onChange={(e) => {setEmail(e.target.value);localStorage.setItem('password',e.target.value)}} />
+          <input className='logininput' type="text" placeholder="email" value={email} onChange={(e) => {setEmail(e.target.value);}} />
           <input className='logininput' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
             if (e.key === "Enter") {
               CheckData()

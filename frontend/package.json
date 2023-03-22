@@ -2,7 +2,6 @@
   "name": "ig",
   "version": "0.1.0",
   "private": true,
-  "proxy":"https://ussinstaclonebackend.onrender.com",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

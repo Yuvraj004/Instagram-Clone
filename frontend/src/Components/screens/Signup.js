@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import M from 'materialize-css'
+import M from 'materialize-css';
+require("dotenv").config({ path: "./.env" });
 
 const Signup = () => {
   const [name, setName] = useState("")
@@ -41,7 +42,7 @@ const Signup = () => {
       });
   };
   const uploadFields = async () => {
-    await fetch("/signup", {
+    await fetch(`${process.env.BACKEND_URI}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -99,7 +100,7 @@ const Signup = () => {
           <button style={{marginBottom:"1.625rem"}} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
           <h5 >
-            <Link to="/login"className="buttonlog" >Already have an account </Link>
+            <Link to="/signin"className="buttonlog" >Already have an account </Link>
           </h5>
           <h6 style={{margin:"1.625rem"}} >
             <Link to="/reset" className="buttonlog" >Forgot Password </Link>

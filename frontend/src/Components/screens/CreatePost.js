@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
+require("dotenv").config({ path: "./.env" });
 
 //Dialog box to create a new post
 const CreatePost = () => {
@@ -32,7 +33,7 @@ const CreatePost = () => {
       });
     
     //uploading data to database
-    let response = await fetch("/createpost", {
+    let response = await fetch(`${process.env.BACKEND_URI}/createpost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -12,6 +12,7 @@ import './App.css';
 import {reducer,initialState} from './reducers/userReducer';
 import Reset from './Components/screens/Reset';
 import NewPass from './Components/screens/NewPassword';
+import updatepfp from './Components/screens/UpdatePfp';
 export const UserContext=createContext()
 
 const Routing =()=>{
@@ -39,6 +40,8 @@ const Routing =()=>{
       <Route path='/followeduser' element={<FollowedUser />}></Route>
       <Route exact path='/reset' element={<Reset/>}></Route>
       <Route path='/reset/:token' element={<NewPass/>}></Route>
+      <Route path='/updatepfp' element={<updatepfp/>}></Route>
+
     </Routes>
   )
 }

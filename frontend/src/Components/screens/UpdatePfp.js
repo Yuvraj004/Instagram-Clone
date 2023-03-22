@@ -2,34 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css';
 
-const updatePhoto = async() => {
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "ig-clone");//ig-clone
-    data.append("cloud_name", "ycloud");//ycloud
+const updatePhoto = async () => {
+    const [image, setImage] = useState("")
+    useEffect(() => {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "ig-clone");//ig-clone
+        data.append("cloud_name", "ycloud");//ycloud
 
-    //uploading image to cloudinary
-    await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
-        method: "post",
-        body: data,
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            let newurl = data.url;
-            setUrl(newurl);
-            url = newurl;
-            M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-            // navigate("/");
+        //uploading image to cloudinary
+        fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
+            method: "post",
+            body: data,
         })
-        .catch((err) => {
-            M.toast({
-                html: "Something Went Wrong AF",
-                classes: "#c62828 red darken-1",
-            });
-            console.log(err);
-        });
+            .then((res) => res.json())
+            .then((data) => {
+                fetch('/updatepic', {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        pic: data.url
+                    })
+                }).then(res => res.json())
+                    .then(result => {
+                        // console.log(result)
+                        M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
+                        localStorage.setItem("user", JSON.stringify({ ...state, pic: result.pic }))
+                        dispatch({ type: "UPDATEPIC", payload: result.pic })
 
-    return(
-        <div></div>
-    )
-}
+                    });
+
+            }, [image]);
+
+
+        return (
+            <div>
+                <input
+                    type="file"
+                    onChange={(e) => {
+                        setImage(e.target.files[0]);
+                    }}
+                />
+
+            </div>
+        )
+    })
+};
+
+
+export default updatePhoto

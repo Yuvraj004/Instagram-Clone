@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
 import { UserContext } from "../../App";
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+require("dotenv").config({ path: "./.env" });
+
 const UserProfile = () => {
   const [userProfile, setProfile] = useState(null);
   const { state, dispatch } = useContext(UserContext);
@@ -10,7 +12,7 @@ const UserProfile = () => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch(`/userprofile/${userid}`, {
+    fetch(`${process.env.BACKEND_URI}/userprofile/${userid}`, {
       method: "get",
       headers: {
         "content-type": "application/json",
@@ -25,7 +27,7 @@ const UserProfile = () => {
   }, [logResult])
 
   const followUser = () => {
-    fetch('/follow', {
+    fetch(`${process.env.BACKEND_URI}/follow`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +57,7 @@ const UserProfile = () => {
       })
   }
   const unfollowUser = () => {
-    fetch('/unfollow', {
+    fetch(`${process.env.BACKEND_URI}/unfollow`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

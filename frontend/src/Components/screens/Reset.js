@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import { UserContext } from '../../App';
 import M from 'materialize-css';
+require("dotenv").config({ path: "./.env" });
 
 function Reset() {
     // const { dispatch } = useContext(UserContext);
@@ -9,7 +10,7 @@ function Reset() {
     const [email, setEmail] = useState("")
     // const [password, setPassword] = useState("")
     const CheckData = async () => {
-        const response = await fetch('/reset-password', {
+        const response = await fetch(`${process.env.BACKEND_URI}/reset-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +22,7 @@ function Reset() {
             M.toast({ html: "Check your Email", classes: "#43a047 green darken-3" });
             console.log(json)
             //save the token and redirect
-            navigate("/login");
+            navigate("/signin");
 
         }
         else {
