@@ -80,6 +80,7 @@ router.post(
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
+    console.log("backend reached")
     let success = false;
     //if there are errors,returning bad request and the errors
     const errors = validationResult(req);
