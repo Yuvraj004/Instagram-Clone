@@ -18,15 +18,14 @@ const Routing =()=>{
   const history = useNavigate()
   const {dispatch}=useContext(UserContext);
   useEffect(() => {
-    const user =JSON.parse(localStorage.getItem("user"));
-    
-    if(user){
+    const userwparse=localStorage.getItem("user");
+    if(userwparse){
+      const user =JSON.parse(userwparse);
       dispatch({type:"USER",payload:user})
       history('/');
     }
     else{
-      // if(!history.location.pathname.startsWith('/reset'))
-        // history('/signup');
+      history('/signup');
     }
   }, []);
   return(

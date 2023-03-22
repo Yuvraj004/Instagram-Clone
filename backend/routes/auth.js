@@ -60,7 +60,7 @@ router.post("/signup", async (req, res) => {
                 }
               })
               res.json({ message: "User Saved Succesfully" });
-              // alert("User succesfully Saved");
+              windows.alert("User succesfully Saved");
             })
             .catch((err) => {
               console.error("Not saved Error", err.message);
@@ -172,7 +172,7 @@ router.post('/new-password',(req,res)=>{
   User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
   .then(user=>{
     if(!user){
-      return rerss.status(422).json(({error:"Trry again session Expired"}))
+      return res.status(422).json(({error:"Trry again session Expired"}))
     }
     bcrypt.hash(newPass,10).then(hashed=>{
       user.password=hashed
