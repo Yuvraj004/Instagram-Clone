@@ -41,7 +41,7 @@ const Signup = () => {
       });
   };
   const uploadFields = async () => {
-    await fetch("/signup", {
+    await fetch("https://ussinstaclonebackend.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -57,7 +57,7 @@ const Signup = () => {
           navigate("/login");
         }
       }).catch(err => {
-        console.log(err)
+        console.error(err)
       })
   }
   let navigate = useNavigate();
