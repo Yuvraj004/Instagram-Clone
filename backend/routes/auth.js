@@ -38,8 +38,7 @@ router.post("/signup", async (req, res) => {
       }
 
       //crypting password here
-      bcrypt
-        .hash(password, 10) //ten is the salt here
+      bcrypt.hash(password, 10) //ten is the salt here
         .then((hp) => {
           const user = new User({
             name,

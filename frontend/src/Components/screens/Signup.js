@@ -41,7 +41,7 @@ const Signup = () => {
       });
   };
   const uploadFields = async () => {
-    await fetch("https://ussinstaclonebackend.onrender.com/signup", {
+    await fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
