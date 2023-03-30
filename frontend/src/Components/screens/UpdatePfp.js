@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css';
-
+import UserContext from '../../App';
 const updatePhoto = async () => {
     const [image, setImage] = useState("")
+  const { state,dispatch} = useContext(UserContext)
+
     useEffect(() => {
         const data = new FormData();
         data.append("file", image);
