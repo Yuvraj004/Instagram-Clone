@@ -17,7 +17,7 @@ const Login = () => {
       },
       body: JSON.stringify({ email, password })
     })
-    .then(res=>res.json())
+    .then(res=>{return res.json()})
     .then(jsond => {
       console.log("worked")
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
