@@ -17,8 +17,7 @@ const Login = () => {
       },
       body: JSON.stringify({ email, password })
     })
-    .then(res=>{return res.json()})
-    .then(jsond => {
+    .then(res=>{let jsond= res.json();
       console.log("worked")
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
@@ -26,9 +25,8 @@ const Login = () => {
       localStorage.setItem('token', jsond.token);
       localStorage.setItem('user', JSON.stringify(jsond.user));
       dispatch(({ type: "USER", payload: jsond.user }))
-      navigate("/profile");
+      navigate("/profile");})
 
-    })
     .catch(err=>{
       console.error(err)
       M.toast({ html: "Retry Please", classes: "#c62828 red darken-3" });
