@@ -105,7 +105,7 @@ const Home = () => {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
       }).then(res => {
-        res.json();
+        let result =res.json();
         const newData = data.filter(item => {
 
           return item._id !== result._id
