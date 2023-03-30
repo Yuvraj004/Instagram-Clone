@@ -28,14 +28,12 @@ const updatePhoto = async () => {
                     body: JSON.stringify({
                         pic: data.url
                     })
-                }).then(res => res.json())
-                    .then(result => {
-                        // console.log(result)
-                        M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
-                        localStorage.setItem("user", JSON.stringify({ ...state, pic: result.pic }))
-                        dispatch({ type: "UPDATEPIC", payload: result.pic })
-
-                    });
+                }).then(res => {
+                    let result =res.json();
+                    M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
+                    localStorage.setItem("user", JSON.stringify({ ...state, pic: result.pic }));
+                    dispatch({ type: "UPDATEPIC", payload: result.pic });
+                })
 
             }, [image]);
 

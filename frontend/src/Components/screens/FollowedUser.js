@@ -35,14 +35,10 @@ const FollowedUser = () => {
         "Access-Control-Allow-Credentials": true,
         'Access-Control-Allow-Headers': 'application/json',
       }
-    }).then(res => res.json())
-      .then(result => {
-        // console.log(result);
-        setData(result.posts)
-        
-
-      })
-      .catch(err => console.log(err))
+    }).then(res => {
+      let result =res.json();
+      setData(result.posts)
+    }).catch(err => console.log(err))
   }
   var i = 0, num = 60;
   const hex = num.toString(16);
@@ -57,15 +53,14 @@ const FollowedUser = () => {
       body: JSON.stringify({
         postId: id
       })
-    }).then(res => res.json())
-      .then(result => {
-        // console.log(result.length)
-        const newData = data.map(item => {
-          if (item._id === result._id) { setColor("red"); return result }
-          else { return item }
-        })
-        setData(newData);
-      }).catch(err => { console.log(err) })
+    }).then(res => {
+      let result = res.json();
+      const newData = data.map(item => {
+        if (item._id === result._id) { setColor("red"); return result }
+        else { return item }
+      })
+      setData(newData);
+    }).catch(err => { console.log(err) })
   }
   const unlikePost = async (id) => {
     await fetch(`${process.env.BACKEND_URI}/unlike`, {
@@ -77,16 +72,16 @@ const FollowedUser = () => {
       body: JSON.stringify({
         postId: id
       })
-    }).then(res => res.json())
-      .then(result => {
-        const newData = data.map(item => {
-          if (item._id === result._id) { setColor("black"); return result }
-          else {
-            return item
-          }
-        })
-        setData(newData);
-      }).catch(err => { console.log(err) })
+    }).then(res => {
+      let result=res.json();
+      const newData = data.map(item => {
+        if (item._id === result._id) { setColor("black"); return result }
+        else {
+          return item
+        }
+      })
+      setData(newData);
+    }).catch(err => { console.log(err) })
 
   }
 
@@ -102,36 +97,34 @@ const FollowedUser = () => {
         text: text,
         postId: postId
       })
-    }).then(res => res.json())
-      .then(result => {
-        // console.log(result._id);
-        const newData = data.map(item => {
-          if (item._id === result._id) {
-            return result
-          }
-          else { return item }
-        })
-        setData(newData);
+    }).then(res =>{ 
+      let result = res.json();
+      const newData = data.map(item => {
+        if (item._id === result._id) {
+          return result
+        }
+        else { return item }
       })
-      .catch(err => { console.log(err) })
+      setData(newData);
+    }).catch(err => { console.log(err) })
 
   }
 
+//delete a post
   const deletePost = (postId) => {
     fetch(`${process.env.BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    }).then(res => res.json())
-      .then(result => {
-        // console.log(result)
-        const newData=data.filter(item=>{
+    }).then(res => {
+      let result= res.json();
+      const newData=data.filter(item=>{
 
-          return item._id!==result._id
-        })
-        setData(newData)
+        return item._id!==result._id
       })
+      setData(newData)
+    }).catch(err=>{console.log(err)})
   }
   return (
     <div className='home' style={{color:"white",fontSize:"40px",textAlign:"center",margin:"20px"}}>
@@ -163,7 +156,9 @@ const FollowedUser = () => {
                     )
                   })) : "No comments"
                 }
-                <form onSubmit={(e) => { e.preventDefault(); makeComment(e.target[0].value, item._id) }}>
+                <form onSubmit={(e) => { 
+                  e.preventDefault(); 
+                  makeComment(e.target[0].value, item._id) }}>
                   <input type="text" placeholder="Add a comment" required />
                 </form>
 

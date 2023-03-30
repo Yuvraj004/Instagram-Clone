@@ -22,8 +22,8 @@ const CreatePost = () => {
       method: "post",
       body: data,
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then((res) => {
+        let data=res.json();
         const newurl = data.url;
         url = newurl;
         console.log(url);

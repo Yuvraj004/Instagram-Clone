@@ -15,9 +15,10 @@ const Profile = () => {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
-    }).then(res => res.json())
-      .then(result => { setPics(result.mypost) })
-      .catch(err => console.log(err))
+    }).then(res => {
+      let result = res.json();
+      setPics(result.mypost);
+    }).catch(err => console.log(err))
   }, [logResult])
 
   return (

@@ -25,15 +25,13 @@ const Signup = () => {
       method: "post",
       body: data,
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then((res) => {
+        let data=res.json();
         let newurl = data.url;
         setUrl(newurl);
         url =newurl;
         M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-        // navigate("/");
-      })
-      .catch((err) => {
+      }).catch((err) => {
         M.toast({
           html: "Something Went Wrong AF",
           classes: "#c62828 red darken-1",
@@ -48,16 +46,16 @@ const Signup = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ name: name, email: email, password: password, pic: url })
-    }).then(res => res.json())
-      .then(data => {
-        if (data.error) {
-          M.toast({ html: data.error, classes: "#c62828 red darken-3" })
-        }
-        else {
-          M.toast({ html: data.message, classes: "#43a047 green darken-1" })
-          navigate("/login");
-        }
-      }).catch(err => {
+    }).then(res => {
+      let data =res.json();
+      if (data.error) {
+        M.toast({ html: data.error, classes: "#c62828 red darken-3" })
+      }
+      else {
+        M.toast({ html: data.message, classes: "#43a047 green darken-1" })
+        navigate("/login");
+      }
+    }).catch(err => {
         console.error(err)
       })
   }

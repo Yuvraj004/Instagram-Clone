@@ -67,12 +67,11 @@ const UserProfile = () => {
         unfollowId: userid
       })
     })
-      .then(res => res.json())
-      .then(data => {
+      .then(res =>{
+        let data= res.json()
         // console.log(data);
-        dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
-        localStorage.setItem("user", JSON.stringify(data))
-
+        dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } });
+        localStorage.setItem("user", JSON.stringify(data));
         setProfile((prevState) => {
           const newFollower = prevState.user.followers.filter(item => item !== data._id)
           return {
@@ -84,7 +83,7 @@ const UserProfile = () => {
           }
         })
         setShowFollow(true);
-      })
+      }).catch(err=>console.log(err))
   }
 
   return (

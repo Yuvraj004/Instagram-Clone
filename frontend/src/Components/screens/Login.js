@@ -17,7 +17,8 @@ const Login = () => {
       },
       body: JSON.stringify({ email, password })
     })
-    .then(res=>{let jsond= res.json();
+    .then(res=>{
+      let jsond= res.json();
       console.log("worked")
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" });
       //save the token and redirect
@@ -45,13 +46,14 @@ const Login = () => {
             }}} />
           <button className=" buttonlog" type="submit" name="action" onClick={() => CheckData()}>Login
           </button>
-          
-          <h5 style={{marginTop:"0.625rem"}}>
+          <div style={{display:"flex",flexDirection:"row"}}>
+            <h5 style={{marginTop:"0.625rem",justifyContent:"flex-start"}} >
             <Link to="/signup" className=" buttonlog" >Don't have an account </Link>
           </h5>
-          <h6 style={{margin:"1.625rem"}}>
+          <h6 style={{margin:"1.625rem",justifyContent:"flex-end"}}>
             <Link to="/reset" className=" buttonlog">Forgot Password </Link>
           </h6>
+          </div>
         </div>
       </div>
     </>

@@ -25,10 +25,10 @@ const Navbar = () => {
         query: query
       })
     })
-      .then(res => res.json())
-      .then((result) => {
+      .then(res => {
+        let result =res.json();
         // console.log(result.user)
-        setuserDetails(result.user)
+        setuserDetails(result.user);
       })
   }
   const renderList = () => {
