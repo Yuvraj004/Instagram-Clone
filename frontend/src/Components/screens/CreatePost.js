@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
 require("dotenv").config({ path: "./.env" });
@@ -18,21 +18,22 @@ const CreatePost = () => {
     data.append("cloud_name", "ycloud");//ycloud
 
     //uploading image to cloudinary
-    await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
-      method: "post",
+    let respons = await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
+      method: "POST",
       body: data,
     })
-      .then((res) => {
-        let data=res.json();
-        const newurl = data.url;
-        url = newurl;
-        setUrl(newurl);
-        console.log(url);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    
+    let dataRes = respons.json();
+    if (dataRes) {
+      const newurl = dataRes.url;
+      // url = newurl;
+      setUrl(newurl);
+      console.log(url);
+    }
+    else {
+      console.log(dataRes.err);
+    }
+
+
     //uploading data to database
     let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/createpost`, {
       method: "POST",

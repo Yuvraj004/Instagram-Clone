@@ -33,7 +33,7 @@ const Profile = () => {
             alt="..no"
           />
 
-          <div className="button probtn">
+          <div className="button probtn" style={{backgroundColor:"transparent"}}>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Update Profile Photo
             </button>
@@ -67,10 +67,10 @@ const Profile = () => {
         </div>
       </div>
       <div className="gallery" style={{ "display": "flex" }}>
+        <h2>Your Posts</h2>
         {(mypics.length === 0) ? "NO POSTS YET " : mypics.map(item => {
           return (
             <>
-              <h2>Your Posts</h2>
               <div style={{ "display": "grid", "columnCount": 3, "rowCount": "3", "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
                 <div key={item._id} style={{ "display": "flex" }}>
                   {/* <p>{item.title}</p> */}
