@@ -30,15 +30,15 @@ const Home = () => {
         'authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     })
-    let result = await res.json(); 
-    if(result){ setData(result.posts);}
-    else {console.log(result.err)}
+    let result = await res.json();
+    if (result) { setData(result.posts); }
+    else { console.log(result.err) }
   }
   var i = 0, num = 60;
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/like`, {
+    let resp = await fetch(`${process.env.REACT_APP_BACKEND_URI}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -47,16 +47,20 @@ const Home = () => {
       body: JSON.stringify({
         postId: id
       })
-    }).then(res => {
-      let result = res.json();
+    })
+    let result = await resp.json();
+    if (result) {
       data.map(item => {
         if (item._id === result._id) { setColor("red"); return result; }
         else { return item }
       })
-    }).catch(err => { console.log(err) })
+    }
+    else {
+      console.log(result.err)
+    }
   }
   const unlikePost = async (id) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/unlike`, {
+    let respo = await fetch(`${process.env.REACT_APP_BACKEND_URI}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -65,8 +69,9 @@ const Home = () => {
       body: JSON.stringify({
         postId: id
       })
-    }).then(res => {
-      let result = res.json();
+    })
+    let result = await respo.json();
+    if (result) {
       const newData = data.map(item => {
         if (item._id === result._id) { setColor("black"); return result }
         else {
@@ -74,11 +79,12 @@ const Home = () => {
         }
       })
       setData(newData);
-    }).catch(err => { console.log(err) })
+    }
+    else { console.log(result.err) }
   }
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/comment`, {
+    let respon = await fetch(`${process.env.REACT_APP_BACKEND_URI}/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -88,8 +94,9 @@ const Home = () => {
         text: text,
         postId: postId
       })
-    }).then(res => {
-      let result = res.json();
+    })
+    let result = await respon.json();
+    if (result) {
       const newData = data.map(item => {
         if (item._id === result._id) {
           return result
@@ -97,7 +104,8 @@ const Home = () => {
         else { return item }
       })
       setData(newData);
-    }).catch(err => { console.log(err) })
+    }
+    else { console.log(result.err) }
 
   }
 

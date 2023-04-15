@@ -10,15 +10,18 @@ const Profile = () => {
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
-  useEffect(() => {
-    let res= fetch(`${process.env.REACT_APP_BACKEND_URI}`+`/mypost`, {
+  const showPics = async ()=>{
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/mypost`, {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
     })
-      let result = res.json();
-      if(result){setPics(result.mypost);}
-      else{console.log(result.err)}
+    let result = await response.json();
+    if(result){setPics(result.mypost);}
+    else{console.log(result.err)}
+  }
+  useEffect(() => {
+    showPics();
   }, [logResult])
 
   return (
