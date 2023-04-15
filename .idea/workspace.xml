@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="473dc7eb-e6fd-4ecf-85de-2f725d3f3ed7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/CreatePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/CreatePost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/FollowedUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/FollowedUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/NewPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/NewPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/Reset.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/Reset.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/UpdatePfp.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/UpdatePfp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Components/screens/UserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Components/screens/UserProfile.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OQeBLN9SSvle1FDLJtI9KICWTD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="473dc7eb-e6fd-4ecf-85de-2f725d3f3ed7" name="Changes" comment="" />
+      <created>1681497115896</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681497115896</updated>
+    </task>
+    <servers />
+  </component>
+</project>

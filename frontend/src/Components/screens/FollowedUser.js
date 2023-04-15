@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../App';
 import {Link} from 'react-router-dom';
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config({ path: ".env" });
 
 const FollowedUser = () => {
   const [data, setData] = useState([])
@@ -27,7 +27,7 @@ const FollowedUser = () => {
 
   var getAllPosts = async () => {
 
-    await fetch(`${process.env.BACKEND_URI}/followerpost`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URI}/followerpost`, {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -44,7 +44,7 @@ const FollowedUser = () => {
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch(`${process.env.BACKEND_URI}/like`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URI}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const FollowedUser = () => {
     }).catch(err => { console.log(err) })
   }
   const unlikePost = async (id) => {
-    await fetch(`${process.env.BACKEND_URI}/unlike`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URI}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const FollowedUser = () => {
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`${process.env.BACKEND_URI}/comment`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URI}/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ const FollowedUser = () => {
 
 //delete a post
   const deletePost = (postId) => {
-    fetch(`${process.env.BACKEND_URI}/deletepost/${postId}`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
@@ -129,7 +129,7 @@ const FollowedUser = () => {
   return (
     <div className='home' style={{color:"white",fontSize:"40px",textAlign:"center",margin:"20px"}}>
       {
-        (data.length==0)?"YOU FOLLOW NO ONE":data.map((item) => {
+        (data.length===0)?"YOU FOLLOW NO ONE":data.map((item) => {
           (item.likes.includes(state._id)) ? color = "red" : color = "black"
           i++;
           return (

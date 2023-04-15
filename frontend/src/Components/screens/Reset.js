@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import { UserContext } from '../../App';
 import M from 'materialize-css';
 require("dotenv").config({ path: "./.env" });
@@ -8,9 +8,10 @@ function Reset() {
     // const { dispatch } = useContext(UserContext);
     let navigate = useNavigate();
     const [email, setEmail] = useState("")
+    const BACKEND_URI =`${process.env.REACT_APP_BACKEND_URI}`;
     // const [password, setPassword] = useState("")
     const CheckData = async () => {
-        const response = await fetch(`${process.env.BACKEND_URI}/reset-password`, {
+        const response = await fetch(`${BACKEND_URI}/reset-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

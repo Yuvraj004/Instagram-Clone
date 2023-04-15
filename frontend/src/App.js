@@ -12,7 +12,7 @@ import './App.css';
 import {reducer,initialState} from './reducers/userReducer';
 import Reset from './Components/screens/Reset';
 import NewPass from './Components/screens/NewPassword';
-import updatepfp from './Components/screens/UpdatePfp';
+import Updatepfp from './Components/screens/UpdatePfp';
 export const UserContext=createContext()
 
 const Routing =()=>{
@@ -21,7 +21,7 @@ const Routing =()=>{
   useEffect(() => {
     const userwparse=localStorage.getItem("user");
     if(userwparse){
-      const user =userwparse===undefined?{}:JSON.parse(userwparse);
+      const user = userwparse===undefined?window.alert("undefined user id"):JSON.parse(userwparse);
       dispatch({type:"USER",payload:user})
       history('/');
     }
@@ -40,7 +40,7 @@ const Routing =()=>{
       <Route path='/followeduser' element={<FollowedUser />}></Route>
       <Route exact path='/reset' element={<Reset/>}></Route>
       <Route path='/reset/:token' element={<NewPass/>}></Route>
-      <Route path='/updatepfp' element={<updatepfp/>}></Route>
+      <Route path='/updatepfp' element={<Updatepfp/>}></Route>
 
     </Routes>
   )

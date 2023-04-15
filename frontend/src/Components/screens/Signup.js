@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css';
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config({ path: ".env" });
 
 const Signup = () => {
   const [name, setName] = useState("")
@@ -26,10 +26,9 @@ const Signup = () => {
       body: data,
     })
       .then((res) => {
-        let data=res.json();
+        let data = res.json();
         let newurl = data.url;
         setUrl(newurl);
-        url =newurl;
         M.toast({ html: "Success", classes: "#43a047 green darken-1" });
       }).catch((err) => {
         M.toast({
@@ -40,24 +39,22 @@ const Signup = () => {
       });
   };
   const uploadFields = async () => {
-    await fetch(`${process.env.BACKEND_URI}/signup`, {
+    let response = await fetch(process.env.REACT_APP_BACKEND_URI+"/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ name: name, email: email, password: password, pic: url })
-    }).then(res => {
-      let data =res.json();
-      if (data.error) {
-        M.toast({ html: data.error, classes: "#c62828 red darken-3" })
-      }
-      else {
-        M.toast({ html: data.message, classes: "#43a047 green darken-1" })
-        navigate("/login");
-      }
-    }).catch(err => {
-        console.error(err)
-      })
+      body: JSON.stringify({ name, email, password, pic: url })
+    })
+    let data = await response.json();
+    if (data) {
+      M.toast({ html: data.message, classes: "#43a047 green darken-1" })
+      navigate("/signin");
+    }
+    else {
+      M.toast({ html: data.error, classes: "#c62828 red darken-3" })
+      console.log(data.err);
+    }
   }
   let navigate = useNavigate();
   const PostData = async () => {
@@ -95,14 +92,16 @@ const Signup = () => {
               <input className="file-path validate" type="text" style={{ "color": "white" }} />
             </div>
           </div>
-          <button style={{marginBottom:"1.625rem"}} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
+          <button style={{ marginBottom: "0.625rem" }} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
-          <h5 >
-            <Link to="/signin"className="buttonlog" >Already have an account </Link>
-          </h5>
-          <h6 style={{margin:"1.625rem"}} >
-            <Link to="/reset" className="buttonlog" >Forgot Password </Link>
-          </h6>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <button className="buttonlog">
+              <Link to="/signin" className="linkstyle" >Already have an account </Link>
+            </button>
+            <button className="buttonlog">
+              <Link to="/reset" className="linkstyle" >Forgot Password </Link>
+            </button>
+          </div>
         </div>
       </div>
     </>

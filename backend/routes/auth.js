@@ -60,7 +60,6 @@ router.post("/signup", async (req, res) => {
                 }
               })
               res.json({ message: "User Saved Succesfully" });
-              windows.alert("User succesfully Saved");
             })
             .catch((err) => {
               console.error("Not saved Error", err.message);
@@ -93,16 +92,12 @@ router.post(
       let user = await User.findOne({ email: req.body.email });
       if (!user) {
         // console.log("Error in userfinding")
-        return res
-          .status(400)
-          .json({ error: "Please use correct credentials" });
+        return res.status(400).json({ error: "Please use correct credentials" });
       }
       const passCompare = await bcrypt.compare(req.body.password, user.password);
       if (!passCompare) {
         // console.log("Error in passcomparision")
-        return res
-          .status(400)
-          .json({ success, error: "Please use correct credentials" });
+        return res.status(400).json({ success, error: "Please use correct credentials" });
       }
       //creating a token for a particular user
       const token = jwt.sign({ _id: user._id }, JWT);

@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from 'react-router-dom';
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config({ path: ".env" });
 
 const UserProfile = () => {
   const [userProfile, setProfile] = useState(null);
@@ -12,7 +12,7 @@ const UserProfile = () => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch(`${process.env.BACKEND_URI}/userprofile/${userid}`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URI}/userprofile/${userid}`, {
       method: "get",
       headers: {
         "content-type": "application/json",
@@ -27,7 +27,7 @@ const UserProfile = () => {
   }, [logResult])
 
   const followUser = () => {
-    fetch(`${process.env.BACKEND_URI}/follow`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URI}/follow`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const UserProfile = () => {
       })
   }
   const unfollowUser = () => {
-    fetch(`${process.env.BACKEND_URI}/unfollow`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URI}/unfollow`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -93,6 +93,7 @@ const UserProfile = () => {
           <div>
             <img className="dp"
               src={!userProfile ? "Loading.." :userProfile.user.pic}
+              alt="../"
             />
           </div>
           <div style={{ color: "white" }}>

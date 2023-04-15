@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate,useParams } from 'react-router-dom';
+import {  useNavigate,useParams } from 'react-router-dom';
 import M from 'materialize-css';
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config({ path: ".env" });
 
 const NewPass = () => {
   let navigate = useNavigate();
@@ -9,7 +9,7 @@ const NewPass = () => {
   const {token} =useParams()
   console.log(token)
   const CheckData = async () => {
-    let response = await fetch(`${process.env.BACKEND_URI}/new-password`, {
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/new-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

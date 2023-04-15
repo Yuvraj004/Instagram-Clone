@@ -26,6 +26,7 @@ const CreatePost = () => {
         let data=res.json();
         const newurl = data.url;
         url = newurl;
+        setUrl(newurl);
         console.log(url);
       })
       .catch((err) => {
@@ -33,7 +34,7 @@ const CreatePost = () => {
       });
     
     //uploading data to database
-    let response = await fetch(`${process.env.BACKEND_URI}/createpost`, {
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/createpost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
