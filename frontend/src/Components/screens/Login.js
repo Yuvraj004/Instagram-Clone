@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Await, Link, useNavigate } from 'react-router-dom';
+import {  Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App';
 import M from 'materialize-css';
 import dotenv from "dotenv";
@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const CheckData = async () => {
     console.log(`${process.env.REACT_APP_BACKEND_URI}`);
-    let response =await fetch(`${process.env.REACT_APP_BACKEND_URI}` + "/login", {
+    let response =await fetch(`${process.env.REACT_APP_BACKEND_URI}/login`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

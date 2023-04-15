@@ -29,10 +29,13 @@ h2 {
 .profile {
   /* /* max-width:550px; */
   margin: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .p-section {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   margin: 18px 0px;
   border-bottom: 1px solid grey;
@@ -76,7 +79,10 @@ h2 {
   max-width: 500px;
   height: max-content;
   margin: 26px auto;
-  background-color: rgba(116, 111, 111, 0.25);
+  color: #ffffff;
+  background-color: rgba(207, 196, 196, 0.5);
+  border-radius: 10%;
+  padding: 20px;
 }
 /*End of Home page*/
 /* navbar*/
@@ -502,11 +508,42 @@ h2 {
 .createPostCard{
   background-color: transparent;
   transition: background-color 3s linear;
+  border-radius: 15%;
+  color: #ffffff;
   
 }
 .createPostCard:hover{
-  background-color:#0d5cb6;
-  filter:blur(10px);
+  background-color: rgba(207, 196, 196, 0.5);
+}
+.createPostInput{
+  color: white;
+}
+.createPostBtn{
+  font-size: 12px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: inherit;
+  /* justify-content: center; */
+  /* align-items: center; */
+  text-align: center;
+  align-self: center;
+  background-color: #8f69e8;
+  border-radius: 30px;
+  border: none;
+  max-width: 300px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: 3.5rem;
+  transition: background-color 1s ease-in-out;
+}
+
+.createPostBtn:hover {
+  background-color: #4b2a67;
+}
+
+.createPostBtn:active {
+  transform: translateY(5px);
+  background-color: #4b2a67;
 }
 
 /*end of create post page*/

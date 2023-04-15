@@ -23,12 +23,11 @@ const CreatePost = () => {
       method: "POST",
       body: data,
     })
-    let dataRes = respons.json();
+    let dataRes =await respons.json();
     if (dataRes) {
       const newurl = dataRes.url;
       url = newurl;
       setUrl(newurl);
-      console.log(url);
     }
     else {
       console.log(dataRes.error);
@@ -69,15 +68,20 @@ const CreatePost = () => {
         maxWidth: "500px",
         padding: "20px",
         textAlign: "center",
+        marginTop:"150px",
+        display:"flex",
+        justifyContent:"center"
       }}
     >
       <input
+        className="createPostInput"
         type="text"
         placeholder="title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       <input
+        className="createPostInput"
         type="text"
         placeholder="body"
         value={body}
@@ -89,6 +93,7 @@ const CreatePost = () => {
         <div className="btn">
           <span>File</span>
           <input
+            className="createPostInput"
             type="file"
             onChange={(e) => {
               setImage(e.target.files[0]);
@@ -100,7 +105,7 @@ const CreatePost = () => {
         </div>
       </div>
       <button
-        className="btn waves-effect waves-light"
+        className="btn createPostBtn"
         type="submit"
         name="action"
         onClick={() => {

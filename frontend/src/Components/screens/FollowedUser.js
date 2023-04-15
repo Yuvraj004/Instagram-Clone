@@ -35,7 +35,7 @@ const FollowedUser = () => {
         "Access-Control-Allow-Origin": "*",
       }
     })
-    let result = response.json();
+    let result = await response.json();
     if (result) setData(result.posts);
     else console.log(result.error);
 
