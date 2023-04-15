@@ -19,7 +19,7 @@ const Login = () => {
       body: JSON.stringify({ email, password })
     })
     let jsond = await response.json();
-    // console.log(jsond);
+    console.log(jsond);
     if (jsond) {
       M.toast({ html: "GOTCHA", classes: "#43a047 green darken-3" ,displayLength:10000});
       //save the token and redirect
