@@ -59,10 +59,13 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+
 }
 
 .item {
   width: 30%;
+  border: none;
+  box-shadow: 0 0 10px rgb(79, 79, 79) inset;
 }
 
 /*End of Profile page*/
@@ -73,6 +76,7 @@ h2 {
   max-width: 500px;
   height: max-content;
   margin: 26px auto;
+  background-color: rgba(116, 111, 111, 0.25);
 }
 /*End of Home page*/
 /* navbar*/
@@ -492,3 +496,17 @@ h2 {
 }
 
 /*End of Signup and login page*/
+
+
+/*Create post page*/
+.createPostCard{
+  background-color: transparent;
+  transition: background-color 3s linear;
+  
+}
+.createPostCard:hover{
+  background-color:#0d5cb6;
+  filter:blur(10px);
+}
+
+/*end of create post page*/

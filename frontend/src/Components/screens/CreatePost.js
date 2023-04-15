@@ -33,14 +33,13 @@ const CreatePost = () => {
     else {
       console.log(dataRes.error);
     }
-
-
     //uploading data to database
     let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/createpost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
+        "Access-Control-Allow-Origin":"*"
       },
       body: JSON.stringify({
         title,
@@ -59,11 +58,12 @@ const CreatePost = () => {
         classes: "#c62828 red darken-1",
       });
     }
+    console.log("done on post");
   };
 
   return (
     <div
-      className="card input-filed"
+      className="card input-filed createPostCard"
       style={{
         margin: "10px auto",
         maxWidth: "500px",

@@ -140,7 +140,7 @@ const FollowedUser = () => {
   return (
     <div className='home' style={{ color: "white", fontSize: "40px", textAlign: "center", margin: "20px" }}>
       {
-        (data.length === 0) ? "YOU FOLLOW NO ONE" : data.map((item) => {
+        (!data) ? "YOU FOLLOW NO ONE" : data.map((item) => {
           (item.likes.includes(state._id)) ? color = "red" : color = "black"
           i++;
           return (
