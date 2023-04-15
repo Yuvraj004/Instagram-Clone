@@ -56,7 +56,7 @@ const Profile = () => {
         <div>
           <h4>{state ? state.name : "loading"}</h4>
           <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
-            <h5>{mypics.length===0?"0":mypics.length} posts</h5>
+            <h5>{!mypics?"0":mypics.length} posts</h5>
             <h5>{state ? state.followers.length : "0"} followers</h5>
             <h5>{state ? state.following.length : "0"} following</h5>
           </div>

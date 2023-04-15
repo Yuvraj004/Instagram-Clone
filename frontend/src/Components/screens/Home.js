@@ -24,13 +24,15 @@ const Home = () => {
 
   var getAllPosts = async () => {
 
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/allpost`, {
+    let res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/allpost`, {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
       }
-    }).then(res => { let result = res.json(); setData(result.posts) })
-      .catch(err => console.log(err))
+    })
+    let result = await res.json(); 
+    if(result){ setData(result.posts);}
+    else {err => console.log(err)}
   }
   var i = 0, num = 60;
   const hex = num.toString(16);
@@ -99,22 +101,25 @@ const Home = () => {
 
   }
 
-  const deletePost = (postId) => {
-    fetch(`${process.env.REACT_APP_BACKEND_URI}/deletepost/${postId}`, {
+  const deletePost = async (postId) => {
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    }).then(res => {
-      let result = res.json();
+    })
+    let result = response.json();
+    if (result) {
       const newData = data.filter(item => {
 
         return item._id !== result._id
       })
-      setData(newData)
-    }).catch(err => {
-      console.log(err);
-    })
+      setData(newData);
+    }
+    else {
+      console.log(result.err);
+    }
+
   }
   return (
     <div className='home'>
