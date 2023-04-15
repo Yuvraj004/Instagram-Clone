@@ -11,15 +11,15 @@ const Profile = () => {
     return 2 + 2;
   }, []);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URI}/mypost`, {
+    let res= fetch(`${process.env.REACT_APP_BACKEND_URI}`+`/mypost`, {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
-    }).then(res => {
+    })
       let result = res.json();
-      setPics(result.mypost);
-    }).catch(err => console.log(err))
-  }, [logResult])
+      if(result){setPics(result.mypost);}
+      else{console.log(result.err)}
+  }, [result.mypost])
 
   return (
     <div className="profile" style={{ color: "white" }} >
@@ -56,7 +56,7 @@ const Profile = () => {
         <div>
           <h4>{state ? state.name : "loading"}</h4>
           <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
-            <h5>{!mypics?"0":mypics.length} posts</h5>
+            <h5>{(mypics) ? mypics.length : '0' } posts</h5>
             <h5>{state ? state.followers.length : "0"} followers</h5>
             <h5>{state ? state.following.length : "0"} following</h5>
           </div>
