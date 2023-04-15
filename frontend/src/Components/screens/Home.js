@@ -32,7 +32,7 @@ const Home = () => {
     })
     let result = await res.json(); 
     if(result){ setData(result.posts);}
-    else {err => console.log(err)}
+    else {console.log(result.err)}
   }
   var i = 0, num = 60;
   const hex = num.toString(16);
