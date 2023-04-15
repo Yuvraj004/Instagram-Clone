@@ -19,7 +19,7 @@ const Profile = () => {
       let result = res.json();
       if(result){setPics(result.mypost);}
       else{console.log(result.err)}
-  }, [result.mypost])
+  }, [logResult])
 
   return (
     <div className="profile" style={{ color: "white" }} >
