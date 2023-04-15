@@ -12,6 +12,7 @@ const CreatePost = () => {
   let navigate = useNavigate();
 
   const postDetails = async () => {
+    console.log("reaching on post");
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "ig-clone");//ig-clone
@@ -25,12 +26,12 @@ const CreatePost = () => {
     let dataRes = respons.json();
     if (dataRes) {
       const newurl = dataRes.url;
-      // url = newurl;
+      url = newurl;
       setUrl(newurl);
       console.log(url);
     }
     else {
-      console.log(dataRes.err);
+      console.log(dataRes.error);
     }
 
 

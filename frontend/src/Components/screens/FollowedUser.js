@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../App';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 require("dotenv").config({ path: ".env" });
 
 const FollowedUser = () => {
@@ -27,24 +27,24 @@ const FollowedUser = () => {
 
   var getAllPosts = async () => {
 
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/followerpost`, {
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/followerpost`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true,
-        'Access-Control-Allow-Headers': 'application/json',
       }
-    }).then(res => {
-      let result =res.json();
-      setData(result.posts)
-    }).catch(err => console.log(err))
+    })
+    let result = response.json();
+    if (result) setData(result.posts);
+    else console.log(result.error);
+
   }
   var i = 0, num = 60;
   const hex = num.toString(16);
 
   const likePost = async (id) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/like`, {
+    let resp = await fetch(`${process.env.REACT_APP_BACKEND_URI}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -53,17 +53,20 @@ const FollowedUser = () => {
       body: JSON.stringify({
         postId: id
       })
-    }).then(res => {
-      let result = res.json();
+    })
+
+    let result = await resp.json();
+    if (result) {
       const newData = data.map(item => {
         if (item._id === result._id) { setColor("red"); return result }
         else { return item }
       })
       setData(newData);
-    }).catch(err => { console.log(err) })
+    }
+    else { console.log(result.err) }
   }
   const unlikePost = async (id) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/unlike`, {
+    let respo = await fetch(`${process.env.REACT_APP_BACKEND_URI}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -72,8 +75,9 @@ const FollowedUser = () => {
       body: JSON.stringify({
         postId: id
       })
-    }).then(res => {
-      let result=res.json();
+    })
+    let result = await respo.json();
+    if (result) {
       const newData = data.map(item => {
         if (item._id === result._id) { setColor("black"); return result }
         else {
@@ -81,13 +85,13 @@ const FollowedUser = () => {
         }
       })
       setData(newData);
-    }).catch(err => { console.log(err) })
-
+    }
+    else { console.log(result.err) }
   }
 
   //function for comments
   const makeComment = async (text, postId) => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URI}/comment`, {
+    let respon = await fetch(`${process.env.REACT_APP_BACKEND_URI}/comment`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -97,8 +101,9 @@ const FollowedUser = () => {
         text: text,
         postId: postId
       })
-    }).then(res =>{ 
-      let result = res.json();
+    })
+    let result = await respon.json();
+    if (result) {
       const newData = data.map(item => {
         if (item._id === result._id) {
           return result
@@ -106,36 +111,42 @@ const FollowedUser = () => {
         else { return item }
       })
       setData(newData);
-    }).catch(err => { console.log(err) })
+    }
+    else { console.log(result.err) }
 
   }
 
-//delete a post
-  const deletePost = (postId) => {
-    fetch(`${process.env.REACT_APP_BACKEND_URI}/deletepost/${postId}`, {
+  //delete a post
+  const deletePost = async (postId) => {
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    }).then(res => {
-      let result= res.json();
-      const newData=data.filter(item=>{
+    })
+    let result = response.json();
+    if (result) {
+      const newData = data.filter(item => {
 
-        return item._id!==result._id
+        return item._id !== result._id
       })
-      setData(newData)
-    }).catch(err=>{console.log(err)})
+      setData(newData);
+    }
+    else {
+      console.log(result.err);
+    }
+
   }
   return (
-    <div className='home' style={{color:"white",fontSize:"40px",textAlign:"center",margin:"20px"}}>
+    <div className='home' style={{ color: "white", fontSize: "40px", textAlign: "center", margin: "20px" }}>
       {
-        (data.length===0)?"YOU FOLLOW NO ONE":data.map((item) => {
+        (data.length === 0) ? "YOU FOLLOW NO ONE" : data.map((item) => {
           (item.likes.includes(state._id)) ? color = "red" : color = "black"
           i++;
           return (
             <div className="card home-card" key={hex + i + num}>
-              <h5><Link to={item.postedBy._id !== state._id?"/userprofile/"+item.postedBy._id:"/profile"}><b>{item.postedBy.name}</b></Link>{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right",cursor:"pointer" }}
-              onClick={()=>deletePost(item._id)}>delete</i>}</h5>
+              <h5><Link to={item.postedBy._id !== state._id ? "/userprofile/" + item.postedBy._id : "/profile"}><b>{item.postedBy.name}</b></Link>{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right", cursor: "pointer" }}
+                onClick={() => deletePost(item._id)}>delete</i>}</h5>
               <div className="card-image">
                 <img src={item.photo} alt='...' />
               </div>
@@ -156,9 +167,10 @@ const FollowedUser = () => {
                     )
                   })) : "No comments"
                 }
-                <form onSubmit={(e) => { 
-                  e.preventDefault(); 
-                  makeComment(e.target[0].value, item._id) }}>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  makeComment(e.target[0].value, item._id)
+                }}>
                   <input type="text" placeholder="Add a comment" required />
                 </form>
 

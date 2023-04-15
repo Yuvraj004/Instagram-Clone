@@ -25,6 +25,7 @@ const Home = () => {
   var getAllPosts = async () => {
 
     let res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/allpost`, {
+      method:"GET",
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -56,7 +57,7 @@ const Home = () => {
       })
     }
     else {
-      console.log(result.err)
+      console.log(result.error)
     }
   }
   const unlikePost = async (id) => {
