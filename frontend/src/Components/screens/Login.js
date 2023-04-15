@@ -10,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const CheckData = async () => {
+    console.log(`${process.env.REACT_APP_BACKEND_URI}`);
     let response =await fetch(`${process.env.REACT_APP_BACKEND_URI}` + "/login", {
       method: "POST",
       headers: {
