@@ -21,22 +21,23 @@ const Signup = () => {
     data.append("cloud_name", "ycloud");//ycloud
 
     //uploading image to cloudinary
-    await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
+    let response = await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
       method: "post",
       body: data,
     })
-      .then((res) => {
-        let data = res.json();
-        let newurl = data.url;
-        setUrl(newurl);
-        M.toast({ html: "Success", classes: "#43a047 green darken-1" });
-      }).catch((err) => {
-        M.toast({
+        let dataResponse = response.json();
+        if(dataResponse){
+          let newurl = dataResponse.url;
+          setUrl(newurl);
+          M.toast({ html: "Success", classes: "#43a047 green darken-1" });
+        }
+        else{
+          M.toast({
           html: "Something Went Wrong AF",
           classes: "#c62828 red darken-1",
         });
-        console.log(err);
-      });
+        console.log(dataResponse.error);
+        }
   };
   const uploadFields = async () => {
     let response = await fetch(process.env.REACT_APP_BACKEND_URI+"/signup", {
@@ -85,6 +86,7 @@ const Signup = () => {
                 type="file"
                 onChange={(e) => {
                   setImage(e.target.files[0]);
+                  // uploadPfp();
                 }}
               />
             </div>

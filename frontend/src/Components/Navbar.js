@@ -3,15 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import M from 'materialize-css';
 require("dotenv").config({ path: "./.env" });
-const Navbar = () => {
+const Navbar = ({ isDesktop }) => {
   const SearchModal = useRef(null);
+  const ref = useRef(null);
+
   const [search, setsearch] = useState('');
   const { state, dispatch } = useContext(UserContext);
   const [userDetails, setuserDetails] = useState([])
   const navigate = useNavigate();
   useEffect(() => {
-    M.Modal.init(SearchModal.current)
-  }, [10])
+    M.Modal.init(SearchModal.current);
+    const element = ref.current;
+    myFunction(isDesktop, element);
+  }, [1])
 
 
   const fetchUsers = async (query) => {
@@ -26,10 +30,22 @@ const Navbar = () => {
       })
     })
       .then(res => {
-        let result =res.json();
+        let result = res.json();
         // console.log(result.user)
         setuserDetails(result.user);
       })
+  }
+
+  function myFunction(isDesktop, element) {
+    const x = element;
+    if (isDesktop) {
+      console.log("desktop");
+      x.className = "navdiv";
+    }
+    else {
+      x.className += " responsive";
+      console.log("mobile");
+    }
   }
   const renderList = () => {
     if (state) {
@@ -49,19 +65,36 @@ const Navbar = () => {
     } else {
       return [
         <li key={30}><Link to='/signin' className='button' >Login</Link></li>,
-        <li key={40}><Link to='/signup' className='button' style={{ marginLeft: "10px" }}>Signup</Link></li>
+        <li key={40}><Link to='/signup' className='button' >Signup</Link></li>
       ]
     }
   }
 
   return (
-    <nav className='navboxx'>
-      <div className='navdiv' style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+    <nav className='navboxx ' id={`base ${isDesktop ? "desktop" : "mobile"}`}>
+      
+      <div className='navdiv' style={{
+        display: "flex",
+        justifyContent: "space-between",
+        width: "100%"
+      }} id="myTopnav" ref={ref}>
         <Link to={state ? '/' : '/signin'} className='logo' >Instagram</Link>&nbsp;
+        <div className="dropdownNav">
+          <button className="dropbtnNav">
+            <i className="fa fa-caret-down"></i>
+          </button>
+          <ul className="dropdown-contentNav">
+            {renderList()}
+          </ul>
+        </div>
         <ul id="nav-mobile" className='right' style={{ "marginRight": "3rem", color: "white", display: "flex", justifyContent: "space-between" }} >
           {renderList()}
+          &nbsp;
+
         </ul>
+        
       </div>
+
       {/*  Modal Structure  */}
       <div id="modal1" className="modal" ref={SearchModal}>
         <div className="modal-content">

@@ -13,7 +13,9 @@ import {reducer,initialState} from './reducers/userReducer';
 import Reset from './Components/screens/Reset';
 import NewPass from './Components/screens/NewPassword';
 import Updatepfp from './Components/screens/UpdatePfp';
-export const UserContext=createContext()
+import useMediaQuery from './Components/useMediaQuery';
+export const UserContext=createContext();
+
 
 const Routing =()=>{
   const history = useNavigate()
@@ -48,13 +50,14 @@ const Routing =()=>{
 
 
 function App() {
-  const [state,dispatch]=useReducer(reducer,initialState)
+  const [state,dispatch]=useReducer(reducer,initialState);
+  const isDesktop = useMediaQuery('(min-width: 960px)');
   return (
     <>
      
       <UserContext.Provider value={{state,dispatch}}>
         <BrowserRouter>
-          <Navbar />
+          <Navbar isDesktop={isDesktop} />
             <Routing/>
         </BrowserRouter>
       </UserContext.Provider>
