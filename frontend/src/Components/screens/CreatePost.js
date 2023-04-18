@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
+import { Dna } from 'react-loader-spinner';
 require("dotenv").config({ path: "./.env" });
 
 //Dialog box to create a new post
@@ -10,6 +11,7 @@ const CreatePost = () => {
   const [image, setImage] = useState("");
   var [url, setUrl] = useState("");
   let navigate = useNavigate();
+  let [loader, setLoader] = useState(false);
 
   const postDetails = async () => {
     console.log("reaching on post");
@@ -17,13 +19,13 @@ const CreatePost = () => {
     data.append("file", image);
     data.append("upload_preset", "ig-clone");//ig-clone
     data.append("cloud_name", "ycloud");//ycloud
-
+    setLoader(true);
     //uploading image to cloudinary
     let respons = await fetch("https://api.cloudinary.com/v1_1/ycloud/image/upload", {
       method: "POST",
       body: data,
     })
-    let dataRes =await respons.json();
+    let dataRes = await respons.json();
     if (dataRes) {
       const newurl = dataRes.url;
       url = newurl;
@@ -38,7 +40,7 @@ const CreatePost = () => {
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
-        "Access-Control-Allow-Origin":"*"
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({
         title,
@@ -48,6 +50,7 @@ const CreatePost = () => {
     });
     let json = await response.json();
     if (json) {
+      setLoader(false);
       M.toast({ html: "Success", classes: "#43a047 green darken-1" });
       navigate("/");
     } else {
@@ -61,60 +64,70 @@ const CreatePost = () => {
   };
 
   return (
-    <div
-      className="card input-filed createPostCard"
-      style={{
-        margin: "10px auto",
-        maxWidth: "500px",
-        padding: "20px",
-        textAlign: "center",
-        marginTop:"150px",
-        display:"flex",
-        justifyContent:"center"
-      }}
-    >
-      <input
-        className="createPostInput"
-        type="text"
-        placeholder="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+    <>
+      <Dna
+        visible={loader}
+        height="80"
+        width="80"
+        ariaLabel="dna-loading"
+        wrapperStyle={{}}
+        wrapperClass="dna-wrapper"
       />
-      <input
-        className="createPostInput"
-        type="text"
-        placeholder="body"
-        value={body}
-        onChange={(e) => {
-          setBody(e.target.value);
-        }}
-      />
-      <div className="file-field input-field">
-        <div className="btn">
-          <span>File</span>
-          <input
-            className="createPostInput"
-            type="file"
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-            }}
-          />
-        </div>
-        <div className="file-path-wrapper">
-          <input className="file-path validate" type="text" />
-        </div>
-      </div>
-      <button
-        className="btn createPostBtn"
-        type="submit"
-        name="action"
-        onClick={() => {
-          postDetails();
+      <div
+        className="card input-filed createPostCard"
+        style={{
+          margin: "10px auto",
+          maxWidth: "500px",
+          padding: "20px",
+          textAlign: "center",
+          marginTop: "150px",
+          display: "flex",
+          justifyContent: "center"
         }}
       >
-        Submit Post
-      </button>
-    </div>
+        <input
+          className="createPostInput"
+          type="text"
+          placeholder="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          className="createPostInput"
+          type="text"
+          placeholder="body"
+          value={body}
+          onChange={(e) => {
+            setBody(e.target.value);
+          }}
+        />
+        <div className="file-field input-field">
+          <div className="btn">
+            <span>File</span>
+            <input
+              className="createPostInput"
+              type="file"
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
+            />
+          </div>
+          <div className="file-path-wrapper">
+            <input className="file-path validate" type="text" />
+          </div>
+        </div>
+        <button
+          className="btn createPostBtn"
+          type="submit"
+          name="action"
+          onClick={() => {
+            postDetails();
+          }}
+        >
+          Submit Post
+        </button>
+      </div>
+    </>
   );
 };
 export default CreatePost;

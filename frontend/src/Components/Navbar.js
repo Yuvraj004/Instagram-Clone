@@ -17,6 +17,9 @@ const Navbar = ({ isDesktop }) => {
     myFunction(isDesktop, element);
   }, [1])
 
+  const handleGoBack = () => {
+    navigate(-1); // new line
+  };
 
   const fetchUsers = async (query) => {
     setsearch(query);
@@ -50,49 +53,46 @@ const Navbar = ({ isDesktop }) => {
   const renderList = () => {
     if (state) {
       return [
-        <li key={4}>
-          <span >
-            <button data-target="modal1" type="submit" className="searchbar__button modal-trigger">
-              <i className="material-icons">search</i></button>
-          </span>
-        </li>,
-        <li key={0}><Link className="btn waves-effect waves-light" to='/profilep'>Profile</Link></li>,
-        <li key={1}><Link className="btn waves-effect waves-light" to='/Create'>Create Post</Link></li>,
-        <li key={2}><Link className="btn waves-effect waves-light" to='/followeduser'>Posts of people i follow</Link></li>,
-        <li key={3}><button className="btn waves-effect waves-light" onClick={() => { dispatch({ type: "CLEAR" }); localStorage.clear(); navigate("/signin") }}>Logout
+        <li key={0}><Link className="dropdown-item btn waves-effect waves-light" to='/profilep'>Profile</Link></li>,
+        <li key={1}><Link className="dropdown-item btn waves-effect waves-light" to='/Create'>Create Post</Link></li>,
+        <li key={2}><Link className="dropdown-item btn waves-effect waves-light" to='/followeduser'>Posts of people i follow</Link></li>,
+        <li key={3}><button className="dropdown-item btn waves-effect waves-light" onClick={() => { dispatch({ type: "CLEAR" }); localStorage.clear(); navigate("/signin") }}>Logout
         </button></li>
       ]
     } else {
       return [
-        <li key={30}><Link to='/signin' className='button' >Login</Link></li>,
-        <li key={40}><Link to='/signup' className='button' >Signup</Link></li>
+        <li className='dropdown-item buttonNav' style={{ marginRight: "2rem" }} key={30}><Link to='/signin'>Login</Link></li>,
+        <li className='dropdown-item buttonNav' key={40}><Link to='/signup'>Signup</Link></li>
       ]
     }
   }
 
   return (
     <nav className='navboxx ' id={`base ${isDesktop ? "desktop" : "mobile"}`}>
-      
-      <div className='navdiv' style={{
+
+      <div className='navdiv btn-group' style={{
         display: "flex",
         justifyContent: "space-between",
         width: "100%"
       }} id="myTopnav" ref={ref}>
-        <Link to={state ? '/' : '/signin'} className='logo' >Instagram</Link>&nbsp;
-        <div className="dropdownNav">
-          <button className="dropbtnNav">
-            <i className="fa fa-caret-down"></i>
+        <Link to={state ? '/' : '/signin'} className='logo' >Instagram</Link>
+        &nbsp;
+        <button data-target="modal1" type="submit" className=" searchbar__button modal-trigger ">
+          <i className="material-icons">search</i></button>
+        <div className="dropdown" style={{ display: "none" }}>
+          <button type='button' className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            <span className="material-icons">dehaze</span>
           </button>
-          <ul className="dropdown-contentNav">
+          <ul className="dropdown-menu dropdown-menu-start" style={{ backgroundColor: "transparent" ,alignItems:"center"}}>
             {renderList()}
           </ul>
         </div>
-        <ul id="nav-mobile" className='right' style={{ "marginRight": "3rem", color: "white", display: "flex", justifyContent: "space-between" }} >
-          {renderList()}
-          &nbsp;
-
-        </ul>
-        
+        <div className='desktopNav'>
+          <ul id="nav-mobile" className='right' style={{ "marginRight": "5rem", color: "white", display: "flex", justifyContent: "space-between" }} >
+            {renderList()}
+            &nbsp;
+          </ul>
+        </div>
       </div>
 
       {/*  Modal Structure  */}

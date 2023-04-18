@@ -25,11 +25,12 @@ const Signup = () => {
       method: "post",
       body: data,
     })
-        let dataResponse = response.json();
+        let dataResponse =  await response.json();
         if(dataResponse){
           let newurl = dataResponse.url;
           setUrl(newurl);
           M.toast({ html: "Success", classes: "#43a047 green darken-1" });
+          uploadFields();
         }
         else{
           M.toast({

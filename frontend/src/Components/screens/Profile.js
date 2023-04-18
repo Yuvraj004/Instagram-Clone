@@ -2,12 +2,14 @@ import React, { useEffect, useCallback, useState, useContext } from "react";
 // import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import M from "materialize-css";
+import { Dna } from 'react-loader-spinner';
 require("dotenv").config({ path: ".env" });
 const Profile = () => {
   const [mypics, setPics] = useState([]);
-  const { state } = useContext(UserContext);
-  const [image, setImage] = useState("")
-  const [url, setUrl] = useState(undefined)
+  const { state, dispatch } = useContext(UserContext);
+  const [image, setImage] = useState("");
+  var [url, setUrl] = useState(undefined);
+  let [loader,setLoader] = useState('false');
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
@@ -23,24 +25,27 @@ const Profile = () => {
       body: data,
     })
 
-    let dataRes = response.json();
+    let dataRes = await response.json();
     if (dataRes) {
       let newurl = dataRes.url;
+      url = newurl;
       setUrl(newurl);
-      console.log(url);
-      // setPics((prevState) => {
-      //   if(state._id ===prevState._id){
-      //     return {
-      //       ...prevState,
-      //       user: {
-      //         ...prevState.user,
-      //         photo: newurl
-      //       }
-      //     }
-      //   }
-        
-      // })
-      M.toast({ html: "Success", classes: "#43a047 green darken-1" });
+      // console.log(newurl);
+      state.pic = newurl;
+      const updation = await fetch('/updatepic', {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          pic: url
+        })
+      })
+      let result = await updation.json();
+      M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
+      localStorage.setItem("user", JSON.stringify({ ...state, pic: result.pic }));
+      dispatch({ type: "UPDATEPIC", payload: result.pic });
     }
 
     else {
@@ -50,7 +55,7 @@ const Profile = () => {
       });
       console.log(dataRes.error);
     }
-  };
+  }
   const showPics = async () => {
     let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/mypost`, {
       headers: {
@@ -86,13 +91,13 @@ const Profile = () => {
                 <h1 className="modal-title fs-5" id="exampleModalLabel">Change/Add Photo</h1>
               </div>
               <div className="modal-body">
-                <div className="" style={{color:"black",display:"flex",flexDirection:"row"}}>
+                <div className="" style={{ color: "black", display: "flex", flexDirection: "row" }}>
                   <input
                     type="file"
                     onChange={(e) => {
                       setImage(e.target.files[0]);
                     }}
-                    style={{color:"black"}}
+                    style={{ color: "black" }}
                   />
                   <p>Give your PFP</p>
                 </div>
@@ -105,8 +110,8 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div>
-          <h4>{state ? state.name : "loading"}</h4>
+        <div className="infoProfile" >
+          <h4 >{state ? state.name : "loading"}</h4>
           <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
             <h5>{(mypics) ? mypics.length : '0'} posts</h5>
             <h5>{state ? state.followers.length : "0"} followers</h5>
@@ -119,12 +124,11 @@ const Profile = () => {
         {(mypics.length === 0) ? "NO POSTS YET " : mypics.map(item => {
           return (
             <>
-              <div style={{ "display": "grid", "columnCount": 3, "rowCount": "3", "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
+              <div key={item._id + 9} style={{ "display": "grid", "columnCount": 3, "rowCount": "3", "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
                 <div key={item._id} style={{ "display": "flex" }}>
                   {/* <p>{item.title}</p> */}
                   <img
-                    key={item._id} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title} />
-                  {/* <p>{item.body}</p> */}
+                    key={item._id + 31} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title} />
                 </div>
               </div>
             </>

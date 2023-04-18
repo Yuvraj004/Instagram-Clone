@@ -2,13 +2,14 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../App';
 import { Link } from 'react-router-dom';
+import { Dna } from 'react-loader-spinner';
 require("dotenv").config({ path: ".env" });
 
 const Home = () => {
   const [data, setData] = useState([])
   const { state } = useContext(UserContext)
-  var [color, setColor] = useState("black");
-
+  let [color, setColor] = useState("red");
+  let [loader,setLoader] = useState(true);
 
   const logResult = useCallback(() => {
     return 2 + 2;
@@ -25,14 +26,14 @@ const Home = () => {
   var getAllPosts = async () => {
 
     let res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/allpost`, {
-      method:"GET",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         'authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     })
     let result = await res.json();
-    if (result) { setData(result.posts); }
+    if (result) { setLoader(false);setData(result.posts); }
     else { console.log(result.err) }
   }
   var i = 0, num = 60;
@@ -51,10 +52,12 @@ const Home = () => {
     })
     let result = await resp.json();
     if (result) {
-      data.map(item => {
+      const newData = data.map(item => {
+
         if (item._id === result._id) { setColor("red"); return result; }
-        else { return item }
+        else { console.log("no idealike2"); return item; }
       })
+      setData(newData);
     }
     else {
       console.log(result.error)
@@ -74,7 +77,8 @@ const Home = () => {
     let result = await respo.json();
     if (result) {
       const newData = data.map(item => {
-        if (item._id === result._id) { setColor("black"); return result }
+
+        if (item._id === result._id) { setColor("black"); console.log("no idea"); return result }
         else {
           return item
         }
@@ -132,7 +136,15 @@ const Home = () => {
   }
   return (
     <div className='home'>
-      {
+      <Dna
+        visible={loader}
+        height="80"
+        width="80"
+        ariaLabel="dna-loading"
+        wrapperStyle={{}}
+        wrapperClass="dna-wrapper"
+      />
+      {(!data) ? <h1>Loading</h1> :
         data.map((item) => {
           (item.likes.includes(state._id)) ? color = "red" : color = "black"
           i++;
@@ -147,7 +159,6 @@ const Home = () => {
                 <img src={item.photo} alt='...' />
               </div>
               <div className="card-content">
-
                 <i className="material-icons like" style={{ "color": color, "cursor": "pointer" }} onClick={() =>
                   item.likes.includes(state._id) ? unlikePost(item._id) : likePost(item._id)
                 }
