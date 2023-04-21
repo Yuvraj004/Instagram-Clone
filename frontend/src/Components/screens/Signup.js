@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css';
+import { Dna } from 'react-loader-spinner';
 require("dotenv").config({ path: ".env" });
 
 const Signup = () => {
@@ -9,12 +10,14 @@ const Signup = () => {
   const [email, setEmail] = useState("")
   const [image, setImage] = useState("")
   const [url, setUrl] = useState(undefined)
+  let [loader, setLoader] = useState(false);
   useEffect(() => {
     if (url) {
       uploadFields();
     }
   }, [url])
   const uploadPfp = async () => {
+    setLoader(true);
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "ig-clone");//ig-clone
@@ -41,6 +44,7 @@ const Signup = () => {
         }
   };
   const uploadFields = async () => {
+    setLoader(true);
     let response = await fetch(process.env.REACT_APP_BACKEND_URI+"/signup", {
       method: "POST",
       headers: {
@@ -51,6 +55,7 @@ const Signup = () => {
     let data = await response.json();
     if (data) {
       M.toast({ html: data.message, classes: "#43a047 green darken-1" })
+      setLoader(false);
       navigate("/signin");
     }
     else {
@@ -97,6 +102,14 @@ const Signup = () => {
           </div>
           <button style={{ marginBottom: "0.625rem" }} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
+          <Dna
+            visible={loader}
+            height="80"
+            width="80"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
           <div style={{ display: "flex", flexDirection: "row" }}>
             <button className="buttonlog">
               <Link to="/signin" className="linkstyle" >Already have an account </Link>

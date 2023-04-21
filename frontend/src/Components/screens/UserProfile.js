@@ -1,17 +1,20 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from 'react-router-dom';
+import { Dna } from "react-loader-spinner";
 require("dotenv").config({ path: ".env" });
 
 const UserProfile = () => {
   const [userProfile, setProfile] = useState(null);
   const { state, dispatch } = useContext(UserContext);
   const { userid } = useParams()
-  const [showfollow, setShowFollow] = useState(state? !state.following.includes(userid):true)
+  const [showfollow, setShowFollow] = useState(state ? !state.following.includes(userid) : true)
+  let [loader,setLoader]=useState(false);
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
   useEffect(() => {
+    setLoader(true);
     fetch(`${process.env.REACT_APP_BACKEND_URI}/userprofile/${userid}`, {
       method: "get",
       headers: {
@@ -22,11 +25,13 @@ const UserProfile = () => {
       .then(result => {
         // console.log(result);
         setProfile(result);
+        setLoader(false)
       })
       .catch(err => console.log(err))
   }, [logResult])
 
   const followUser = () => {
+    setLoader(true)
     fetch(`${process.env.REACT_APP_BACKEND_URI}/follow`, {
       method: "PUT",
       headers: {
@@ -54,9 +59,11 @@ const UserProfile = () => {
           }
         })
         setShowFollow(false);
+        setLoader(false)
       })
   }
   const unfollowUser = () => {
+    setLoader(true)
     fetch(`${process.env.REACT_APP_BACKEND_URI}/unfollow`, {
       method: "PUT",
       headers: {
@@ -67,8 +74,8 @@ const UserProfile = () => {
         unfollowId: userid
       })
     })
-      .then(res =>{
-        let data= res.json()
+      .then(res => {
+        let data = res.json()
         // console.log(data);
         dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } });
         localStorage.setItem("user", JSON.stringify(data));
@@ -83,7 +90,8 @@ const UserProfile = () => {
           }
         })
         setShowFollow(true);
-      }).catch(err=>console.log(err))
+        setLoader(false)
+      }).catch(err => console.log(err))
   }
 
   return (
@@ -92,7 +100,7 @@ const UserProfile = () => {
         <div className="p-section" style={{ "width": "100%" }}>
           <div>
             <img className="dp"
-              src={!userProfile ? "Loading.." :userProfile.user.pic}
+              src={!userProfile ? "Loading.." : userProfile.user.pic}
               alt="../"
             />
           </div>
@@ -105,7 +113,7 @@ const UserProfile = () => {
               <h5>{!userProfile ? "Loading.." : userProfile.user.followers.length} followers</h5>
               <h5>{!userProfile ? "Loading.." : userProfile.user.following.length} following</h5>
               {showfollow ? <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => followUser()}>Follow
-              </button> : <button className="btn waves-effect waves-light" type="submit" style={{backgroundColor:"grey"}} name="action" onClick={() => unfollowUser()}>following
+              </button> : <button className="btn waves-effect waves-light" type="submit" style={{ backgroundColor: "grey" }} name="action" onClick={() => unfollowUser()}>following
               </button>}
             </div>
           </div>
@@ -119,6 +127,14 @@ const UserProfile = () => {
                   {/* <p>{item.title}</p> */}
                   <img
                     key={item._id} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title}
+                  />
+                  <Dna
+                    visible={loader}
+                    height="80"
+                    width="80"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
                   />
                   {/* <p>{item.body}</p> */}
                 </div>)

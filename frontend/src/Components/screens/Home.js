@@ -9,7 +9,7 @@ const Home = () => {
   const [data, setData] = useState([])
   const { state } = useContext(UserContext)
   let [color, setColor] = useState("red");
-  let [loader,setLoader] = useState(true);
+  let [loader, setLoader] = useState(true);
 
   const logResult = useCallback(() => {
     return 2 + 2;
@@ -24,7 +24,7 @@ const Home = () => {
   }, [logResult]);
 
   var getAllPosts = async () => {
-
+    setLoader(true)
     let res = await fetch(`${process.env.REACT_APP_BACKEND_URI}/allpost`, {
       method: "GET",
       headers: {
@@ -33,13 +33,14 @@ const Home = () => {
       }
     })
     let result = await res.json();
-    if (result) { setLoader(false);setData(result.posts); }
+    if (result) { setLoader(false); setData(result.posts); }
     else { console.log(result.err) }
   }
   var i = 0, num = 60;
   const hex = num.toString(16);
 
   const likePost = async (id) => {
+    setLoader(true)
     let resp = await fetch(`${process.env.REACT_APP_BACKEND_URI}/like`, {
       method: "put",
       headers: {
@@ -58,12 +59,14 @@ const Home = () => {
         else { console.log("no idealike2"); return item; }
       })
       setData(newData);
+      setLoader(false)
     }
     else {
       console.log(result.error)
     }
   }
   const unlikePost = async (id) => {
+    setLoader(true)
     let respo = await fetch(`${process.env.REACT_APP_BACKEND_URI}/unlike`, {
       method: "put",
       headers: {
@@ -84,11 +87,13 @@ const Home = () => {
         }
       })
       setData(newData);
+      setLoader(false);
     }
     else { console.log(result.err) }
   }
   //function for comments
   const makeComment = async (text, postId) => {
+    setLoader(true)
     let respon = await fetch(`${process.env.REACT_APP_BACKEND_URI}/comment`, {
       method: "post",
       headers: {
@@ -109,12 +114,14 @@ const Home = () => {
         else { return item }
       })
       setData(newData);
+      setLoader(false)
     }
     else { console.log(result.err) }
 
   }
 
   const deletePost = async (postId) => {
+    setLoader(true)
     let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/deletepost/${postId}`, {
       method: "delete",
       headers: {
@@ -128,6 +135,7 @@ const Home = () => {
         return item._id !== result._id
       })
       setData(newData);
+      setLoader(false)
     }
     else {
       console.log(result.err);
@@ -136,14 +144,6 @@ const Home = () => {
   }
   return (
     <div className='home'>
-      <Dna
-        visible={loader}
-        height="80"
-        width="80"
-        ariaLabel="dna-loading"
-        wrapperStyle={{}}
-        wrapperClass="dna-wrapper"
-      />
       {(!data) ? <h1>Loading</h1> :
         data.map((item) => {
           (item.likes.includes(state._id)) ? color = "red" : color = "black"
@@ -158,6 +158,14 @@ const Home = () => {
               <div className="card-image">
                 <img src={item.photo} alt='...' />
               </div>
+              <Dna
+                visible={loader}
+                height="80"
+                width="80"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              />
               <div className="card-content">
                 <i className="material-icons like" style={{ "color": color, "cursor": "pointer" }} onClick={() =>
                   item.likes.includes(state._id) ? unlikePost(item._id) : likePost(item._id)

@@ -14,6 +14,7 @@ const Profile = () => {
     return 2 + 2;
   }, []);
   const uploadPfp = async () => {
+    setLoader(true)
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "ig-clone");//ig-clone
@@ -46,6 +47,7 @@ const Profile = () => {
       M.toast({ html: "Photo Updated", classes: "#43a047 green darken-1" });
       localStorage.setItem("user", JSON.stringify({ ...state, pic: result.pic }));
       dispatch({ type: "UPDATEPIC", payload: result.pic });
+      setLoader(false)
     }
 
     else {
@@ -57,13 +59,14 @@ const Profile = () => {
     }
   }
   const showPics = async () => {
+    setLoader(true)
     let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/mypost`, {
       headers: {
         "authorization": `Bearer ${localStorage.getItem('token')}`
       }
     })
     let result = await response.json();
-    if (result) { setPics(result.mypost); }
+    if (result) { setPics(result.mypost);setLoader(false) }
     else { console.log(result.err) }
   }
   useEffect(() => {

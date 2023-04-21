@@ -81,7 +81,7 @@ const Navbar = ({ isDesktop }) => {
           <i className="material-icons">search</i></button>
         <div className="dropdown" style={{ display: "none" }}>
           <button type='button' className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-            <span className="material-icons">dehaze</span>
+            <i class="material-icons">&#xe3c7;</i>
           </button>
           <ul className="dropdown-menu dropdown-menu-start" style={{ backgroundColor: "transparent" ,alignItems:"center"}}>
             {renderList()}
