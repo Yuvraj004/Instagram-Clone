@@ -9,7 +9,7 @@ const Profile = () => {
   const { state, dispatch } = useContext(UserContext);
   const [image, setImage] = useState("");
   var [url, setUrl] = useState(undefined);
-  let [loader,setLoader] = useState('false');
+  let [loader, setLoader] = useState(false);
   const logResult = useCallback(() => {
     return 2 + 2;
   }, []);
@@ -66,7 +66,7 @@ const Profile = () => {
       }
     })
     let result = await response.json();
-    if (result) { setPics(result.mypost);setLoader(false) }
+    if (result) { setPics(result.mypost); setLoader(false) }
     else { console.log(result.err) }
   }
   useEffect(() => {
@@ -133,6 +133,14 @@ const Profile = () => {
                   <img
                     key={item._id + 31} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title} />
                 </div>
+                <Dna
+                  visible={loader}
+                  height="80"
+                  width="80"
+                  ariaLabel="dna-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="dna-wrapper"
+                />
               </div>
             </>
           )

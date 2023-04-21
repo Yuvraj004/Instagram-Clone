@@ -17,9 +17,9 @@ const Navbar = ({ isDesktop }) => {
     myFunction(isDesktop, element);
   }, [1])
 
-  const handleGoBack = () => {
-    navigate(-1); // new line
-  };
+  // const handleGoBack = () => {
+  //   navigate(-1); // new line
+  // };
 
   const fetchUsers = async (query) => {
     setsearch(query);
