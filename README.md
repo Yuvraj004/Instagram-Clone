@@ -6,7 +6,8 @@
 - express-validattor
 - bcryptjs
 - cors
-
+# Deployed on 
+https://www-ussinstaclone-com.onrender.com/signup
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
