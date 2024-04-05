@@ -549,13 +549,13 @@ h2 {
   height: calc(100% + 4px);
   z-index: -1;
 
-  animation: animate 5s linear infinite;
+  /* animation: animate 5s linear infinite; */
 }
 
-.shadow::after {
+/* .shadow::after {
   filter: blur(25px);
-}
-
+} */
+/* 
 @keyframes animate {
   0% {
     box-shadow: 5px 0 10px #0000ff, 0 5px 10px green, -5px 5px 10px yellow,
@@ -579,7 +579,7 @@ h2 {
     box-shadow: 5px 0 10px #0000ff, 0 5px 10px green, -5px 5px 10px yellow,
       0 -5px 10px #ff0000;
   }
-}
+} */
 
 @media screen and (max-width: 480px) {
   /* .signup-box.logininput{
