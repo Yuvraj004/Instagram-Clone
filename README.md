@@ -1,3 +1,4 @@
+**NOTE : This repository 's backend uses Node 14 therefore can't be viewed in Node =<18.
 # External packages Used
 - mongoose
 - express
