@@ -77,7 +77,7 @@ const Signup = () => {
     <>
       <div className='container'>
         <div className="signup-box shadow">
-          <h2 className='loginh2'>Instagram</h2>
+          {/* <h2 className='loginh2'>Instagram</h2> */}
           {/* <!-- first name --> */}
           <div className='detailBox'>
             <label for='firstName' className='fl fontLabel'>Name: </label>
@@ -90,16 +90,18 @@ const Signup = () => {
             <div className='clr'></div>
           </div>
           
+          {/* <!-- email --> */}
           <div class="detailBox">
             <label for="email" class="fl fontLabel"> Email ID: </label>
     			  <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
     			  <div class="fr">
               <input name='email' className='textBox' type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />    			  
             </div>
-    			<div class="clr"></div>
+    			  <div class="clr"></div>
     		  </div>
+          {/* <!-- password  --> */}
           <div class="detailBox">
-            <label for="password" class="fl fontLabel"> Password </label>
+            <label for="password" class="fl fontLabel"> Password: </label>
             <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
             <div class="fr">
               <input name='password' className='textBox' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
@@ -113,7 +115,7 @@ const Signup = () => {
           
           <div className="file-field input-field">
             <div className='buttonNav'>
-              <label htmlFor='pf-p'>Upload Profile Photo</label>
+              <label htmlFor='pf-p' style={{color:"white"}}>Upload Profile Photo</label>
               <input
                 id='pf-p'
                 type="file"
@@ -138,10 +140,10 @@ const Signup = () => {
             wrapperClass="dna-wrapper"
           />
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <button className="buttonlog">
+            <button className="buttonlog hideColor">
               <Link to="/signin" className="linkstyle" >Already have an account </Link>
             </button>
-            <button className="buttonlog">
+            <button className="buttonlog hideColor">
               <Link to="/reset" className="linkstyle" >Forgot Password </Link>
             </button>
           </div>

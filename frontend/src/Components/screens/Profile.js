@@ -1,9 +1,11 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
+import "../../App.css";
 // import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import M from "materialize-css";
 import { Dna } from 'react-loader-spinner';
 require("dotenv").config({ path: ".env" });
+
 const Profile = () => {
   const [mypics, setPics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
@@ -113,7 +115,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="infoProfile" >
+        <div className="infoProfile_pfp" >
           <h4 >{state ? state.name : "loading"}</h4>
           <div style={{ display: "flex", justifyContent: "space-around", width: "108%" }}>
             <h5>{(mypics) ? mypics.length : '0'} posts</h5>
@@ -124,27 +126,29 @@ const Profile = () => {
       </div>
       <div className="gallery" style={{ "display": "flex" }}>
         <h2>Your Posts</h2>
-        {(mypics.length === 0) ? "NO POSTS YET " : mypics.map(item => {
-          return (
-            <>
-              <div key={item._id + 9} style={{ "display": "grid", "columnCount": 3, "rowCount": "3", "gap": "50px 20px", "gridTemplateColumns": "auto auto" }}>
-                <div key={item._id} style={{ "display": "flex" }}>
-                  {/* <p>{item.title}</p> */}
-                  <img
-                    key={item._id + 31} className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title} />
+        <div>
+          {(mypics && mypics.length === 0) ? "NO POSTS YET " : mypics.map(item => {
+            return (
+              <>
+                <div key={item._id + 9} style={{ "display": "grid", "columnCount": 3, "rowCount": "3", "gap": "50px 20px", "gridTemplateColumns": "auto auto" ,"margin":"10px"}}>
+                  <div style={{ "display": "flex" }}>
+                    {/* <p>{item.title}</p> */}
+                    <img
+                      className="item" style={{ "width": "100%", "height": "auto" }} src={item.photo} alt={item.title} />
+                  </div>
+                  <Dna
+                    visible={loader}
+                    height="80"
+                    width="80"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
+                  />
                 </div>
-                <Dna
-                  visible={loader}
-                  height="80"
-                  width="80"
-                  ariaLabel="dna-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="dna-wrapper"
-                />
-              </div>
-            </>
-          )
-        })}
+              </>
+            )
+          })}
+        </div>
       </div>
     </div>
   );

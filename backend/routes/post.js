@@ -177,14 +177,14 @@ router.delete('/deletepost/:postId', requiredLogin, (req, res) => {
 })
 
 //Route-8 accessing other user's profile from followers
-router.get('/followerpost', requiredLogin, (req, res) => {
-    console.log(res.json());
+router.post('/followerpost', requiredLogin, (req, res) => {
+    console.log(req.json())
     Post.find({ postedBy: { $in: req.user.following } })
-        .populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
+        .populate("postedBy", "_id").populate("comments.postedBy", "_id name")
         .sort('-createdAt')
         .then(posts => {
-            res.json({ posts })
             // console.log(posts)
+            res.json({ posts })
         })
         .catch(err => {
             console.log(err)

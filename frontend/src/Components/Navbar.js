@@ -53,23 +53,32 @@ const Navbar = ({ isDesktop }) => {
   const renderList = () => {
     if (state) {
       return [
-        <ul style={{ 
+        <ul key={98} style={{ 
           "marginRight": "7rem", color: "white", display: "flex", justifyContent: "space-between" }}>
-          <li key={0}><Link className="dropdown-item btn waves-effect waves-light" to='/profilep'>Profile</Link></li>,
-          <li key={1}><Link className="dropdown-item btn waves-effect waves-light" to='/Create'>Create Post</Link></li>,
-          <li key={2}><Link className="dropdown-item btn waves-effect waves-light" to='/followeduser'>Followed People</Link></li>,
-          <li key={3} style={{padding:"0px 20px",position:"relative",top:"-1px"}}>
-            <button className="dropdown-item btn waves-effect waves-light"  onClick={() => { dispatch({ type: "CLEAR" }); localStorage.clear(); navigate("/signin") }}>Logout
-            </button>
-          </li>
+            <li key={4}>
+            {state && (<button data-target="modal1" type="submit" className=" searchbar__button modal-trigger ">
+            <i className="material-icons">search</i>
+          </button>)}
+            </li>
+            <li key={0}><Link className="dropdown-item btn waves-effect waves-light" to='/profilep'>Profile</Link></li>,
+            <li key={1}><Link className="dropdown-item btn waves-effect waves-light" to='/Create'>Create Post</Link></li>,
+            <li key={2}><Link className="dropdown-item btn waves-effect waves-light" to='/followeduser'>Followed People</Link></li>,
+            <li key={3} style={{padding:"0px 20px",position:"relative",top:"-1px"}}>
+              <button className="dropdown-item btn waves-effect waves-light"  onClick={() => { dispatch({ type: "CLEAR" }); localStorage.clear(); navigate("/signin") }}>Logout
+              </button>
+            </li>
         </ul>
       ]
     } else {
       return [
-        <ul style={{ 
+        <ul key={99} style={{ 
           "marginRight": "7rem", color: "white", display: "flex", justifyContent: "space-between" }}>
-          <li className='dropdown-item buttonNav' style={{ marginRight: "2rem" }} key={30}><Link to='/signin'>Login</Link></li>
-          <li className='dropdown-item buttonNav' key={40}><Link to='/signup'>Signup</Link></li>
+          <li key={30} className='dropdown-item ' style={{ marginRight: "2rem" }} >
+            <Link className='buttonNav' to='/signin'>LOGIN</Link>
+          </li>
+          <li key={40} className='dropdown-item ' >
+            <Link className='buttonNav' to='/signup'>SIGNUP</Link>
+          </li>
         </ul>
       ]
     }
@@ -85,18 +94,20 @@ const Navbar = ({ isDesktop }) => {
       }} id="myTopnav" ref={ref}>
         <Link to={state ? '/' : '/signin'} className='logo' >Instagram</Link>
         &nbsp;
-        {state && (<button data-target="modal1" type="submit" className=" searchbar__button modal-trigger ">
-          <i className="material-icons">search</i>
-        </button>)}
+        
         <div className="dropdown" style={{ display: "none" }}>
+          {state && (<button data-target="modal1" type="submit" className=" searchbar__button modal-trigger ">
+            <i className="material-icons">search</i>
+          </button>)}
           <button type='button' className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-            <i class="material-icons">&#xe3c7;</i>
+            <i className="material-icons">&#xe3c7;</i>
           </button>
           <ul className="dropdown-menu dropdown-menu-start" style={{ backgroundColor: "transparent" ,alignItems:"center"}}>
             {renderList()}
           </ul>
         </div>
         <div className='desktopNav right' id="nav-mobile" >
+          
             {renderList()}
         </div>
       </div>

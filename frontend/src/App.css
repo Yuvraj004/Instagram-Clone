@@ -37,19 +37,20 @@ h2 {
   margin: 18px 0px;
   border-bottom: 1px solid grey;
   width: 100%;
-  align-items:center;
+  /* align-items:center; */
 }
 .box2 {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-content: center;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
   align-self: center;
+  flex-wrap: wrap;
 }
 /* update pic button */
 .probtn {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   margin-top: 1rem;
 }
 .dp {
@@ -60,6 +61,8 @@ h2 {
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
   justify-content: space-around;
 }
 
@@ -67,6 +70,15 @@ h2 {
   width: 30%;
   border: none;
   box-shadow: 0 0 10px rgb(79, 79, 79) inset;
+}
+.infoProfile_pfp{
+  height: 100%;
+  width: 45%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* align-content: center; */
 }
 
 @media screen and (max-width: 560px) {
@@ -76,7 +88,7 @@ h2 {
     display: flex;
     flex-direction:column;
     justify-content: space-around;
-    align-items: center;
+    /* align-items: center; */
   }
   .gallery{
     display: flex;
@@ -89,8 +101,10 @@ h2 {
     align-items: center;
     align-content: center;
   }
-  .infoProfile{
-    display: flex;
+  .infoProfile_pfp{
+    height: 100%;
+    width: 45%;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -156,25 +170,25 @@ h2 {
 }
 .button {
   color: #ffffff;
-  display: inline-block;
+  /* display: inline-block; */
   padding: 0px 25px;
-  background-color: #8f69e8;
+  /* background-color: #8f69e8; */
   border-radius: 30px;
   border: none;
   font-size: 13px;
   cursor: pointer;
-  margin-left: 3.5rem;
-  transition: background-color 0.3s ease-in-out;
+  /* margin-left: 3.5rem; */
+  /* transition: background-color 0.3s ease-in-out; */
 }
 
-.button:hover {
+/* .button:hover {
   background-color: #4b2a67 !important;
-}
-
+} */
+/* 
 .button:active {
   transform: translateY(2px) !important;
   background-color: #4b2a67 !important;
-}
+} */
 
 .buttonNav {
   color: #ffffff;
@@ -264,7 +278,7 @@ h2 {
 
 .signup-box,
 .login-box {
-  padding: 30px;
+  /* padding: 30px; */
   text-align: center;
   max-width: 100%;
 }
@@ -312,8 +326,11 @@ h2 {
 .buttonlog:hover {
   background-color: #4b2a67;
 }
+.hideColor{
+  background-color:transparent !important;
+}
 
-/*End og login page*/
+/*End of login page*/
 
 /*background of site*/
 @keyframes move {
@@ -559,6 +576,7 @@ h2 {
 }
 .fontLabel{
   color: white;
+  font-size: 18px;
 }
 .fr{
 	float: right;
@@ -575,6 +593,7 @@ h2 {
 	font-size: 15px;
 }
 .textBox{
+  color: white;
 	height: 35px;
 	width: 190px;
 	border: none;
@@ -590,6 +609,9 @@ h2 {
 	line-height: 38px;
 	text-align: center;
   background: #474645;
+}
+.padTop{
+  padding-top: 30px;
 }
 
 
@@ -632,7 +654,7 @@ h2 {
   max-width: 300px;
   font-size: 13px;
   cursor: pointer;
-  margin-left: 3.5rem;
+  /* margin-left: 3.5rem; */
   transition: background-color 1s ease-in-out;
 }
 

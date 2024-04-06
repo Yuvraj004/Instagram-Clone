@@ -43,15 +43,35 @@ const Login = () => {
     <>
       <div className='container'>
         <div className="login-box shadow">
-          <h2 className='loginh2'>Instagram</h2>
-          <input className='logininput' type="text" placeholder="email" value={email} onChange={(e) => { setEmail(e.target.value); }} />
-          <input className='logininput' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              CheckData()
-            }
-          }} />
+          {/* <h2 className='loginh2'>Instagram</h2> */}
+
+          {/* <!-- email --> */}
+          <div className="detailBox">
+            <label for="email" class="fl fontLabel"> Email ID: </label>
+    			  <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+    			  <div class="fr">
+              <input name='email' className='textBox' type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />   			  
+            </div>
+    			  <div class="clr"></div>
+    		  </div>
+          
+          {/* <!-- password  --> */}
+          <div className="detailBox">
+            <label for="password" class="fl fontLabel"> Password: </label>
+            <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+            <div class="fr">
+              <input name='password' className='textBox' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                CheckData()
+              }
+            }} />
+            </div>
+            <div class="clr"></div>
+    		  </div>
+          <div className='padTop'>
           <button className=" buttonlog" type="submit" name="action" onClick={() => CheckData()}>Login
           </button>
+          </div>
           <Dna
             visible={loader}
             height="80"
@@ -61,11 +81,11 @@ const Login = () => {
             wrapperClass="dna-wrapper"
           />
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <button className=" buttonlog" style={{ justifyContent: "flex-start" }} >
-              <Link to="/signup" className='linkstyle'  >Don't have an account </Link>
+            <button className=" buttonlog hideColor" style={{ justifyContent: "flex-start" }} >
+              <Link to="/signup" className='linkstyle '  >Don't have an account </Link>
             </button>
-            <button className=" buttonlog" style={{ position: "relative", justifyContent: "flex-end" }}>
-              <Link to="/reset" className='linkstyle' >Forgot Password </Link>
+            <button className=" buttonlog hideColor" style={{ position: "relative", justifyContent: "flex-end" }}>
+              <Link to="/reset" className='linkstyle ' >Forgot Password </Link>
             </button>
           </div>
         </div>

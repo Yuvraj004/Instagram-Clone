@@ -112,9 +112,9 @@ const CreatePost = () => {
               }}
             />
           </div>
-          <div className="file-path-wrapper">
+         {image && (<div className="file-path-wrapper">
             <input className="file-path validate" type="text" />
-          </div>
+          </div>)}
         </div>
         <button
           className="btn createPostBtn"

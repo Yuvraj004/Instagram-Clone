@@ -27,17 +27,23 @@ const FollowedUser = () => {
 
   var getAllPosts = async () => {
     setLoader(true);
-    let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/followerpost`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        'authorization': `Bearer ${localStorage.getItem('token')}`,
-        "Access-Control-Allow-Origin": "*",
-      }
-    })
-    let result = await response.json();
-    if (result) {setData(result.posts);setLoader(false)}
-    else console.log(result.error);
+    try {
+      let response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/followerpost`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'authorization': `Bearer ${localStorage.getItem('token')}`,
+          // "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          user: localStorage.getItem('user')
+        })
+      })
+      let result = await response.json();
+      if (result) {setData(result.posts);setLoader(false)}
+    } catch (error) {
+      console.log(error);
+    }
 
   }
   var i = 0, num = 60;

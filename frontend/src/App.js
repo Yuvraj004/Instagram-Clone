@@ -23,7 +23,7 @@ const Routing =()=>{
   useEffect(() => {
     const userwparse=localStorage.getItem("user");
     if(userwparse){
-      const user = userwparse===undefined?window.alert("undefined user id"):JSON.parse(userwparse);
+      const user = (userwparse===undefined) ?window.alert("undefined user id") : JSON.parse(userwparse);
       dispatch({type:"USER",payload:user})
       history('/');
     }
