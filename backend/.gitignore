@@ -1,6 +1,74 @@
 # dependencies
 /node_modules
 ./node_modules
+node_modules
 
 /env
 ./env
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Build output
+/build/  # Replace with your build directory name if different
+
+# Dependency directories
+/deps/  # Optional
+/vendor/  # Optional
+
+# Testing frameworks
+/coverage/  # Optional
+jest/  # Example
+
+# IDE and editor files
+/.vscode/
+.idea/
+.DS_Store
+
+# Temporary directories
+/temp/
+*.tmp
+
+# Logs
+*.log
+
+# Environment variables
+# .env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# dotenv configuration file
+.envrc
+
+# Babel configuration
+.babelrc
+
+# ESLint configuration
+.eslintrc.json
+
+# Stylelint configuration
+.stylelintrc.json
+
+# Prettier configuration
+.prettierrc
+
+# Husky configuration
+.huskyrc
+
+# Yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+
+# Optional: CI/CD pipeline cache
+.circleci/cache/
+.github/workflows/cache/
+
+# Optional: npm cache
+.npm
