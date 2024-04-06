@@ -151,7 +151,7 @@ const Home = () => {
           return (
             <div className="card home-card" key={hex + i + num}>
               <h5>
-                <Link to={item.postedBy._id !== state._id ? "/userprofile/" + item.postedBy._id : "/profile"}><b>{item.postedBy.name}</b>
+                <Link to={item.postedBy._id !== state._id ? "/userprofile/" + item.postedBy._id : "/profilep"}><b>{item.postedBy.name}</b>
                 </Link>{item.postedBy._id === state._id && <i className='material-icons' style={{ float: "right", cursor: "pointer" }}
                   onClick={() => deletePost(item._id)}>delete</i>}
               </h5>

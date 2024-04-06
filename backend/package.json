@@ -4,7 +4,7 @@
   "description": "insta clone backend",
   "main": "index.js",
   "scripts": {
-    "start": "node ./backend/index.js"
+    "start": "node ./index.js"
   },
   "author": "",
   "license": "ISC",

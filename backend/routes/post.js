@@ -178,7 +178,7 @@ router.delete('/deletepost/:postId', requiredLogin, (req, res) => {
 
 //Route-8 accessing other user's profile from followers
 router.get('/followerpost', requiredLogin, (req, res) => {
-    // console.log(res.json());
+    console.log(res.json());
     Post.find({ postedBy: { $in: req.user.following } })
         .populate("postedBy", "_id name").populate("comments.postedBy", "_id name")
         .sort('-createdAt')

@@ -78,17 +78,44 @@ const Signup = () => {
       <div className='container'>
         <div className="signup-box shadow">
           <h2 className='loginh2'>Instagram</h2>
-          <input className='logininput' type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input className='logininput' type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input className='logininput' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              PostData()
-            }
-          }} />
+          {/* <!-- first name --> */}
+          <div className='detailBox'>
+            <label for='firstName' className='fl fontLabel'>Name: </label>
+            <div className='new iconBox'>
+              <i className='fa fa-user' aria-hidden="true"></i>
+            </div>
+            <div className='fr'>
+              <input name='firstName' className=' textBox' autoFocus='on' type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className='clr'></div>
+          </div>
+          
+          <div class="detailBox">
+            <label for="email" class="fl fontLabel"> Email ID: </label>
+    			  <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+    			  <div class="fr">
+              <input name='email' className='textBox' type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />    			  
+            </div>
+    			<div class="clr"></div>
+    		  </div>
+          <div class="detailBox">
+            <label for="password" class="fl fontLabel"> Password </label>
+            <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+            <div class="fr">
+              <input name='password' className='textBox' type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                PostData()
+              }
+            }} />
+            </div>
+            <div class="clr"></div>
+    		</div>
+          
           <div className="file-field input-field">
-            <div className="btn">
-              <span>Upload Profile Photo</span>
+            <div className='buttonNav'>
+              <label htmlFor='pf-p'>Upload Profile Photo</label>
               <input
+                id='pf-p'
                 type="file"
                 onChange={(e) => {
                   setImage(e.target.files[0]);
@@ -96,9 +123,9 @@ const Signup = () => {
                 }}
               />
             </div>
-            <div className="file-path-wrapper">
+            {image && (<div className="file-path-wrapper">
               <input className="file-path validate" type="text" style={{ "color": "white" }} />
-            </div>
+            </div> )}
           </div>
           <button style={{ marginBottom: "0.625rem" }} className="buttonlog" type="submit" name="action" onClick={() => PostData()}>Signup
           </button>
